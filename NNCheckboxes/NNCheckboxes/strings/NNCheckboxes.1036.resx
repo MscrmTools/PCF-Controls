@@ -85,6 +85,12 @@
   <data name="parentEntityLogicalName_Desc_Key" xml:space="preserve">
     <value>Nom logique de l'entité parente (l'entité de ce formulaire)</value>
   </data>
+    <data name="showActiveRecordsOnly_Display_Key" xml:space="preserve">
+    <value>Enregistrements actifs uniquement</value>
+  </data>
+  <data name="showActiveRecordsOnly_Desc_Key" xml:space="preserve">
+    <value>Affiche uniquement les enregistrements actifs</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
 
 </root>

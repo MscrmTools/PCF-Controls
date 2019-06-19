@@ -85,6 +85,12 @@
   <data name="parentEntityLogicalName_Desc_Key" xml:space="preserve">
     <value>Logical name of the parent entity (the entity of the current form)</value>
   </data>
+  <data name="showActiveRecordsOnly_Display_Key" xml:space="preserve">
+    <value>Show only active records</value>
+  </data>
+  <data name="showActiveRecordsOnly_Desc_Key" xml:space="preserve">
+    <value>Show only active records</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
 
 </root>

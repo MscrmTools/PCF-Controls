@@ -11,13 +11,10 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 	// Reference to ComponentFramework Context object
 	private _context: ComponentFramework.Context<IInputs>;
 	// Event Handler 'refreshData' reference
-	private _refreshData: EventListenerOrEventListenerObject;
-	private _notifyOutputChanged: () => void;
-	private createModeDiv : HTMLDivElement;
 	private updateModeDiv : HTMLDivElement;
 	private parentRecordId : string;
 	private parentRecordType : string;
-	private relationshipName: string;
+	private labelAttributeName : string;
 	/**
 	 * Empty constructor.
 	 */
@@ -25,8 +22,6 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 	{
 
 	}
-
-
 
 	/**
 	 * Used to initialize the control instance. Controls can kick off remote server calls and other initialization actions here.
@@ -47,6 +42,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 		// @ts-ignore
 		this.parentRecordId = context.mode.contextInfo.entityId;
 		this.parentRecordType = context.parameters.parentEntityLogicalName.raw;
+		// TODO Waiting for bug fix : entityTypeName contains child entity name instead of parent
 		// context.mode.contextInfo.entityTypeName;
 
 		container.appendChild(this._container);
@@ -54,7 +50,16 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 		var currentEntity = context.parameters.nnRelationshipDataSet.getTargetEntityType();
 		var thisCtrl = this;
 
-		context.webAPI.retrieveMultipleRecords(currentEntity,"?$select=" + currentEntity + "id," + "new_name")
+		debugger; 
+
+		for(var i=0;i<context.parameters.nnRelationshipDataSet.columns.length;i++){
+			var column = context.parameters.nnRelationshipDataSet.columns[i];
+			if(column.alias === "displayAttribute"){
+				thisCtrl.labelAttributeName = column.name;
+			}
+		}
+
+		context.webAPI.retrieveMultipleRecords(currentEntity,"?$select=" + currentEntity + "id," + thisCtrl.labelAttributeName + "&$orderby="+ thisCtrl.labelAttributeName + " asc")
 		.then(function(result){
 			for(var i=0;i<result.entities.length;i++){
 				var record = result.entities[i];
@@ -111,11 +116,11 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 						  .then(
 							 // @ts-ignore
 							 function(result){
-								  debugger;
+								  console.log("NNCheckboxes: records were successfully associated")
 							  },
 							 // @ts-ignore
 							 function(error){
-								  debugger;
+								  thisCtrl._context.navigation.openAlertDialog({text:"An error occured when associating records. Please check NNCheckboxes control configuration"});
 							  }
 						  );
 					}
@@ -152,16 +157,14 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 						  .then(
 							 // @ts-ignore
 							 function(result){
-								  debugger;
-							  },
-							 // @ts-ignore
-							 function(error){
-								  debugger;
-							  }
+								console.log("NNCheckboxes: records were successfully disassociated")
+							},
+						   // @ts-ignore
+						   function(error){
+								thisCtrl._context.navigation.openAlertDialog({text:"An error occured when disassociating records. Please check NNCheckboxes control configuration"});
+							}
 						  );
 					}
-
-					thisCtrl._notifyOutputChanged();
 				});
 
 				var selectedIds = context.parameters.nnRelationshipDataSet.sortedRecordIds;
@@ -179,7 +182,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 				var mark = document.createElement("span");
 				mark.setAttribute("class","checkmark");
 
-				lblContainer.innerHTML += record["new_name"];
+				lblContainer.innerHTML += record[thisCtrl.labelAttributeName];
 				lblContainer.appendChild(chk);
 				lblContainer.appendChild(mark);
 				divCtrl.appendChild(lblContainer);
@@ -187,7 +190,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 			}
 		},
 		function(error){
-
+			thisCtrl._context.navigation.openAlertDialog({text:"An error occured when retrieving "+ thisCtrl._context.parameters.nnRelationshipDataSet.getTargetEntityType() +" records. Please check NNCheckboxes control configuration"});
 		});
 	}
 
