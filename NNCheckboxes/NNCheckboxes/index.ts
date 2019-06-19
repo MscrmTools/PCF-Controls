@@ -14,7 +14,10 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 	private updateModeDiv: HTMLDivElement;
 	private parentRecordId: string;
 	private parentRecordType: string;
+	private _childRecordType: string;
 	private labelAttributeName: string;
+
+	private _relationshipSchemaName: string | null;
 	/**
 	 * Empty constructor.
 	 */
@@ -45,7 +48,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 
 		container.appendChild(this._container);
 
-		var currentEntity = context.parameters.nnRelationshipDataSet.getTargetEntityType();
+		this._childRecordType = context.parameters.nnRelationshipDataSet.getTargetEntityType();
 		var thisCtrl = this;
 
 		debugger;
@@ -57,9 +60,9 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 			}
 		}
 
-		var nnRelationshipSchemaName = await thisCtrl.GetNNRelationshipNameByEntityNames(currentEntity, thisCtrl.parentRecordType);
+		this._relationshipSchemaName = await thisCtrl.GetNNRelationshipNameByEntityNames();
 
-		context.webAPI.retrieveMultipleRecords(currentEntity, "?$select=" + currentEntity + "id," + thisCtrl.labelAttributeName + "&$orderby=" + thisCtrl.labelAttributeName + " asc")
+		context.webAPI.retrieveMultipleRecords(thisCtrl._childRecordType, "?$select=" + thisCtrl._childRecordType + "id," + thisCtrl.labelAttributeName + "&$orderby=" + thisCtrl.labelAttributeName + " asc")
 			.then(function (result) {
 				for (var i = 0; i < result.entities.length; i++) {
 					var record = result.entities[i];
@@ -71,15 +74,15 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 
 					var chk = document.createElement("input");
 					chk.setAttribute("type", "checkbox");
-					chk.setAttribute("id", record[currentEntity + "id"]);
-					chk.setAttribute("value", record[currentEntity + "id"]);
+					chk.setAttribute("id", record[thisCtrl._childRecordType + "id"]);
+					chk.setAttribute("value", record[thisCtrl._childRecordType + "id"]);
 					chk.addEventListener("change", function () {
 						if (this.checked) {
 							var theRecordId = this.id;
 							var associateRequest = new class {
 								target = {
 									id: theRecordId,
-									entityType: currentEntity
+									entityType: thisCtrl._childRecordType
 								};
 								relatedEntities = [
 									{
@@ -87,13 +90,13 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 										entityType: thisCtrl.parentRecordType
 									}
 								];
-								relationship = nnRelationshipSchemaName;
+								relationship = thisCtrl._relationshipSchemaName;
 								getMetadata(): any {
 									return {
 										boundParameter: undefined,
 										parameterTypes: {
 											"target": {
-												"typeName": "mscrm." + currentEntity,
+												"typeName": "mscrm." + thisCtrl._childRecordType,
 												"structuralProperty": 5
 											},
 											"relatedEntities": {
@@ -129,16 +132,16 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 							var disassociateRequest = new class {
 								target = {
 									id: theRecordId,
-									entityType: currentEntity
+									entityType: thisCtrl._childRecordType
 								};
 								relatedEntityId = thisCtrl.parentRecordId;
-								relationship = nnRelationshipSchemaName;
+								relationship = thisCtrl._relationshipSchemaName;
 								getMetadata(): any {
 									return {
 										boundParameter: undefined,
 										parameterTypes: {
 											"target": {
-												"typeName": "mscrm." + currentEntity,
+												"typeName": "mscrm." + thisCtrl._childRecordType,
 												"structuralProperty": 5
 											},
 											"relationship": {
@@ -170,7 +173,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 					var selectedIds = context.parameters.nnRelationshipDataSet.sortedRecordIds;
 
 					for (var j = 0; j < selectedIds.length; j++) {
-						if (record[currentEntity + "id"] === selectedIds[j]) {
+						if (record[thisCtrl._childRecordType + "id"] === selectedIds[j]) {
 							chk.checked = true;
 						}
 					}
@@ -190,21 +193,28 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 				}
 			},
 				function (error) {
-					thisCtrl._context.navigation.openAlertDialog({ text: "An error occured when retrieving " + thisCtrl._context.parameters.nnRelationshipDataSet.getTargetEntityType() + " records. Please check NNCheckboxes control configuration" });
+					if (thisCtrl._relationshipSchemaName == null) {
+						thisCtrl._context.navigation.openAlertDialog({ text: "There are no N:N relationships found for '" + thisCtrl._childRecordType + "' & '" + thisCtrl.parentRecordType + "' entities." });
+					} else {
+						thisCtrl._context.navigation.openAlertDialog({ text: "Wrong N:N relationship schema name ('" + thisCtrl._relationshipSchemaName + "') defined in parameters." });
+					}
 				});
 	}
 
-	public async GetNNRelationshipNameByEntityNames(entity1: string, entity2: string) {
-		let entityMetadata = await this._context.utils.getEntityMetadata(entity1);
+	public async GetNNRelationshipNameByEntityNames() {
+		let schemaNameParameter = this._context.parameters.relationshipSchemaName;
+		if (schemaNameParameter != undefined && schemaNameParameter.raw != null) { return Promise.resolve(<string>schemaNameParameter.raw); }
+		let entityMetadata = await this._context.utils.getEntityMetadata(this.parentRecordType);
 		let nnRelationships = entityMetadata.ManyToManyRelationships.getAll();
 
 		for (let i = 0; i < nnRelationships.length; i++) {
-			if ((nnRelationships[i].Entity1LogicalName == entity1 && nnRelationships[i].Entity2LogicalName == entity2) ||
-				(nnRelationships[i].Entity1LogicalName == entity2 && nnRelationships[i].Entity2LogicalName == entity1)) {
+			if ((nnRelationships[i].Entity1LogicalName == this.parentRecordType && nnRelationships[i].Entity2LogicalName == this._childRecordType) ||
+				(nnRelationships[i].Entity1LogicalName == this._childRecordType && nnRelationships[i].Entity2LogicalName == this.parentRecordType)) {
 				return Promise.resolve(<string>nnRelationships[i].SchemaName);
 			}
 		}
 
+		return Promise.resolve(null);
 	}
 
 	/**
