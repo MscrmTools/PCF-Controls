@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-  <control namespace="MscrmTools" constructor="NNCheckboxes" version="1.0.0" display-name-key="NNCheckboxes_Display_Key" description-key="NNCheckboxes_Desc_Key" control-type="standard" preview-image="logo.png">
+  <control namespace="MscrmTools" constructor="NNCheckboxes" version="1.0.1" display-name-key="NNCheckboxes_Display_Key" description-key="NNCheckboxes_Desc_Key" control-type="standard" preview-image="logo.png">
     <data-set name="nnRelationshipDataSet" display-name-key="nnRelationshipDataSet_Display_Key">
       <property-set name="displayAttribute" display-name-key="targetEntity_Display_Key" description-key="targetEntity_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
     </data-set>
     <property name="parentEntityLogicalName" display-name-key="parentEntityLogicalName_Display_Key" description-key="parentEntityLogicalName_Desc_Key" of-type="SingleLine.Text" usage="input" required="true" /> 
-    <property name="relationshipSchemaName" display-name-key="relationshipSchemaName_Display_Key" description-key="relationshipSchemaName_Desc_Key" of-type="SingleLine.Text" usage="input" required="true" /> 
     <resources>
       <code path="index.ts" order="1"/>
       <css path="css/NNCheckboxes.css" order="1" />
