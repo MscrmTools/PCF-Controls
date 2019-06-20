@@ -2,6 +2,9 @@
 Controls using PowerApps Components Framework
 
 ## NN Checkboxes
+
+[Download](https://github.com/MscrmTools/PCF-Controls/releases/)
+
 ### Purpose
 The purpose of this control is to allow user to associate/disassociate records for a many-to-many relationship displaying all possible records as checkboxes.
 
@@ -13,7 +16,7 @@ New in version 1.1
 - Records can be rendered with background color and forecolor if the entity has corresponding attributes
 - Records can be grouped by an attribute (text, optionset or booleans)
 
-![Configuration](https://github.com/MscrmTools/PCF-Controls/blob/master/NNCheckboxes/Screenshots/ColorAndGroups.png?raw=true)
+![Update1.1](https://github.com/MscrmTools/PCF-Controls/blob/master/NNCheckboxes/Screenshots/ColorAndGroups.png?raw=true)
 
 ### Configuration
 
