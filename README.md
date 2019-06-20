@@ -7,10 +7,22 @@ The purpose of this control is to allow user to associate/disassociate records f
 
 ![Vidéo](https://github.com/MscrmTools/PCF-Controls/blob/master/NNCheckboxes/Screenshots/video.gif?raw=true)
 
-### Configuration
-![Configuration](https://github.com/MscrmTools/PCF-Controls/blob/master/NNCheckboxes/Screenshots/Configuration.png?raw=true)
+New in version 1.1
+- You can choose the number of columns to render
+- Relationship schema name is not mandatory if only one many-to-many relationship exists for the entities
+- Records can be rendered with background color and forecolor if the entity has corresponding attributes
+- Records can be grouped by an attribute (text, optionset or booleans)
 
-Due to current limitation of PowerApps Components Framework for dataset, multiple properties need to be set
-1. Display attribute (Champ d'affichage) : Attribute in the subgrid view that is used for checkbox label
-2. Parent entity logical name (Nom logique de l'entité parente) : Logical name of the current form entity 
-3. Relationship schema name (Nom de schéma de la relation) : Schema name (case is important) of the many-to-many relationship
+![Configuration](https://github.com/MscrmTools/PCF-Controls/blob/master/NNCheckboxes/Screenshots/ColorAndGroups.png?raw=true)
+
+### Configuration
+
+This is the list of parameters that can be set on the control
+
+* **Display attribute** : Attribute to use as label for the checkbox (required / bound to an attribute)
+* **Relationship schema name** : Schema name of the relationship (required only if multiple many-to-many relationship exist for both related entities)
+* **Parent entity logical name** : Logical name of the current form entity (required)
+* **Background color** : Attribute to use as background color (optional / bound to an attribute)
+* **Color** : Attribute to use as forecolor (optional / bound to an attribute)
+* **Number of columns** : Number of columns to display checkboxes (required)
+* **Grouping Attribute** : Attribute used to group records (optional / bound to an attribute)
