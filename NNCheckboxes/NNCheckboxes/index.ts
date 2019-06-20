@@ -16,6 +16,9 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 	private parentRecordType: string;
 	private _childRecordType: string;
 	private labelAttributeName: string;
+	private backgroundColorAttributeName: string;
+	private foreColorAttributeName: string;
+	private numberOfColumns: number;
 
 	private _relationshipSchemaName: string | null;
 	/**
@@ -49,28 +52,46 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 		container.appendChild(this._container);
 
 		this._childRecordType = context.parameters.nnRelationshipDataSet.getTargetEntityType();
-		var thisCtrl = this;
+		this.numberOfColumns = context.parameters.columnsNumber ? context.parameters.columnsNumber.raw : 1;
 
 		debugger;
 
 		for (var i = 0; i < context.parameters.nnRelationshipDataSet.columns.length; i++) {
 			var column = context.parameters.nnRelationshipDataSet.columns[i];
 			if (column.alias === "displayAttribute") {
-				thisCtrl.labelAttributeName = column.name;
+				this.labelAttributeName = column.name;
+			}
+			else if(column.alias === "backgroundColorAttribute"){
+				this.backgroundColorAttributeName = column.name;
+			}
+			else if(column.alias === "foreColorAttribute"){
+				this.foreColorAttributeName = column.name;
 			}
 		}
 
-		this._relationshipSchemaName = await thisCtrl.GetNNRelationshipNameByEntityNames();
+		var attributes = new Array();
+		attributes.push(this.labelAttributeName);
+		if(this.backgroundColorAttributeName) attributes.push(this.backgroundColorAttributeName);
+		if(this.foreColorAttributeName) attributes.push(this.foreColorAttributeName);
 
-		context.webAPI.retrieveMultipleRecords(thisCtrl._childRecordType, "?$select=" + thisCtrl._childRecordType + "id," + thisCtrl.labelAttributeName + "&$orderby=" + thisCtrl.labelAttributeName + " asc")
+		this._relationshipSchemaName = await this.GetNNRelationshipNameByEntityNames();
+		var thisCtrl = this;
+
+		context.webAPI.retrieveMultipleRecords(this._childRecordType, "?$select=" + this._childRecordType + "id," + attributes.join(",") + "&$orderby=" + this.labelAttributeName + " asc")
 			.then(function (result) {
 				for (var i = 0; i < result.entities.length; i++) {
 					var record = result.entities[i];
 
 					var divCtrl = document.createElement("div");
+					divCtrl.setAttribute("style", "flex: 0 " + (100/thisCtrl.numberOfColumns) + "% !important");
 
+					var styles = new Array();
+					if(thisCtrl.backgroundColorAttributeName) styles.push("background-color:" + record[thisCtrl.backgroundColorAttributeName]);
+					if(thisCtrl.foreColorAttributeName) styles.push("color:" + record[thisCtrl.foreColorAttributeName]);
+					
 					var lblContainer = document.createElement("label");
 					lblContainer.setAttribute("class", "container");
+					lblContainer.setAttribute("style", styles.join(";"))
 
 					var chk = document.createElement("input");
 					chk.setAttribute("type", "checkbox");
