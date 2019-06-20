@@ -8,10 +8,10 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 	// Reference to the control container HTMLDivElement
 	// This element contains all elements of our custom control example
 	private _container: HTMLDivElement;
+	private divFlexBox: HTMLDivElement;
 	// Reference to ComponentFramework Context object
 	private _context: ComponentFramework.Context<IInputs>;
 	// Event Handler 'refreshData' reference
-	private updateModeDiv: HTMLDivElement;
 	private parentRecordId: string;
 	private parentRecordType: string;
 	private _childRecordType: string;
@@ -19,6 +19,8 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 	private backgroundColorAttributeName: string;
 	private foreColorAttributeName: string;
 	private numberOfColumns: number;
+	private categoryAttributeName : string;
+	private categoryUseDisplayName : boolean;
 
 	private _relationshipSchemaName: string | null;
 	/**
@@ -40,9 +42,6 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 		// Add control initialization code
 		this._context = context;
 		this._container = document.createElement("div");
-		this.updateModeDiv = document.createElement("div");
-		this.updateModeDiv.setAttribute("class", "flex");
-		this._container.appendChild(this.updateModeDiv);
 		// @ts-ignore
 		this.parentRecordId = context.mode.contextInfo.entityId;
 		this.parentRecordType = context.parameters.parentEntityLogicalName.raw;
@@ -53,7 +52,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 
 		this._childRecordType = context.parameters.nnRelationshipDataSet.getTargetEntityType();
 		this.numberOfColumns = context.parameters.columnsNumber ? context.parameters.columnsNumber.raw : 1;
-
+		
 		debugger;
 
 		for (var i = 0; i < context.parameters.nnRelationshipDataSet.columns.length; i++) {
@@ -67,24 +66,72 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 			else if(column.alias === "foreColorAttribute"){
 				this.foreColorAttributeName = column.name;
 			}
+			else if(column.alias === "categoryAttribute"){
+				this.categoryAttributeName = column.name;
+				this.categoryUseDisplayName = column.dataType === "Lookup.Simple" ||  column.dataType === "OptionSet" ||  column.dataType === "TwoOptions";
+				if(column.dataType === "Lookup.Simple"){
+					this.categoryAttributeName = "_" + column.name + "_value";
+				}
+			}
 		}
 
+		// If no category grouping, then only one flexbox is needed
+		if(!this.categoryAttributeName){
+			this.divFlexBox = document.createElement("div");
+			this.divFlexBox.setAttribute("class", "flex");
+			this._container.appendChild(this.divFlexBox);
+		}
+
+		// Select attributes to retrieve
 		var attributes = new Array();
 		attributes.push(this.labelAttributeName);
 		if(this.backgroundColorAttributeName) attributes.push(this.backgroundColorAttributeName);
 		if(this.foreColorAttributeName) attributes.push(this.foreColorAttributeName);
+		if(this.categoryAttributeName && this.categoryAttributeName !== this.labelAttributeName) attributes.push(this.categoryAttributeName);
+
+		// Define order (category fist, then label used)
+		var orders= new Array();
+		if(this.categoryAttributeName) orders.push(this.categoryAttributeName + " asc");
+		if(this.categoryAttributeName !== this.labelAttributeName) orders.push(this.labelAttributeName + " asc")
 
 		this._relationshipSchemaName = await this.GetNNRelationshipNameByEntityNames();
 		var thisCtrl = this;
 
-		context.webAPI.retrieveMultipleRecords(this._childRecordType, "?$select=" + this._childRecordType + "id," + attributes.join(",") + "&$orderby=" + this.labelAttributeName + " asc")
+		context.webAPI.retrieveMultipleRecords(this._childRecordType, "?$select=" + this._childRecordType + "id," + attributes.join(",") + "&$orderby=" + orders.join(","))
 			.then(function (result) {
+				var category = "";
+				var divFlexCtrl = document.createElement("div");
+				
 				for (var i = 0; i < result.entities.length; i++) {
 					var record = result.entities[i];
 
-					var divCtrl = document.createElement("div");
-					divCtrl.setAttribute("style", "flex: 0 " + (100/thisCtrl.numberOfColumns) + "% !important");
+					// If using category
+					if(thisCtrl.categoryAttributeName){
+						// We need to display new category only if the category 
+						// is different from the previous one
+						if(category != record[thisCtrl.categoryAttributeName]){
+							category = record[thisCtrl.categoryAttributeName];
 
+							// Add the category
+							var categoryDiv = document.createElement("div");
+							categoryDiv.setAttribute("style", "margin-bottom: 10px;border-bottom: solid 1px #828181;padding-bottom: 5px;");
+							categoryDiv.innerHTML = record[thisCtrl.categoryAttributeName + (thisCtrl.categoryUseDisplayName ? "@OData.Community.Display.V1.FormattedValue" : "")];
+							
+							thisCtrl._container.appendChild(categoryDiv);
+
+							// Add a new flex box
+							thisCtrl.divFlexBox = document.createElement("div");
+							thisCtrl.divFlexBox.setAttribute("class", "flex");
+							thisCtrl._container.appendChild(thisCtrl.divFlexBox);
+						}
+					}
+									
+					// Add flex content
+					divFlexCtrl = document.createElement("div");
+					divFlexCtrl.setAttribute("style", "flex: 0 " + (100/thisCtrl.numberOfColumns) + "% !important");
+					thisCtrl.divFlexBox.appendChild(divFlexCtrl);
+					
+					// With style if configured with colors
 					var styles = new Array();
 					if(thisCtrl.backgroundColorAttributeName) styles.push("background-color:" + record[thisCtrl.backgroundColorAttributeName]);
 					if(thisCtrl.foreColorAttributeName) styles.push("color:" + record[thisCtrl.foreColorAttributeName]);
@@ -92,6 +139,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 					var lblContainer = document.createElement("label");
 					lblContainer.setAttribute("class", "container");
 					lblContainer.setAttribute("style", styles.join(";"))
+					divFlexCtrl.appendChild(lblContainer);
 
 					var chk = document.createElement("input");
 					chk.setAttribute("type", "checkbox");
@@ -209,8 +257,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 					lblContainer.innerHTML += record[thisCtrl.labelAttributeName];
 					lblContainer.appendChild(chk);
 					lblContainer.appendChild(mark);
-					divCtrl.appendChild(lblContainer);
-					thisCtrl.updateModeDiv.appendChild(divCtrl);
+					
 				}
 			},
 				function (error) {

@@ -109,6 +109,12 @@
   <data name="columnsNumber_Desc_Key" xml:space="preserve">
     <value>Number of columns to display records</value>
   </data>
+  <data name="categoryAttribute_Display_Key" xml:space="preserve">
+    <value>Grouping attribute</value>
+  </data>
+  <data name="categoryAttribute_Desc_Key" xml:space="preserve">
+    <value>Attribute used to group records. This attribute must be exposed in the selected view</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
 
 </root>

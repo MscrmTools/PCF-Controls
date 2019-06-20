@@ -106,6 +106,12 @@
   <data name="columnsNumber_Display_Key" xml:space="preserve">
     <value>Nombre de colonnes</value>
   </data>
+   <data name="categoryAttribute_Display_Key" xml:space="preserve">
+    <value>Attribut de groupement</value>
+  </data>
+  <data name="categoryAttribute_Desc_Key" xml:space="preserve">
+    <value>Attribut utilisé pour grouper les enregistrements. L'attribut doit être exposé dans la vue sélectionnée</value>
+  </data>
   <data name="columnsNumber_Desc_Key" xml:space="preserve">
     <value>Nombre de colonnes à utiliser pour afficher les enregistrements</value>
   </data>
