@@ -29,3 +29,4 @@ This is the list of parameters that can be set on the control
 * **Color** : Attribute to use as forecolor (optional / bound to an attribute)
 * **Number of columns** : Number of columns to display checkboxes (required)
 * **Grouping Attribute** : Attribute used to group records (optional / bound to an attribute)
+
