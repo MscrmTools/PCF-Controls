@@ -8,20 +8,19 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 	// Reference to the control container HTMLDivElement
 	// This element contains all elements of our custom control example
 	private _container: HTMLDivElement;
-	private divFlexBox: HTMLDivElement;
+	private _divFlexBox: HTMLDivElement;
 	// Reference to ComponentFramework Context object
 	private _context: ComponentFramework.Context<IInputs>;
 	// Event Handler 'refreshData' reference
-	private parentRecordId: string;
-	private parentRecordType: string;
+	private _parentRecordId: string;
+	private _parentRecordType: string;
 	private _childRecordType: string;
-	private labelAttributeName: string;
-	private backgroundColorAttributeName: string;
-	private foreColorAttributeName: string;
-	private numberOfColumns: number;
-	private categoryAttributeName : string;
-	private categoryUseDisplayName : boolean;
-
+	private _labelAttributeName: string;
+	private _backgroundColorAttributeName: string;
+	private _foreColorAttributeName: string;
+	private _numberOfColumns: number;
+	private _categoryAttributeName : string;
+	private _categoryUseDisplayName : boolean;
 	private _relationshipSchemaName: string | null;
 	/**
 	 * Empty constructor.
@@ -43,246 +42,264 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 		this._context = context;
 		this._container = document.createElement("div");
 		// @ts-ignore
-		this.parentRecordId = context.mode.contextInfo.entityId;
-		this.parentRecordType = context.parameters.parentEntityLogicalName.raw;
+		this._parentRecordId = context.mode.contextInfo.entityId;
+		this._parentRecordType = context.parameters.parentEntityLogicalName.raw;
 		// TODO Waiting for bug fix : entityTypeName contains child entity name instead of parent
 		// context.mode.contextInfo.entityTypeName;
 
 		container.appendChild(this._container);
 
 		this._childRecordType = context.parameters.nnRelationshipDataSet.getTargetEntityType();
-		this.numberOfColumns = context.parameters.columnsNumber ? context.parameters.columnsNumber.raw : 1;
+		this._numberOfColumns = context.parameters.columnsNumber ? context.parameters.columnsNumber.raw : 1;
 		
-		debugger;
-
 		for (var i = 0; i < context.parameters.nnRelationshipDataSet.columns.length; i++) {
 			var column = context.parameters.nnRelationshipDataSet.columns[i];
 			if (column.alias === "displayAttribute") {
-				this.labelAttributeName = column.name;
+				this._labelAttributeName = column.name;
 			}
 			else if(column.alias === "backgroundColorAttribute"){
-				this.backgroundColorAttributeName = column.name;
+				this._backgroundColorAttributeName = column.name;
 			}
 			else if(column.alias === "foreColorAttribute"){
-				this.foreColorAttributeName = column.name;
+				this._foreColorAttributeName = column.name;
 			}
 			else if(column.alias === "categoryAttribute"){
-				this.categoryAttributeName = column.name;
-				this.categoryUseDisplayName = column.dataType === "Lookup.Simple" ||  column.dataType === "OptionSet" ||  column.dataType === "TwoOptions";
+				this._categoryAttributeName = column.name;
+				this._categoryUseDisplayName = column.dataType === "Lookup.Simple" ||  column.dataType === "OptionSet" ||  column.dataType === "TwoOptions";
 				if(column.dataType === "Lookup.Simple"){
-					this.categoryAttributeName = "_" + column.name + "_value";
+					this._categoryAttributeName = "_" + column.name + "_value";
 				}
 			}
 		}
 
 		// If no category grouping, then only one flexbox is needed
-		if(!this.categoryAttributeName){
-			this.divFlexBox = document.createElement("div");
-			this.divFlexBox.setAttribute("class", "flex");
-			this._container.appendChild(this.divFlexBox);
+		if(!this._categoryAttributeName){
+			this._divFlexBox = document.createElement("div");
+			this._divFlexBox.setAttribute("class", "flex");
+			this._container.appendChild(this._divFlexBox);
 		}
 
-		// Select attributes to retrieve
-		var attributes = new Array();
-		attributes.push(this.labelAttributeName);
-		if(this.backgroundColorAttributeName) attributes.push(this.backgroundColorAttributeName);
-		if(this.foreColorAttributeName) attributes.push(this.foreColorAttributeName);
-		if(this.categoryAttributeName && this.categoryAttributeName !== this.labelAttributeName) attributes.push(this.categoryAttributeName);
+		try{
+			this._relationshipSchemaName = await this.GetNNRelationshipNameByEntityNames();
+		}
+		catch(error){
+			this._context.navigation.openAlertDialog(
+				{ 
+					text: "NNCheckboxes " + error
+				});
+			return;
+		}
 
-		// Define order (category fist, then label used)
-		var orders= new Array();
-		if(this.categoryAttributeName) orders.push(this.categoryAttributeName + " asc");
-		if(this.categoryAttributeName !== this.labelAttributeName) orders.push(this.labelAttributeName + " asc")
-
-		this._relationshipSchemaName = await this.GetNNRelationshipNameByEntityNames();
 		var thisCtrl = this;
 
-		context.webAPI.retrieveMultipleRecords(this._childRecordType, "?$select=" + this._childRecordType + "id," + attributes.join(",") + "&$orderby=" + orders.join(","))
-			.then(function (result) {
-				var category = "";
-				var divFlexCtrl = document.createElement("div");
-				
-				for (var i = 0; i < result.entities.length; i++) {
-					var record = result.entities[i];
+		context.webAPI.retrieveRecord("savedquery", context.parameters.nnRelationshipDataSet.getViewId(),"?$select=fetchxml")
+		.then(
+			function(view){
+				context.webAPI.retrieveMultipleRecords(thisCtrl._childRecordType, "?fetchXml=" + encodeURIComponent(<string>view.fetchxml)
+					)
+					.then(function (result) {
+						var category = "";
+						var divFlexCtrl = document.createElement("div");
+						
+						for (var i = 0; i < result.entities.length; i++) {
+							var record = result.entities[i];
+		
+							// If using category
+							if(thisCtrl._categoryAttributeName){
+								// We need to display new category only if the category 
+								// is different from the previous one
+								if(category != record[thisCtrl._categoryAttributeName]){
+									category = record[thisCtrl._categoryAttributeName];
+		
+									let label = record[thisCtrl._categoryAttributeName + (thisCtrl._categoryUseDisplayName ? "@OData.Community.Display.V1.FormattedValue" : "")];
+									if(!label){
+										label = context.resources.getString("No_Category");
+									}
 
-					// If using category
-					if(thisCtrl.categoryAttributeName){
-						// We need to display new category only if the category 
-						// is different from the previous one
-						if(category != record[thisCtrl.categoryAttributeName]){
-							category = record[thisCtrl.categoryAttributeName];
-
-							// Add the category
-							var categoryDiv = document.createElement("div");
-							categoryDiv.setAttribute("style", "margin-bottom: 10px;border-bottom: solid 1px #828181;padding-bottom: 5px;");
-							categoryDiv.innerHTML = record[thisCtrl.categoryAttributeName + (thisCtrl.categoryUseDisplayName ? "@OData.Community.Display.V1.FormattedValue" : "")];
-							
-							thisCtrl._container.appendChild(categoryDiv);
-
-							// Add a new flex box
-							thisCtrl.divFlexBox = document.createElement("div");
-							thisCtrl.divFlexBox.setAttribute("class", "flex");
-							thisCtrl._container.appendChild(thisCtrl.divFlexBox);
-						}
-					}
+									// Add the category
+									var categoryDiv = document.createElement("div");
+									categoryDiv.setAttribute("style", "margin-bottom: 10px;border-bottom: solid 1px #828181;padding-bottom: 5px;");
+									categoryDiv.innerHTML = label;
 									
-					// Add flex content
-					divFlexCtrl = document.createElement("div");
-					divFlexCtrl.setAttribute("style", "flex: 0 " + (100/thisCtrl.numberOfColumns) + "% !important");
-					thisCtrl.divFlexBox.appendChild(divFlexCtrl);
-					
-					// With style if configured with colors
-					var styles = new Array();
-					if(thisCtrl.backgroundColorAttributeName) styles.push("background-color:" + record[thisCtrl.backgroundColorAttributeName]);
-					if(thisCtrl.foreColorAttributeName) styles.push("color:" + record[thisCtrl.foreColorAttributeName]);
-					
-					var lblContainer = document.createElement("label");
-					lblContainer.setAttribute("class", "container");
-					lblContainer.setAttribute("style", styles.join(";"))
-					divFlexCtrl.appendChild(lblContainer);
-
-					var chk = document.createElement("input");
-					chk.setAttribute("type", "checkbox");
-					chk.setAttribute("id", record[thisCtrl._childRecordType + "id"]);
-					chk.setAttribute("value", record[thisCtrl._childRecordType + "id"]);
-					chk.addEventListener("change", function () {
-						if (this.checked) {
-							var theRecordId = this.id;
-							var associateRequest = new class {
-								target = {
-									id: theRecordId,
-									entityType: thisCtrl._childRecordType
-								};
-								relatedEntities = [
-									{
-										id: thisCtrl.parentRecordId,
-										entityType: thisCtrl.parentRecordType
-									}
-								];
-								relationship = thisCtrl._relationshipSchemaName;
-								getMetadata(): any {
-									return {
-										boundParameter: undefined,
-										parameterTypes: {
-											"target": {
-												"typeName": "mscrm." + thisCtrl._childRecordType,
-												"structuralProperty": 5
-											},
-											"relatedEntities": {
-												"typeName": "mscrm." + thisCtrl.parentRecordType,
-												"structuralProperty": 4
-											},
-											"relationship": {
-												"typeName": "Edm.String",
-												"structuralProperty": 1
-											}
-										},
-										operationType: 2,
-										operationName: "Associate"
-									};
+									thisCtrl._container.appendChild(categoryDiv);
+		
+									// Add a new flex box
+									thisCtrl._divFlexBox = document.createElement("div");
+									thisCtrl._divFlexBox.setAttribute("class", "flex");
+									thisCtrl._container.appendChild(thisCtrl._divFlexBox);
 								}
-							}();
-
-							// @ts-ignore
-							thisCtrl._context.webAPI.execute(associateRequest)
-								.then(
-									// @ts-ignore
-									function (result) {
-										console.log("NNCheckboxes: records were successfully associated")
-									},
-									// @ts-ignore
-									function (error) {
-										thisCtrl._context.navigation.openAlertDialog({ text: "An error occured when associating records. Please check NNCheckboxes control configuration" });
-									}
-								);
-						}
-						else {
-							var theRecordId = this.id;
-							var disassociateRequest = new class {
-								target = {
-									id: theRecordId,
-									entityType: thisCtrl._childRecordType
-								};
-								relatedEntityId = thisCtrl.parentRecordId;
-								relationship = thisCtrl._relationshipSchemaName;
-								getMetadata(): any {
-									return {
-										boundParameter: undefined,
-										parameterTypes: {
-											"target": {
-												"typeName": "mscrm." + thisCtrl._childRecordType,
-												"structuralProperty": 5
-											},
-											"relationship": {
-												"typeName": "Edm.String",
-												"structuralProperty": 1
+							}
+											
+							// Add flex content
+							divFlexCtrl = document.createElement("div");
+							divFlexCtrl.setAttribute("style", "flex: 0 " + (100/thisCtrl._numberOfColumns) + "% !important");
+							thisCtrl._divFlexBox.appendChild(divFlexCtrl);
+							
+							// With style if configured with colors
+							var styles = new Array();
+							if(thisCtrl._backgroundColorAttributeName) styles.push("background-color:" + record[thisCtrl._backgroundColorAttributeName]);
+							if(thisCtrl._foreColorAttributeName) styles.push("color:" + record[thisCtrl._foreColorAttributeName]);
+							
+							var lblContainer = document.createElement("label");
+							lblContainer.setAttribute("class", "container");
+							lblContainer.setAttribute("style", styles.join(";"))
+							divFlexCtrl.appendChild(lblContainer);
+		
+							var chk = document.createElement("input");
+							chk.setAttribute("type", "checkbox");
+							chk.setAttribute("id", record[thisCtrl._childRecordType + "id"]);
+							chk.setAttribute("value", record[thisCtrl._childRecordType + "id"]);
+							chk.addEventListener("change", function () {
+								if (this.checked) {
+									var theRecordId = this.id;
+									var associateRequest = new class {
+										target = {
+											id: theRecordId,
+											entityType: thisCtrl._childRecordType
+										};
+										relatedEntities = [
+											{
+												id: thisCtrl._parentRecordId,
+												entityType: thisCtrl._parentRecordType
 											}
-										},
-										operationType: 2,
-										operationName: "Disassociate"
-									};
+										];
+										relationship = thisCtrl._relationshipSchemaName;
+										getMetadata(): any {
+											return {
+												boundParameter: undefined,
+												parameterTypes: {
+													"target": {
+														"typeName": "mscrm." + thisCtrl._childRecordType,
+														"structuralProperty": 5
+													},
+													"relatedEntities": {
+														"typeName": "mscrm." + thisCtrl._parentRecordType,
+														"structuralProperty": 4
+													},
+													"relationship": {
+														"typeName": "Edm.String",
+														"structuralProperty": 1
+													}
+												},
+												operationType: 2,
+												operationName: "Associate"
+											};
+										}
+									}();
+		
+									// @ts-ignore
+									thisCtrl._context.webAPI.execute(associateRequest)
+										.then(
+											// @ts-ignore
+											function (result) {
+												console.log("NNCheckboxes: records were successfully associated")
+											},
+											// @ts-ignore
+											function (error) {
+												thisCtrl._context.navigation.openAlertDialog({ text: "An error occured when associating records. Please check NNCheckboxes control configuration" });
+											}
+										);
 								}
-							}();
-
-							// @ts-ignore
-							thisCtrl._context.webAPI.execute(disassociateRequest)
-								.then(
+								else {
+									var theRecordId = this.id;
+									var disassociateRequest = new class {
+										target = {
+											id: theRecordId,
+											entityType: thisCtrl._childRecordType
+										};
+										relatedEntityId = thisCtrl._parentRecordId;
+										relationship = thisCtrl._relationshipSchemaName;
+										getMetadata(): any {
+											return {
+												boundParameter: undefined,
+												parameterTypes: {
+													"target": {
+														"typeName": "mscrm." + thisCtrl._childRecordType,
+														"structuralProperty": 5
+													},
+													"relationship": {
+														"typeName": "Edm.String",
+														"structuralProperty": 1
+													}
+												},
+												operationType: 2,
+												operationName: "Disassociate"
+											};
+										}
+									}();
+		
 									// @ts-ignore
-									function (result) {
-										console.log("NNCheckboxes: records were successfully disassociated")
-									},
-									// @ts-ignore
-									function (error) {
-										thisCtrl._context.navigation.openAlertDialog({ text: "An error occured when disassociating records. Please check NNCheckboxes control configuration" });
-									}
-								);
+									thisCtrl._context.webAPI.execute(disassociateRequest)
+										.then(
+											// @ts-ignore
+											function (result) {
+												console.log("NNCheckboxes: records were successfully disassociated")
+											},
+											// @ts-ignore
+											function (error) {
+												thisCtrl._context.navigation.openAlertDialog({ text: "An error occured when disassociating records. Please check NNCheckboxes control configuration" });
+											}
+										);
+								}
+							});
+		
+							if (context.mode.isControlDisabled) {
+								chk.setAttribute("disabled", "disabled");
+							}
+		
+							var mark = document.createElement("span");
+							mark.setAttribute("class", "checkmark");
+		
+							lblContainer.innerHTML += record[thisCtrl._labelAttributeName];
+							lblContainer.appendChild(chk);
+							lblContainer.appendChild(mark);
 						}
-					});
 
-					var selectedIds = context.parameters.nnRelationshipDataSet.sortedRecordIds;
-
-					for (var j = 0; j < selectedIds.length; j++) {
-						if (record[thisCtrl._childRecordType + "id"] === selectedIds[j]) {
-							chk.checked = true;
-						}
+						thisCtrl._context.parameters.nnRelationshipDataSet.paging.reset();
+						thisCtrl._context.parameters.nnRelationshipDataSet.refresh();
+					},
+					function (error) {
+						thisCtrl._context.navigation.openAlertDialog(
+							{ 
+								text: "NNCheckboxes: " + error 
+							});
 					}
-
-					if (context.mode.isControlDisabled) {
-						chk.setAttribute("disabled", "disabled");
-					}
-
-					var mark = document.createElement("span");
-					mark.setAttribute("class", "checkmark");
-
-					lblContainer.innerHTML += record[thisCtrl.labelAttributeName];
-					lblContainer.appendChild(chk);
-					lblContainer.appendChild(mark);
-					
-				}
+				);
 			},
-				function (error) {
-					if (thisCtrl._relationshipSchemaName == null) {
-						thisCtrl._context.navigation.openAlertDialog({ text: "There are no N:N relationships found for '" + thisCtrl._childRecordType + "' & '" + thisCtrl.parentRecordType + "' entities." });
-					} else {
-						thisCtrl._context.navigation.openAlertDialog({ text: "Wrong N:N relationship schema name ('" + thisCtrl._relationshipSchemaName + "') defined in parameters." });
-					}
-				});
+			function(error){
+				thisCtrl._context.navigation.openAlertDialog(
+					{ 
+						text: "NNCheckboxes: " + error 
+					});
+			}
+		);
 	}
 
 	public async GetNNRelationshipNameByEntityNames() {
 		let schemaNameParameter = this._context.parameters.relationshipSchemaName;
 		if (schemaNameParameter != undefined && schemaNameParameter.raw != null) { return Promise.resolve(<string>schemaNameParameter.raw); }
-		let entityMetadata = await this._context.utils.getEntityMetadata(this.parentRecordType);
+		let entityMetadata = await this._context.utils.getEntityMetadata(this._parentRecordType);
 		let nnRelationships = entityMetadata.ManyToManyRelationships.getAll();
 
+		let count = 0;
+		let foundSchemaName = "";
+
 		for (let i = 0; i < nnRelationships.length; i++) {
-			if ((nnRelationships[i].Entity1LogicalName == this.parentRecordType && nnRelationships[i].Entity2LogicalName == this._childRecordType) ||
-				(nnRelationships[i].Entity1LogicalName == this._childRecordType && nnRelationships[i].Entity2LogicalName == this.parentRecordType)) {
-				return Promise.resolve(<string>nnRelationships[i].SchemaName);
+			if ((nnRelationships[i].Entity1LogicalName == this._parentRecordType && nnRelationships[i].Entity2LogicalName == this._childRecordType) ||
+				(nnRelationships[i].Entity1LogicalName == this._childRecordType && nnRelationships[i].Entity2LogicalName == this._parentRecordType)) {
+				count++;
+				foundSchemaName = nnRelationships[i].SchemaName;					
 			}
 		}
 
-		return Promise.resolve(null);
+		if(foundSchemaName.length === 0){
+			return Promise.reject(new Error(this._context.resources.getString("No_Relationship_Found")));
+		}
+		if(count > 1){
+			return Promise.reject(new Error(this._context.resources.getString("Multiple_Relationships_Found")));
+		}
+
+		return Promise.resolve(<string>foundSchemaName);
 	}
 
 	/**
@@ -290,7 +307,20 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 	 * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to names defined in the manifest, as well as utility functions
 	 */
 	public updateView(context: ComponentFramework.Context<IInputs>): void {
-		// Add code to update control view
+		debugger;
+		if(context.parameters.nnRelationshipDataSet.paging.hasNextPage)
+		{
+			context.parameters.nnRelationshipDataSet.paging.loadNextPage();
+			return;
+		}
+
+		var selectedIds = context.parameters.nnRelationshipDataSet.sortedRecordIds;
+		for (var j = 0; j < selectedIds.length; j++) {
+			let chk = <HTMLInputElement>window.document.getElementById(selectedIds[j]);
+			if(chk){
+				chk.checked = true;
+			}
+		}
 	}
 
 	/** 

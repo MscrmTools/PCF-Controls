@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-  <control namespace="MscrmTools" constructor="NNCheckboxes" version="1.0.4" display-name-key="NNCheckboxes_Display_Key" description-key="NNCheckboxes_Desc_Key" control-type="standard" preview-image="logo.png">
+  <control namespace="MscrmTools" constructor="NNCheckboxes" version="1.0.5" display-name-key="NNCheckboxes_Display_Key" description-key="NNCheckboxes_Desc_Key" control-type="standard" preview-image="logo.png">
     <data-set name="nnRelationshipDataSet" display-name-key="nnRelationshipDataSet_Display_Key">
       <property-set name="displayAttribute" display-name-key="targetEntity_Display_Key" description-key="targetEntity_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
       <property-set name="backgroundColorAttribute" display-name-key="backgroundColorAttribute_Display_Key" description-key="backgroundColorAttribute_Desc_Key" of-type="SingleLine.Text" usage="bound" required="false" />
       <property-set name="foreColorAttribute" display-name-key="foreColorAttribute_Display_Key" description-key="foreColorAttribute_Desc_Key" of-type="SingleLine.Text" usage="bound" required="false" />
-      <property-set name="categoryAttribute" display-name-key="categoryAttribute_Display_Key" description-key="categoryAttribute_Desc_Key" of-type-group="categoryTypes" usage="input" required="false" />
-  </data-set>
+      <property-set name="categoryAttribute" display-name-key="categoryAttribute_Display_Key" description-key="categoryAttribute_Desc_Key" of-type-group="categoryTypes" usage="bound" required="false" />
+    </data-set>
     <property name="parentEntityLogicalName" display-name-key="parentEntityLogicalName_Display_Key" description-key="parentEntityLogicalName_Desc_Key" of-type="SingleLine.Text" usage="input" required="true" /> 
     <property name="relationshipSchemaName" display-name-key="relationshipSchemaName_Display_Key" description-key="relationshipSchemaName_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" />    
-    <property name="columnsNumber" display-name-key="columnsNumber_Display_Key" description-key="columnsNumber_Desc_Key" of-type="Whole.None" usage="input" required="true" />    
+    <property name="columnsNumber" display-name-key="columnsNumber_Display_Key" description-key="columnsNumber_Desc_Key" of-type="Whole.None" usage="input" required="true" default-value="2" />    
     <type-group name="categoryTypes">
       <type>SingleLine.Text</type>
       <type>OptionSet</type>

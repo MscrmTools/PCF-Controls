@@ -68,30 +68,24 @@
     <value>Jeu de données des enregistrements associés</value>
   </data>
   <data name="targetEntity_Display_Key" xml:space="preserve">
-    <value>Champ d'affichage</value>
+    <value>Libellé</value>
   </data>
   <data name="targetEntity_Desc_Key" xml:space="preserve">
     <value>Champ utilisé comme libellé pour les cases à cocher</value>
   </data>
      <data name="relationshipSchemaName_Display_Key" xml:space="preserve">
-    <value>Nom de schéma de la relation</value>
+    <value>Relation</value>
   </data>
   <data name="relationshipSchemaName_Desc_Key" xml:space="preserve">
-    <value>Nom de schéma de la relation utilisée (la casse est importante)</value>
+    <value>Nom de schéma de la relation utilisée (la casse est importante). Nécessaire uniquement si plusieurs relations NN existent pour ces deux entités</value>
   </data>
   <data name="parentEntityLogicalName_Display_Key" xml:space="preserve">
-    <value>Nom logique de l'entité parente</value>
+    <value>Entité parente</value>
   </data>
   <data name="parentEntityLogicalName_Desc_Key" xml:space="preserve">
     <value>Nom logique de l'entité parente (l'entité de ce formulaire)</value>
   </data>
-    <data name="showActiveRecordsOnly_Display_Key" xml:space="preserve">
-    <value>Enregistrements actifs uniquement</value>
-  </data>
-  <data name="showActiveRecordsOnly_Desc_Key" xml:space="preserve">
-    <value>Affiche uniquement les enregistrements actifs</value>
-  </data>
-    <data name="backgroundColorAttribute_Display_Key" xml:space="preserve">
+  <data name="backgroundColorAttribute_Display_Key" xml:space="preserve">
     <value>Couleur de fond</value>
   </data>
   <data name="backgroundColorAttribute_Desc_Key" xml:space="preserve">
@@ -103,18 +97,26 @@
   <data name="foreColorAttribute_Desc_Key" xml:space="preserve">
     <value>Attribut qui sert à définir la couleur d'affichage de l'enregistrement. L'attribut doit être exposé dans la vue sélectionnée</value>
   </data>
-  <data name="columnsNumber_Display_Key" xml:space="preserve">
-    <value>Nombre de colonnes</value>
-  </data>
-   <data name="categoryAttribute_Display_Key" xml:space="preserve">
-    <value>Attribut de groupement</value>
+  <data name="categoryAttribute_Display_Key" xml:space="preserve">
+    <value>Grouper par</value>
   </data>
   <data name="categoryAttribute_Desc_Key" xml:space="preserve">
     <value>Attribut utilisé pour grouper les enregistrements. L'attribut doit être exposé dans la vue sélectionnée</value>
   </data>
+  <data name="columnsNumber_Display_Key" xml:space="preserve">
+    <value>Colonnes</value>
+  </data>
   <data name="columnsNumber_Desc_Key" xml:space="preserve">
     <value>Nombre de colonnes à utiliser pour afficher les enregistrements</value>
   </data>
+  <data name="No_Relationship_Found" xml:space="preserve">
+    <value>Aucune relation plusieurs à plusieurs n'a été trouvé pour ces entités</value>
+  </data>
+  <data name="Multiple_Relationships_Found" xml:space="preserve">
+    <value>Plusieurs relations plusieurs à plusieurs ont été trouvé pour ces entités. Veuillez spécifier le nom de schéma de la relation à utiliser dans la configuration de ce contrôle</value>
+  </data>
+  <data name="No_Category" xml:space="preserve">
+    <value>Enregistrements non catégorisés</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-
 </root>
