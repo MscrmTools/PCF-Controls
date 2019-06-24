@@ -29,3 +29,7 @@ This is the list of parameters that can be set on the control
 * **Color** : Attribute to use as forecolor (optional / bound to an attribute)
 * **Number of columns** : Number of columns to display checkboxes (required)
 * **Grouping Attribute** : Attribute used to group records (optional / bound to an attribute)
+
+### Known issues
+* Subgrid properties must be set to display as many lines as there is records to display
+* This control displays all records from the related entity, even if selected view for the subgrid has a filter
