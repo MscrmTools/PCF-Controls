@@ -89,13 +89,13 @@
     <value>Background color</value>
   </data>
   <data name="backgroundColorAttribute_Desc_Key" xml:space="preserve">
-    <value>Attribute that contains the color to use as background. This attribute must be exposed in the selected view</value>
+    <value>Attribute that contains the color to use as background. If text attribute, can be color name of hexadecimal code. If optionset attribute, the color of the option will be used. This attribute must be exposed in the selected view</value>
   </data>
   <data name="foreColorAttribute_Display_Key" xml:space="preserve">
     <value>Color</value>
   </data>
   <data name="foreColorAttribute_Desc_Key" xml:space="preserve">
-    <value>Attribute that contains the color to use as forecolor. This attribute must be exposed in the selected view</value>
+    <value>Attribute that contains the color to use as forecolor. If text attribute, can be color name of hexadecimal code. If optionset attribute, the color of the option will be used. This attribute must be exposed in the selected view</value>
   </data>
   <data name="columnsNumber_Display_Key" xml:space="preserve">
     <value>Columns</value>

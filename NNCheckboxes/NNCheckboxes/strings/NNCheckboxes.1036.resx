@@ -89,13 +89,13 @@
     <value>Couleur de fond</value>
   </data>
   <data name="backgroundColorAttribute_Desc_Key" xml:space="preserve">
-    <value>Attribut qui sert à définir la couleur de fond de l'enregistrement. L'attribut doit être exposé dans la vue sélectionnée</value>
+    <value>Attribut qui sert à définir la couleur de fond de l'enregistrement. Si attribut de type texte, la valeur doit être un nom de couleur ou un code hexadécimal. Si attribut de type OptionSet, la couleur de l'option sera utilisée. L'attribut doit être exposé dans la vue sélectionnée</value>
   </data>
   <data name="foreColorAttribute_Display_Key" xml:space="preserve">
     <value>Couleur du texte</value>
   </data>
   <data name="foreColorAttribute_Desc_Key" xml:space="preserve">
-    <value>Attribut qui sert à définir la couleur d'affichage de l'enregistrement. L'attribut doit être exposé dans la vue sélectionnée</value>
+    <value>Attribut qui sert à définir la couleur d'affichage de l'enregistrement. Si attribut de type texte, la valeur doit être un nom de couleur ou un code hexadécimal. Si attribut de type OptionSet, la couleur de l'option sera utilisée. L'attribut doit être exposé dans la vue sélectionnée</value>
   </data>
   <data name="categoryAttribute_Display_Key" xml:space="preserve">
     <value>Grouper par</value>

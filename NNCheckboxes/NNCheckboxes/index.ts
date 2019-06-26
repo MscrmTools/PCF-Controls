@@ -17,11 +17,14 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 	private _childRecordType: string;
 	private _labelAttributeName: string;
 	private _backgroundColorAttributeName: string;
+	private _backgroundColorIsFromOptionSet: boolean;
 	private _foreColorAttributeName: string;
+	private _foreColorIsFromOptionSet: boolean;
 	private _numberOfColumns: number;
 	private _categoryAttributeName : string;
 	private _categoryUseDisplayName : boolean;
 	private _relationshipSchemaName: string | null;
+	private _colors: any;
 	/**
 	 * Empty constructor.
 	 */
@@ -59,16 +62,29 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 			}
 			else if(column.alias === "backgroundColorAttribute"){
 				this._backgroundColorAttributeName = column.name;
+
+				if(column.dataType === "OptionSet"){
+					if(!this._colors || !this._colors[column.name]){
+						await this.GetOptionSetColors(column.name);
+					}
+					
+					this._backgroundColorIsFromOptionSet = true;
+				}
 			}
 			else if(column.alias === "foreColorAttribute"){
 				this._foreColorAttributeName = column.name;
+
+				if(column.dataType === "OptionSet"){
+					if(!this._colors || !this._colors[column.name]){
+						await this.GetOptionSetColors(column.name);
+					}
+					
+					this._foreColorIsFromOptionSet = true;
+				}
 			}
 			else if(column.alias === "categoryAttribute"){
 				this._categoryAttributeName = column.name;
 				this._categoryUseDisplayName = column.dataType === "Lookup.Simple" ||  column.dataType === "OptionSet" ||  column.dataType === "TwoOptions";
-				if(column.dataType === "Lookup.Simple"){
-					this._categoryAttributeName = "_" + column.name + "_value";
-				}
 			}
 		}
 
@@ -137,9 +153,33 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 							
 							// With style if configured with colors
 							var styles = new Array();
-							if(thisCtrl._backgroundColorAttributeName) styles.push("background-color:" + record[thisCtrl._backgroundColorAttributeName]);
-							if(thisCtrl._foreColorAttributeName) styles.push("color:" + record[thisCtrl._foreColorAttributeName]);
-							
+							if(thisCtrl._backgroundColorAttributeName) {
+								if(thisCtrl._backgroundColorIsFromOptionSet){
+									if(thisCtrl._colors 
+										&& thisCtrl._colors[thisCtrl._backgroundColorAttributeName] 
+										&& thisCtrl._colors[thisCtrl._backgroundColorAttributeName][record[thisCtrl._backgroundColorAttributeName]]){
+										var color = thisCtrl._colors[thisCtrl._backgroundColorAttributeName][record[thisCtrl._backgroundColorAttributeName]];
+										styles.push("background-color:" + color);
+									}
+								}
+								else{
+									styles.push("background-color:" + record[thisCtrl._backgroundColorAttributeName]);
+								}
+							}
+							if(thisCtrl._foreColorAttributeName){
+								if(thisCtrl._foreColorIsFromOptionSet){
+									if(thisCtrl._colors 
+										&& thisCtrl._colors[thisCtrl._foreColorAttributeName] 
+										&& thisCtrl._colors[thisCtrl._foreColorAttributeName][record[thisCtrl._backgroundColorAttributeName]]){
+										var color = thisCtrl._colors[thisCtrl._foreColorAttributeName][record[thisCtrl._backgroundColorAttributeName]];
+										styles.push("color:" + color);
+									}
+								}
+								else{
+									styles.push("color:" + record[thisCtrl._foreColorAttributeName]);
+								}
+							}
+
 							var lblContainer = document.createElement("label");
 							lblContainer.setAttribute("class", "container");
 							lblContainer.setAttribute("style", styles.join(";"))
@@ -275,6 +315,37 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 		);
 	}
 
+	public async GetOptionSetColors(attribute:string){
+		let requestUrl =
+		"/api/data/v9.0/EntityDefinitions(LogicalName='"+ this._childRecordType +"')/Attributes/Microsoft.Dynamics.CRM.PicklistAttributeMetadata?$select=LogicalName&$filter=LogicalName eq '"+attribute+"'&$expand=OptionSet";
+	
+		var thisCtrl = this;
+		let request = new XMLHttpRequest();
+		request.open("GET", requestUrl, true);
+		request.setRequestHeader("OData-MaxVersion", "4.0");
+		request.setRequestHeader("OData-Version", "4.0");
+		request.setRequestHeader("Accept", "application/json");
+		request.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+		request.onreadystatechange = () => {
+			if (request.readyState === 4) {
+				request.onreadystatechange = null;
+				if (request.status === 200) {
+					let entityMetadata = JSON.parse(request.response);
+					let options = entityMetadata.value[0].OptionSet.Options;
+					thisCtrl._colors = {};
+					thisCtrl._colors[attribute] = {}
+					for (var i = 0; i < options.length; i++) {
+						thisCtrl._colors[attribute][options[i].Value] = options[i].Color;						
+					}
+				} else {
+					let errorText = request.responseText;
+					console.log(errorText);
+				}
+				}
+			};
+		request.send();
+	}
+
 	public async GetNNRelationshipNameByEntityNames() {
 		let schemaNameParameter = this._context.parameters.relationshipSchemaName;
 		if (schemaNameParameter != undefined && schemaNameParameter.raw != null) { return Promise.resolve(<string>schemaNameParameter.raw); }
@@ -307,7 +378,6 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 	 * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to names defined in the manifest, as well as utility functions
 	 */
 	public updateView(context: ComponentFramework.Context<IInputs>): void {
-		debugger;
 		if(context.parameters.nnRelationshipDataSet.paging.hasNextPage)
 		{
 			context.parameters.nnRelationshipDataSet.paging.loadNextPage();
