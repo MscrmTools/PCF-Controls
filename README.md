@@ -6,7 +6,7 @@ Controls using PowerApps Components Framework
 [Download](https://github.com/MscrmTools/PCF-Controls/releases/)
 
 ### Purpose
-The purpose of this control is to allow user to associate/disassociate records for a many-to-many relationship displaying all possible records as checkboxes.
+The purpose of this control is to allow user to associate/disassociate records for a many-to-many relationship displaying all possible records as checkboxes or toggle switches
 
 ![Vidéo](https://github.com/MscrmTools/PCF-Controls/blob/master/NNCheckboxes/Screenshots/video.gif?raw=true)
 
@@ -22,11 +22,18 @@ New in version 1.1
 
 This is the list of parameters that can be set on the control
 
-* **Display attribute** : Attribute to use as label for the checkbox (required / bound to an attribute)
-* **Relationship schema name** : Schema name of the relationship (required only if multiple many-to-many relationship exist for both related entities)
-* **Parent entity logical name** : Logical name of the current form entity (required)
-* **Background color** : Attribute to use as background color (optional / bound to an attribute)
-* **Color** : Attribute to use as forecolor (optional / bound to an attribute)
-* **Number of columns** : Number of columns to display checkboxes (required)
-* **Grouping Attribute** : Attribute used to group records (optional / bound to an attribute). If used, this attribute must be the first attribute used to sort the view used by this control. 
+|Parameter|Description|Required|Bound to an attribute|
+|---------|-----------|:----:|:---:|
+|**Display attribute**|Attribute to use as label for the checkbox|X|X|
+|**Relationship schema name**|Schema name of the relationship. *required only if multiple many-to-many relationship exist for both related entities*|?||
+|**Parent entity logical name**|Logical name of the current form entity|X||
+|**Background color**|Attribute to use as background color||X|
+|**Color**|Attribute to use as forecolor||X|
+|**Columns**|Number of columns to display checkboxes|X||
+|**Grouping Attribute**|Attribute used to group records. *If used, this attribute must be the first attribute used to sort the view used by this control*|X|
+|**Use Toggle switch**|"true" if you want to display toggle switch instead of checkboxes|||
+|**Switch Off color**|Default background color when the switch is Off. *This parameter is overriden by the parameter **Background color***||X|
+|**Switch On color**|Default background color when the switch is On. *This parameter is overriden by the parameter **Background color***||X|
+
+
 
