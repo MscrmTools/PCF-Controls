@@ -354,6 +354,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 								mark.setAttribute("class", "checkmark");
 
 								lblContainer.innerHTML += record[thisCtrl._labelAttributeName];
+								lblContainer.appendChild(chk);
 								lblContainer.appendChild(mark);
 							}
 						}
