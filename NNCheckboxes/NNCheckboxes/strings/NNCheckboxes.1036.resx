@@ -85,6 +85,24 @@
   <data name="parentEntityLogicalName_Desc_Key" xml:space="preserve">
     <value>Nom logique de l'entité parente (l'entité de ce formulaire)</value>
   </data>
+  <data name="useToggleSwitch_Display_Key" xml:space="preserve">
+    <value>Utiliser des switch</value>
+  </data>
+  <data name="useToggleSwitch_Desc_Key" xml:space="preserve">
+    <value>"true" si vous voulez utiliser des switchs à la place des cases à cocher</value>
+  </data>
+  <data name="toggleDefaultBackgroundColorOff_Display_Key" xml:space="preserve">
+    <value>Couleur Switch Off</value>
+  </data>
+  <data name="toggleDefaultBackgroundColorOff_Desc_Key" xml:space="preserve">
+    <value>Couleur utilisée lorsque le switch est Off</value>
+  </data>
+  <data name="toggleDefaultBackgroundColorOn_Display_Key" xml:space="preserve">
+    <value>Couleur Switch On</value>
+  </data>
+  <data name="toggleDefaultBackgroundColorOn_Desc_Key" xml:space="preserve">
+    <value>Couleur utilisée lorsque le switch est On</value>
+  </data>
   <data name="backgroundColorAttribute_Display_Key" xml:space="preserve">
     <value>Couleur de fond</value>
   </data>

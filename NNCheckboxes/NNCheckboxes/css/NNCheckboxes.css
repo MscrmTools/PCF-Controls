@@ -21,89 +21,162 @@ input[type=checkbox]:checked + label{
 }
 
 
+div.nncb-main{
+    margin-top:10px;
+}
+
 
 /* Customize the label (the container) */
 .container {
-display: block;
-position: relative;
-padding-left: 25px !important;
-padding-bottom: 1px;
-margin-bottom: 12px;
-margin-right:10px;
-border-radius: 5px;
-cursor: pointer;
--webkit-user-select: none;
--moz-user-select: none;
--ms-user-select: none;
-user-select: none;
+    display: block;
+    position: relative;
+    padding-left: 25px !important;
+    padding-bottom: 1px;
+    margin-bottom: 12px;
+    margin-right:10px;
+    border-radius: 5px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /* Hide the browser's default checkbox */
 .container input {
-position: absolute;
-opacity: 0;
-cursor: pointer;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
 }
 
 /* Create a custom checkbox */
 .checkmark {
-position: absolute;
-top: 3px;
-left: 3px;
-height: 12px;
-width: 12px;
-background-color: #fff;
-border:solid 1px #828181;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    height: 12px;
+    width: 12px;
+    background-color: #fff;
+    border:solid 1px #828181;
 }
 
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
-background-color: #ccc;
+    background-color: #ccc;
 }
 
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
-background-color: #fff;
+    background-color: #fff;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
-content: "";
-position: absolute;
-display: none;
+    content: "";
+    position: absolute;
+    display: none;
 }
 
 /* Show the checkmark when checked */
 .container input:checked ~ .checkmark:after {
-display: block;
+    display: block;
 }
 
 /* Style the checkmark/indicator */
 .container .checkmark:after {
-left: 3px !important;
-top: 0px !important;
-width: 4px;
-height: 8px;
-border: solid #828181;
-border-width: 0 2px 2px 0;
--webkit-transform: rotate(45deg);
--ms-transform: rotate(45deg);
-transform: rotate(45deg);
+    left: 3px !important;
+    top: 0px !important;
+    width: 4px;
+    height: 8px;
+    border: solid #828181;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
 }
 
 div.flex{
-display: flex;
-flex-wrap : wrap;
-flex-grow:1;
+    display: flex;
+    flex-wrap : wrap;
+    flex-grow:1;
 }
 
 div.flex >div {
-flex: 0 50%;
+    flex: 0 50%;
+    margin-bottom:5px;
 }
 
 div.new{
-text-align: center;
-vertical-align: middle;
-line-height: 160px;
-color:#9B9B9B;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 160px;
+    color:#9B9B9B;
 }
+
+/* toggle switch */
+/* The switch - the box around the slider */
+.nncb-container {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+  }
+  
+  /* Hide default HTML checkbox */
+  .nncb-container input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .nncb-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: /*#ccc*/#CC0000;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .nncb-slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .nncb-slider {
+    background-color: /*#2196F3*/#008800;
+  }
+  
+  /* input:focus + .nncb-slider {
+    box-shadow: 0 0 1px #2196F3;
+  } */
+  
+  input:checked + .nncb-slider:before {
+    -webkit-transform: translateX(18px);
+    -ms-transform: translateX(18px);
+    transform: translateX(18px);
+  }
+  
+  /* Rounded sliders */
+  .nncb-slider.nncb-round {
+    border-radius: 34px;
+  }
+  
+  .nncb-slider.nncb-round:before {
+    border-radius: 50%;
+  }
+
+  span.nncb-switch-label{
+    padding-left:5px;
+  }

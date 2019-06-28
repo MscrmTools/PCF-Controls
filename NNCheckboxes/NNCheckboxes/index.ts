@@ -23,6 +23,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 	private _numberOfColumns: number;
 	private _categoryAttributeName : string;
 	private _categoryUseDisplayName : boolean;
+	private _useToggleSwitch : boolean;
 	private _relationshipSchemaName: string | null;
 	private _colors: any;
 	/**
@@ -44,11 +45,51 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 		// Add control initialization code
 		this._context = context;
 		this._container = document.createElement("div");
+		this._container.setAttribute("class", "nncb-main")
+		this._useToggleSwitch = (context.parameters.useToggleSwitch && context.parameters.useToggleSwitch.raw && context.parameters.useToggleSwitch.raw.toLowerCase() === "true") ? true : false;
 		// @ts-ignore
 		this._parentRecordId = context.mode.contextInfo.entityId;
 		this._parentRecordType = context.parameters.parentEntityLogicalName.raw;
 		// TODO Waiting for bug fix : entityTypeName contains child entity name instead of parent
 		// context.mode.contextInfo.entityTypeName;
+
+		if(context.parameters.toggleDefaultBackgroundColorOn && context.parameters.toggleDefaultBackgroundColorOn.raw)
+		{
+			// @ts-ignore
+			let styleSheet = this.GetStyleSheet();
+			if(styleSheet != null){
+				// @ts-ignore
+				let rules = styleSheet.rules;
+				for(let i=0;i<rules.length;i++){
+					let rule = rules[i];
+					if(rule.selectorText === "input:checked + .nncb-slider"){
+						// @ts-ignore
+						styleSheet.deleteRule(i);
+						// @ts-ignore
+						styleSheet.insertRule("input:checked + .nncb-slider { background-color: "+context.parameters.toggleDefaultBackgroundColorOn.raw+";}", rule.index)
+					}
+				}
+			}	
+		}
+
+		if(context.parameters.toggleDefaultBackgroundColorOff && context.parameters.toggleDefaultBackgroundColorOff.raw)
+		{
+			// @ts-ignore
+			let styleSheet = this.GetStyleSheet();
+			if(styleSheet != null){
+				// @ts-ignore
+				let rules = styleSheet.rules;
+				for(let i=0;i<rules.length;i++){
+					let rule = rules[i];
+					if(rule.selectorText === ".nncb-slider"){
+						// @ts-ignore
+						styleSheet.deleteRule(i);
+						// @ts-ignore
+						styleSheet.insertRule(".nncb-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: "+context.parameters.toggleDefaultBackgroundColorOff.raw+"; -webkit-transition: .4s; transition: .4s;", rule.index)
+					}
+				}
+			}
+		}
 
 		container.appendChild(this._container);
 
@@ -181,10 +222,21 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 							}
 
 							var lblContainer = document.createElement("label");
-							lblContainer.setAttribute("class", "container");
-							lblContainer.setAttribute("style", styles.join(";"))
 							divFlexCtrl.appendChild(lblContainer);
-		
+							
+							if(thisCtrl._useToggleSwitch){
+								lblContainer.setAttribute("class", "nncb-container");
+						
+								var spanLabel = document.createElement("span");
+								spanLabel.setAttribute("class", "nncb-switch-label");
+								spanLabel.textContent = record[thisCtrl._labelAttributeName];
+								divFlexCtrl.appendChild(spanLabel);
+							}
+							else{
+								lblContainer.setAttribute("class", "container");
+								lblContainer.setAttribute("style", styles.join(";"))
+							}
+							
 							var chk = document.createElement("input");
 							chk.setAttribute("type", "checkbox");
 							chk.setAttribute("id", record[thisCtrl._childRecordType + "id"]);
@@ -286,13 +338,24 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 							if (context.mode.isControlDisabled) {
 								chk.setAttribute("disabled", "disabled");
 							}
-		
-							var mark = document.createElement("span");
-							mark.setAttribute("class", "checkmark");
-		
-							lblContainer.innerHTML += record[thisCtrl._labelAttributeName];
-							lblContainer.appendChild(chk);
-							lblContainer.appendChild(mark);
+							
+							if(thisCtrl._useToggleSwitch){
+								var toggle = document.createElement("span");
+								toggle.setAttribute("class","nncb-slider nncb-round");
+								
+								if(styles.length > 0)
+									toggle.setAttribute("style", styles.join(";"))
+
+								lblContainer.appendChild(chk);
+								lblContainer.appendChild(toggle);
+							}
+							else{
+								var mark = document.createElement("span");
+								mark.setAttribute("class", "checkmark");
+
+								lblContainer.innerHTML += record[thisCtrl._labelAttributeName];
+								lblContainer.appendChild(mark);
+							}
 						}
 
 						thisCtrl._context.parameters.nnRelationshipDataSet.paging.reset();
@@ -314,6 +377,15 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 			}
 		);
 	}
+	public GetStyleSheet() {
+		for(var i=0; i<document.styleSheets.length; i++) {
+		  var sheet = document.styleSheets[i];
+		  if(sheet.href && sheet.href.endsWith("NNCheckboxes.css")) {
+			return sheet;
+		  }
+		}
+		return null;
+	  }
 
 	public async GetOptionSetColors(attribute:string){
 		let requestUrl =

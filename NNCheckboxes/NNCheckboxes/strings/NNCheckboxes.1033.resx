@@ -85,6 +85,24 @@
   <data name="parentEntityLogicalName_Desc_Key" xml:space="preserve">
     <value>Logical name of the parent entity (the entity of the current form)</value>
   </data>
+   <data name="useToggleSwitch_Display_Key" xml:space="preserve">
+    <value>Use Toggle switch</value>
+  </data>
+  <data name="useToggleSwitch_Desc_Key" xml:space="preserve">
+    <value>"true" if you want to use toggle switches instead of checkboxes</value>
+  </data>
+  <data name="toggleDefaultBackgroundColorOff_Display_Key" xml:space="preserve">
+    <value>Switch Off color</value>
+  </data>
+  <data name="toggleDefaultBackgroundColorOff_Desc_Key" xml:space="preserve">
+    <value>Color used for the switch when it is Off</value>
+  </data>
+  <data name="toggleDefaultBackgroundColorOn_Display_Key" xml:space="preserve">
+    <value>Switch On color</value>
+  </data>
+  <data name="toggleDefaultBackgroundColorOn_Desc_Key" xml:space="preserve">
+    <value>Color used for the switch when it is On</value>
+  </data>
   <data name="backgroundColorAttribute_Display_Key" xml:space="preserve">
     <value>Background color</value>
   </data>
