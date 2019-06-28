@@ -31,7 +31,7 @@ This is the list of parameters that can be set on the control
 |**Background color**|Attribute to use as background color||X|
 |**Color**|Attribute to use as forecolor||X|
 |**Columns**|Number of columns to display checkboxes|X||
-|**Grouping Attribute**|Attribute used to group records. *If used, this attribute must be the first attribute used to sort the view used by this control*|X|
+|**Grouping Attribute**|Attribute used to group records. *If used, this attribute must be the first attribute used to sort the view used by this control*||X
 |**Use Toggle switch**|"true" if you want to display toggle switch instead of checkboxes|||
 |**Switch Off color**|Default background color when the switch is Off. *This parameter is overriden by the parameter **Background color***||X|
 |**Switch On color**|Default background color when the switch is On. *This parameter is overriden by the parameter **Background color***||X|
