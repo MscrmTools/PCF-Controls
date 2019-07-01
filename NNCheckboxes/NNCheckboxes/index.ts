@@ -104,7 +104,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 			else if(column.alias === "backgroundColorAttribute"){
 				this._backgroundColorAttributeName = column.name;
 
-				if(column.dataType === "OptionSet"){
+				if(column.dataType === "OptionSet" || column.dataType === "" && column.name === "statuscode"){
 					if(!this._colors || !this._colors[column.name]){
 						await this.GetOptionSetColors(column.name);
 					}
@@ -115,7 +115,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 			else if(column.alias === "foreColorAttribute"){
 				this._foreColorAttributeName = column.name;
 
-				if(column.dataType === "OptionSet"){
+				if(column.dataType === "OptionSet" || column.dataType === "" && column.name === "statuscode"){
 					if(!this._colors || !this._colors[column.name]){
 						await this.GetOptionSetColors(column.name);
 					}
@@ -125,7 +125,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 			}
 			else if(column.alias === "categoryAttribute"){
 				this._categoryAttributeName = column.name;
-				this._categoryUseDisplayName = column.dataType === "Lookup.Simple" ||  column.dataType === "OptionSet" ||  column.dataType === "TwoOptions";
+				this._categoryUseDisplayName = column.dataType === "Lookup.Simple" ||  column.dataType === "OptionSet" ||  column.dataType === "TwoOptions" || column.dataType === "" && column.name === "statuscode";
 			}
 		}
 
