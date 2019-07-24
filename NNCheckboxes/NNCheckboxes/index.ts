@@ -52,7 +52,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 		this._parentRecordType = context.parameters.parentEntityLogicalName.raw;
 		// TODO Waiting for bug fix : entityTypeName contains child entity name instead of parent
 		// context.mode.contextInfo.entityTypeName;
-
+debugger;
 		if(context.parameters.toggleDefaultBackgroundColorOn && context.parameters.toggleDefaultBackgroundColorOn.raw)
 		{
 			// @ts-ignore
@@ -132,7 +132,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 		// If no category grouping, then only one flexbox is needed
 		if(!this._categoryAttributeName){
 			this._divFlexBox = document.createElement("div");
-			this._divFlexBox.setAttribute("class", "flex");
+			this._divFlexBox.setAttribute("class", "nncb-flex");
 			this._container.appendChild(this._divFlexBox);
 		}
 
@@ -182,7 +182,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 		
 									// Add a new flex box
 									thisCtrl._divFlexBox = document.createElement("div");
-									thisCtrl._divFlexBox.setAttribute("class", "flex");
+									thisCtrl._divFlexBox.setAttribute("class", "nncb-flex");
 									thisCtrl._container.appendChild(thisCtrl._divFlexBox);
 								}
 							}
@@ -225,7 +225,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 							divFlexCtrl.appendChild(lblContainer);
 							
 							if(thisCtrl._useToggleSwitch){
-								lblContainer.setAttribute("class", "nncb-container");
+								lblContainer.setAttribute("class", "nncb-container-switch");
 						
 								var spanLabel = document.createElement("span");
 								spanLabel.setAttribute("class", "nncb-switch-label");
@@ -233,7 +233,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 								divFlexCtrl.appendChild(spanLabel);
 							}
 							else{
-								lblContainer.setAttribute("class", "container");
+								lblContainer.setAttribute("class", "nncb-container");
 								lblContainer.setAttribute("style", styles.join(";"))
 							}
 							
@@ -351,7 +351,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 							}
 							else{
 								var mark = document.createElement("span");
-								mark.setAttribute("class", "checkmark");
+								mark.setAttribute("class", "nncb-checkmark");
 
 								lblContainer.innerHTML += record[thisCtrl._labelAttributeName];
 								lblContainer.appendChild(chk);
@@ -451,6 +451,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 	 * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to names defined in the manifest, as well as utility functions
 	 */
 	public updateView(context: ComponentFramework.Context<IInputs>): void {
+		debugger;
 		if(context.parameters.nnRelationshipDataSet.paging.hasNextPage)
 		{
 			context.parameters.nnRelationshipDataSet.paging.loadNextPage();

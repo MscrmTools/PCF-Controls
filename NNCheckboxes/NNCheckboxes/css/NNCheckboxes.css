@@ -1,9 +1,3 @@
-* {
-    font-family: "Segoe UI",tahoma,Arial;
-    font-size: 14px;
-    color: #828181;
-}
-
 body {
     margin: 0;
 }
@@ -27,7 +21,7 @@ div.nncb-main{
 
 
 /* Customize the label (the container) */
-.container {
+.nncb-container {
     display: block;
     position: relative;
     padding-left: 25px !important;
@@ -40,17 +34,20 @@ div.nncb-main{
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    font-family: "Segoe UI",tahoma,Arial;
+    font-size: 14px;
+    color: #828181;
 }
 
 /* Hide the browser's default checkbox */
-.container input {
+.nncb-container input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
 }
 
 /* Create a custom checkbox */
-.checkmark {
+.nncb-checkmark {
     position: absolute;
     top: 3px;
     left: 3px;
@@ -61,29 +58,29 @@ div.nncb-main{
 }
 
 /* On mouse-over, add a grey background color */
-.container:hover input ~ .checkmark {
+.nncb-container:hover input ~ .nncb-checkmark {
     background-color: #ccc;
 }
 
 /* When the checkbox is checked, add a blue background */
-.container input:checked ~ .checkmark {
+.nncb-container input:checked ~ .nncb-checkmark {
     background-color: #fff;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
-.checkmark:after {
+.nncb-checkmark:after {
     content: "";
     position: absolute;
     display: none;
 }
 
 /* Show the checkmark when checked */
-.container input:checked ~ .checkmark:after {
+.nncb-container input:checked ~ .nncb-checkmark:after {
     display: block;
 }
 
 /* Style the checkmark/indicator */
-.container .checkmark:after {
+.nncb-container .nncb-checkmark:after {
     left: 3px !important;
     top: 0px !important;
     width: 4px;
@@ -95,18 +92,21 @@ div.nncb-main{
     transform: rotate(45deg);
 }
 
-div.flex{
+div.nncb-flex{
     display: flex;
     flex-wrap : wrap;
     flex-grow:1;
 }
 
-div.flex >div {
+div.nncb-flex >div {
     flex: 0 50%;
     margin-bottom:5px;
+    font-family: "Segoe UI",tahoma,Arial;
+    font-size: 14px;
+    color: #828181;
 }
 
-div.new{
+div.nncb-new{
     text-align: center;
     vertical-align: middle;
     line-height: 160px;
@@ -115,7 +115,7 @@ div.new{
 
 /* toggle switch */
 /* The switch - the box around the slider */
-.nncb-container {
+.nncb-container-switch {
     position: relative;
     display: inline-block;
     width: 40px;
@@ -123,7 +123,7 @@ div.new{
   }
   
   /* Hide default HTML checkbox */
-  .nncb-container input {
+  .nncb-container-switch input {
     opacity: 0;
     width: 0;
     height: 0;
