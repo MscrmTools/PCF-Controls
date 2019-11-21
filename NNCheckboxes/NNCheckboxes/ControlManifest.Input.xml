@@ -1,33 +1,45 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest>
-  <control namespace="MscrmTools" constructor="NNCheckboxes" version="1.0.11" display-name-key="NNCheckboxes_Display_Key" description-key="NNCheckboxes_Desc_Key" control-type="standard" preview-image="logo.png">
+  <control namespace="MscrmTools" constructor="NNCheckboxes" version="1.0.13" display-name-key="NNCheckboxes_Display_Key" description-key="NNCheckboxes_Desc_Key" control-type="standard" preview-image="imgs/logo.png">
     <data-set name="nnRelationshipDataSet" display-name-key="nnRelationshipDataSet_Display_Key">
       <property-set name="displayAttribute" display-name-key="targetEntity_Display_Key" description-key="targetEntity_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
       <property-set name="backgroundColorAttribute" display-name-key="backgroundColorAttribute_Display_Key" description-key="backgroundColorAttribute_Desc_Key" of-type-group="colorTypes" usage="bound" required="false" />
       <property-set name="foreColorAttribute" display-name-key="foreColorAttribute_Display_Key" description-key="foreColorAttribute_Desc_Key" of-type-group="colorTypes" usage="bound" required="false" />
       <property-set name="categoryAttribute" display-name-key="categoryAttribute_Display_Key" description-key="categoryAttribute_Desc_Key" of-type-group="categoryTypes" usage="bound" required="false" />
     </data-set>
-    <property name="parentEntityLogicalName" display-name-key="parentEntityLogicalName_Display_Key" description-key="parentEntityLogicalName_Desc_Key" of-type="SingleLine.Text" usage="input" required="true" /> 
-    <property name="relationshipSchemaName" display-name-key="relationshipSchemaName_Display_Key" description-key="relationshipSchemaName_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" />    
-    <property name="columnsNumber" display-name-key="columnsNumber_Display_Key" description-key="columnsNumber_Desc_Key" of-type="Whole.None" usage="input" required="true" default-value="2" />    
-    <property name="useToggleSwitch" display-name-key="useToggleSwitch_Display_Key" description-key="useToggleSwitch_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" default-value="false" />    
-    <property name="toggleDefaultBackgroundColorOff" display-name-key="toggleDefaultBackgroundColorOff_Display_Key" description-key="toggleDefaultBackgroundColorOff_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" default-value="#CC0000" />    
-    <property name="toggleDefaultBackgroundColorOn" display-name-key="toggleDefaultBackgroundColorOn_Display_Key" description-key="toggleDefaultBackgroundColorOn_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" default-value="#008800" />    
+    <property name="relationshipSchemaName" display-name-key="relationshipSchemaName_Display_Key" description-key="relationshipSchemaName_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="columnsNumber" display-name-key="columnsNumber_Display_Key" description-key="columnsNumber_Desc_Key" of-type="Whole.None" usage="input" required="true" default-value="2" />
+    <property name="useToggleSwitch" display-name-key="useToggleSwitch_Display_Key" description-key="useToggleSwitch_Desc_Key" of-type="Enum" usage="input" required="true">
+      <value name="True" display-name-key="useToggleSwitchTrue" description-key="useToggleSwitchTrue_Desc">True</value>
+      <value name="False" display-name-key="useToggleSwitchFalse" description-key="useToggleSwitchFalse_Desc" default="true">False</value>
+    </property>
+    <property name="toggleDefaultBackgroundColorOff" display-name-key="toggleDefaultBackgroundColorOff_Display_Key" description-key="toggleDefaultBackgroundColorOff_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" default-value="#CC0000" />
+    <property name="toggleDefaultBackgroundColorOn" display-name-key="toggleDefaultBackgroundColorOn_Display_Key" description-key="toggleDefaultBackgroundColorOn_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" default-value="#008800" />
     <type-group name="categoryTypes">
       <type>SingleLine.Text</type>
       <type>OptionSet</type>
       <type>TwoOptions</type>
     </type-group>
-      <type-group name="colorTypes">
+    <type-group name="colorTypes">
       <type>SingleLine.Text</type>
       <type>OptionSet</type>
     </type-group>
     <resources>
-      <code path="index.ts" order="1"/>
+      <code path="index.ts" order="1" />
       <css path="css/NNCheckboxes.css" order="1" />
       <resx path="strings/NNCheckboxes.1033.resx" version="1.0.0" />
       <resx path="strings/NNCheckboxes.1036.resx" version="1.0.0" />
-      <img path="imgs/logo.png"/>
+      <!-- <img path="imgs/logo.png" /> -->
     </resources>
+    <feature-usage>
+      <uses-feature name="Device.captureAudio" required="false" />
+      <uses-feature name="Device.captureImage" required="false" />
+      <uses-feature name="Device.captureVideo" required="false" />
+      <uses-feature name="Device.getBarcodeValue" required="false" />
+      <uses-feature name="Device.getCurrentPosition" required="false" />
+      <uses-feature name="Device.pickFile" required="false" />
+      <uses-feature name="Utility" required="true" />
+      <uses-feature name="WebAPI" required="true" />
+    </feature-usage>
   </control>
 </manifest>

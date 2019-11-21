@@ -86,10 +86,10 @@
     <value>Logical name of the parent entity (the entity of the current form)</value>
   </data>
    <data name="useToggleSwitch_Display_Key" xml:space="preserve">
-    <value>Use Toggle switch</value>
+    <value>Layout</value>
   </data>
   <data name="useToggleSwitch_Desc_Key" xml:space="preserve">
-    <value>"true" if you want to use toggle switches instead of checkboxes</value>
+    <value>Select layout for selectors</value>
   </data>
   <data name="toggleDefaultBackgroundColorOff_Display_Key" xml:space="preserve">
     <value>Switch Off color</value>
@@ -135,6 +135,18 @@
   </data>
   <data name="No_Category" xml:space="preserve">
     <value>Uncategorized records</value>
+  </data>
+  <data name="useToggleSwitchTrue" xml:space="preserve">
+    <value>Switch</value>
+  </data>  
+  <data name="useToggleSwitchTrue_Desc" xml:space="preserve">
+    <value>Display selector as switches</value>
+  </data>
+  <data name="useToggleSwitchFalse" xml:space="preserve">
+    <value>Check boxes</value>
+  </data>  
+  <data name="useToggleSwitchFalse_Desc" xml:space="preserve">
+    <value>Display selector as check boxes</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
 </root>

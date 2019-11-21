@@ -86,10 +86,10 @@
     <value>Nom logique de l'entité parente (l'entité de ce formulaire)</value>
   </data>
   <data name="useToggleSwitch_Display_Key" xml:space="preserve">
-    <value>Utiliser des switch</value>
+    <value>Mise en forme</value>
   </data>
   <data name="useToggleSwitch_Desc_Key" xml:space="preserve">
-    <value>"true" si vous voulez utiliser des switchs à la place des cases à cocher</value>
+    <value>Sélectionne la mise en forme pour les sélecteurs</value>
   </data>
   <data name="toggleDefaultBackgroundColorOff_Display_Key" xml:space="preserve">
     <value>Couleur Switch Off</value>
@@ -135,6 +135,18 @@
   </data>
   <data name="No_Category" xml:space="preserve">
     <value>Enregistrements non catégorisés</value>
+  </data>
+  <data name="useToggleSwitchTrue" xml:space="preserve">
+    <value>Interrupteur</value>
+  </data>  
+  <data name="useToggleSwitchTrue_Desc" xml:space="preserve">
+    <value>Affiche les sélecteurs en tant qu'interrupteur</value>
+  </data>
+  <data name="useToggleSwitchFalse" xml:space="preserve">
+    <value>Cases à cocher</value>
+  </data>  
+  <data name="useToggleSwitchFalse_Desc" xml:space="preserve">
+    <value>Affiche les sélecteurs en tant que cases à cocher</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
 </root>

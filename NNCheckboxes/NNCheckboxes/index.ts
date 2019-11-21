@@ -1,6 +1,7 @@
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 import DataSetInterfaces = ComponentFramework.PropertyHelper.DataSetApi;
 import { SpawnSyncOptionsWithBufferEncoding } from "child_process";
+import { RelationshipInfo} from "./reldef";
 type DataSet = ComponentFramework.PropertyTypes.DataSet;
 
 export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs, IOutputs> {
@@ -26,6 +27,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 	private _useToggleSwitch : boolean;
 	private _relationshipSchemaName: string | null;
 	private _colors: any;
+	private _relationshipInfo: RelationshipInfo;
 	/**
 	 * Empty constructor.
 	 */
@@ -49,10 +51,10 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 		this._useToggleSwitch = (context.parameters.useToggleSwitch && context.parameters.useToggleSwitch.raw && context.parameters.useToggleSwitch.raw.toLowerCase() === "true") ? true : false;
 		// @ts-ignore
 		this._parentRecordId = context.mode.contextInfo.entityId;
-		this._parentRecordType = context.parameters.parentEntityLogicalName.raw;
-		// TODO Waiting for bug fix : entityTypeName contains child entity name instead of parent
-		// context.mode.contextInfo.entityTypeName;
-debugger;
+		// @ts-ignore
+		this._parentRecordType = context.mode.contextInfo.entityTypeName;
+
+
 		if(context.parameters.toggleDefaultBackgroundColorOn && context.parameters.toggleDefaultBackgroundColorOn.raw)
 		{
 			// @ts-ignore
@@ -242,30 +244,46 @@ debugger;
 							chk.setAttribute("id", record[thisCtrl._childRecordType + "id"]);
 							chk.setAttribute("value", record[thisCtrl._childRecordType + "id"]);
 							chk.addEventListener("change", function () {
+								let entity1name:string;
+								let entity2name:string;
+								let record1Id:string;
+								let record2Id:string;
+								if(thisCtrl._relationshipInfo.Entity1AttributeName === thisCtrl._childRecordType){
+									entity1name = thisCtrl._childRecordType;
+									record1Id = this.id;
+									entity2name = thisCtrl._parentRecordType;
+									record2Id = thisCtrl._parentRecordId;
+								}
+								else{
+									entity1name = thisCtrl._parentRecordType;
+									record1Id = thisCtrl._parentRecordId;
+									entity2name = thisCtrl._childRecordType;
+									record2Id = this.id;
+								}
+
 								if (this.checked) {
-									var theRecordId = this.id;
 									var associateRequest = new class {
 										target = {
-											id: theRecordId,
-											entityType: thisCtrl._childRecordType
+											id: record1Id,
+											entityType: entity1name
 										};
 										relatedEntities = [
 											{
-												id: thisCtrl._parentRecordId,
-												entityType: thisCtrl._parentRecordType
+												id: record2Id,
+												entityType: entity2name
 											}
 										];
-										relationship = thisCtrl._relationshipSchemaName;
+										relationship = thisCtrl._relationshipInfo.Name;
 										getMetadata(): any {
 											return {
 												boundParameter: undefined,
 												parameterTypes: {
 													"target": {
-														"typeName": "mscrm." + thisCtrl._childRecordType,
+														"typeName": "mscrm." + entity1name,
 														"structuralProperty": 5
 													},
 													"relatedEntities": {
-														"typeName": "mscrm." + thisCtrl._parentRecordType,
+														"typeName": "mscrm." + entity2name,
 														"structuralProperty": 4
 													},
 													"relationship": {
@@ -296,17 +314,17 @@ debugger;
 									var theRecordId = this.id;
 									var disassociateRequest = new class {
 										target = {
-											id: theRecordId,
-											entityType: thisCtrl._childRecordType
+											id: record1Id,
+											entityType: entity1name
 										};
-										relatedEntityId = thisCtrl._parentRecordId;
-										relationship = thisCtrl._relationshipSchemaName;
+										relatedEntityId = record2Id;
+										relationship = thisCtrl._relationshipInfo.Name;
 										getMetadata(): any {
 											return {
 												boundParameter: undefined,
 												parameterTypes: {
 													"target": {
-														"typeName": "mscrm." + thisCtrl._childRecordType,
+														"typeName": "mscrm." + entity1name,
 														"structuralProperty": 5
 													},
 													"relationship": {
@@ -421,7 +439,23 @@ debugger;
 
 	public async GetNNRelationshipNameByEntityNames() {
 		let schemaNameParameter = this._context.parameters.relationshipSchemaName;
-		if (schemaNameParameter != undefined && schemaNameParameter.raw != null) { return Promise.resolve(<string>schemaNameParameter.raw); }
+		if (schemaNameParameter != undefined && schemaNameParameter.raw != null) { 
+			let entityMetadata = await this._context.utils.getEntityMetadata(this._parentRecordType);
+			let nnRelationships = entityMetadata.ManyToManyRelationships.getAll();
+			debugger;
+			for (let i = 0; i < nnRelationships.length; i++) {
+				if (nnRelationships[i].IntersectEntityName.toLowerCase() === this._context.parameters.relationshipSchemaName.raw.toLowerCase()) {
+					this._relationshipInfo = new RelationshipInfo();
+					this._relationshipInfo.Entity1LogicalName = nnRelationships[i].Entity1LogicalName;
+					this._relationshipInfo.Entity1AttributeName = nnRelationships[i].Entity1IntersectAttribute;
+					this._relationshipInfo.Entity2LogicalName = nnRelationships[i].Entity2LogicalName;
+					this._relationshipInfo.Entity2AttributeName = nnRelationships[i].Entity2IntersectAttribute;
+					this._relationshipInfo.Name = nnRelationships[i].SchemaName;
+				}
+			}
+			
+			return Promise.resolve(<string>schemaNameParameter.raw); 
+		}
 		let entityMetadata = await this._context.utils.getEntityMetadata(this._parentRecordType);
 		let nnRelationships = entityMetadata.ManyToManyRelationships.getAll();
 
