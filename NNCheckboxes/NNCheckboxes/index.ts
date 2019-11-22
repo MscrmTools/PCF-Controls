@@ -159,7 +159,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 					.then(function (result) {
 						var category = "";
 						var divFlexCtrl = document.createElement("div");
-						
+				
 						for (var i = 0; i < result.entities.length; i++) {
 							var record = result.entities[i];
 		
@@ -241,8 +241,8 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 							
 							var chk = document.createElement("input");
 							chk.setAttribute("type", "checkbox");
-							chk.setAttribute("id", record[thisCtrl._childRecordType + "id"]);
-							chk.setAttribute("value", record[thisCtrl._childRecordType + "id"]);
+							chk.setAttribute("id", thisCtrl._relationshipInfo.Name + "|" + record[thisCtrl._childRecordType + "id"]);
+							chk.setAttribute("value", thisCtrl._relationshipInfo.Name + "|" + record[thisCtrl._childRecordType + "id"]);
 							chk.addEventListener("change", function () {
 								let entity1name:string;
 								let entity2name:string;
@@ -250,7 +250,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 								let record2Id:string;
 								if(thisCtrl._relationshipInfo.Entity1AttributeName === thisCtrl._childRecordType){
 									entity1name = thisCtrl._childRecordType;
-									record1Id = this.id;
+									record1Id = this.id.split('|')[1];
 									entity2name = thisCtrl._parentRecordType;
 									record2Id = thisCtrl._parentRecordId;
 								}
@@ -258,7 +258,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 									entity1name = thisCtrl._parentRecordType;
 									record1Id = thisCtrl._parentRecordId;
 									entity2name = thisCtrl._childRecordType;
-									record2Id = this.id;
+									record2Id = this.id.split('|')[1];
 								}
 
 								if (this.checked) {
@@ -442,7 +442,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 		if (schemaNameParameter != undefined && schemaNameParameter.raw != null) { 
 			let entityMetadata = await this._context.utils.getEntityMetadata(this._parentRecordType);
 			let nnRelationships = entityMetadata.ManyToManyRelationships.getAll();
-			debugger;
+
 			for (let i = 0; i < nnRelationships.length; i++) {
 				if (nnRelationships[i].IntersectEntityName.toLowerCase() === this._context.parameters.relationshipSchemaName.raw.toLowerCase()) {
 					this._relationshipInfo = new RelationshipInfo();
@@ -466,7 +466,14 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 			if ((nnRelationships[i].Entity1LogicalName == this._parentRecordType && nnRelationships[i].Entity2LogicalName == this._childRecordType) ||
 				(nnRelationships[i].Entity1LogicalName == this._childRecordType && nnRelationships[i].Entity2LogicalName == this._parentRecordType)) {
 				count++;
-				foundSchemaName = nnRelationships[i].SchemaName;					
+				foundSchemaName = nnRelationships[i].SchemaName;	
+				
+				this._relationshipInfo = new RelationshipInfo();
+				this._relationshipInfo.Entity1LogicalName = nnRelationships[i].Entity1LogicalName;
+				this._relationshipInfo.Entity1AttributeName = nnRelationships[i].Entity1IntersectAttribute;
+				this._relationshipInfo.Entity2LogicalName = nnRelationships[i].Entity2LogicalName;
+				this._relationshipInfo.Entity2AttributeName = nnRelationships[i].Entity2IntersectAttribute;
+				this._relationshipInfo.Name = nnRelationships[i].SchemaName;
 			}
 		}
 
@@ -485,7 +492,8 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 	 * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to names defined in the manifest, as well as utility functions
 	 */
 	public updateView(context: ComponentFramework.Context<IInputs>): void {
-		debugger;
+		if(!context.updatedProperties.includes("nnRelationshipDataSet")) return;
+
 		if(context.parameters.nnRelationshipDataSet.paging.hasNextPage)
 		{
 			context.parameters.nnRelationshipDataSet.paging.loadNextPage();
@@ -494,7 +502,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 
 		var selectedIds = context.parameters.nnRelationshipDataSet.sortedRecordIds;
 		for (var j = 0; j < selectedIds.length; j++) {
-			let chk = <HTMLInputElement>window.document.getElementById(selectedIds[j]);
+			let chk = <HTMLInputElement>window.document.getElementById(this._relationshipInfo.Name + "|" + selectedIds[j]);
 			if(chk){
 				chk.checked = true;
 			}

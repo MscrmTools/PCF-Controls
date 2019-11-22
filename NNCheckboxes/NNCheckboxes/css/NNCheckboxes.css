@@ -36,7 +36,7 @@ div.nncb-main{
     user-select: none;
     font-family: "Segoe UI",tahoma,Arial;
     font-size: 14px;
-    color: #828181;
+    color: #444444;
 }
 
 /* Hide the browser's default checkbox */
@@ -54,7 +54,7 @@ div.nncb-main{
     height: 12px;
     width: 12px;
     background-color: #fff;
-    border:solid 1px #828181;
+    border:solid 1px #444444;
 }
 
 /* On mouse-over, add a grey background color */
@@ -85,7 +85,7 @@ div.nncb-main{
     top: 0px !important;
     width: 4px;
     height: 8px;
-    border: solid #828181;
+    border: solid #444444;
     border-width: 0 2px 2px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
@@ -103,14 +103,7 @@ div.nncb-flex >div {
     margin-bottom:5px;
     font-family: "Segoe UI",tahoma,Arial;
     font-size: 14px;
-    color: #828181;
-}
-
-div.nncb-new{
-    text-align: center;
-    vertical-align: middle;
-    line-height: 160px;
-    color:#9B9B9B;
+    color: #444444;
 }
 
 /* toggle switch */
