@@ -1,0 +1,121 @@
+body {
+    margin: 0;
+}
+
+input[type=checkbox] + label {
+    vertical-align: middle;
+    position: relative;
+    bottom: 1px;
+    font-weight: bold;
+}
+
+input[type=checkbox]:checked + label{
+    font-weight: normal;
+    text-decoration: line-through;
+}
+
+div.ccb-main{
+    margin-top:10px;
+}
+
+/* Customize the label (the container) */
+.ccb-container {
+    display: block;
+    position: relative;
+    top:6px;
+    padding-bottom: 1px;
+    margin-bottom: 12px;
+    margin-right:10px;
+    border-radius: 5px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-family: "Segoe UI",tahoma,Arial;
+    font-size: 14px;
+    color: #444444;
+    text-align:left;
+}
+
+/* Hide the browser's default checkbox */
+.ccb-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* toggle switch */
+/* The switch - the box around the slider */
+.ccb-container-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+    display:inline-block;
+    vertical-align:middle;
+  }
+  
+  /* Hide default HTML checkbox */
+  .ccb-container-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .ccb-slider-default {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #FFFFFF;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border:solid 2px black;
+  }
+
+  .ccb-slider-default:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 2px;
+    bottom: 2px;
+    background-color: black;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  input:checked + .ccb-slider-default{
+    background-color: #008800;
+    border:solid 2px #008800;
+  }
+  
+  input:checked + .ccb-slider-default:before{
+      background-color:white;
+      -webkit-transform: translateX(18px);
+      -ms-transform: translateX(18px);
+      transform: translateX(18px);
+  }
+  
+  /* Rounded sliders */
+  input:checked + .ccb-slider-default.ccb-round {
+    border-radius: 34px;
+  }
+
+  .ccb-round {
+    border-radius: 34px;
+  }
+  
+  .ccb-slider-default.ccb-round:before{
+    border-radius: 50%;
+  }
+
+  span.ccb-switch-label{
+    padding-left:5px;
+    display:inline-block;
+    vertical-align:middle;
+  }

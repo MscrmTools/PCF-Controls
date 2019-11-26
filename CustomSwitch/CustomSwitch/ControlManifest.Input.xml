@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <control namespace="MscrmTools" constructor="CustomSwitch" version="1.0.0" display-name-key="CustomSwitch_Display_Key" description-key="CustomSwitch_Desc_Key" control-type="standard" preview-image="imgs/preview.png">
+    <property name="booleanAttribute" display-name-key="booleanAttribute_Display_Key" description-key="booleanAttribute_Desc_Key" of-type="TwoOptions" usage="bound" required="true" />
+    <property name="offColor" display-name-key="offColor_Display_Key" description-key="offColor_Desc_Key" of-type="SingleLine.Text" default-value="" usage="input" required="false" />
+    <property name="onColor" display-name-key="onColor_Display_Key" description-key="onColor_Desc_Key" of-type="SingleLine.Text" default-value="" usage="input" required="false" />
+    <property name="switchColor" display-name-key="switchColor_Display_Key" description-key="switchColor_Desc_Key" of-type="SingleLine.Text" default-value="" usage="input" required="false" />
+    <property name="layout" display-name-key="layout_Display_Key" description-key="layout_Desc_Key" of-type="Enum" usage="input" default-value="Round" required="true">
+      <value name="Round" display-name-key="layoutRound_Display_Key" description-key="layoutRound_Desc_Key">Round</value>
+      <value name="Square" display-name-key="layoutSquare_Display_Key" description-key="layoutSquare_Desc_Key">Square</value>
+    </property>
+    <property name="displayLabel" display-name-key="displayLabel_Display_Key" description-key="displayLabel_Desc_Key" of-type="Enum" usage="input" default-value="True" required="true">
+      <value name="True" display-name-key="true_Display_Key" description-key="true_Desc_Key">True</value>
+      <value name="False" display-name-key="false_Display_Key" description-key="false_Desc_Key">False</value>
+    </property>
+    <resources>
+      <code path="index.ts" order="1" />
+      <css path="css/CustomSwitch.css" order="1" />
+      <resx path="strings/CustomSwitch.1033.resx" version="1.0.0" />
+      <resx path="strings/CustomSwitch.1036.resx" version="1.0.0" />
+    </resources>
+    <!-- UNCOMMENT TO ENABLE THE SPECIFIED API
+    <feature-usage>
+      <uses-feature name="Device.captureAudio" required="true" />
+      <uses-feature name="Device.captureImage" required="true" />
+      <uses-feature name="Device.captureVideo" required="true" />
+      <uses-feature name="Device.getBarcodeValue" required="true" />
+      <uses-feature name="Device.getCurrentPosition" required="true" />
+      <uses-feature name="Device.pickFile" required="true" />
+      <uses-feature name="Utility" required="true" />
+      <uses-feature name="WebAPI" required="true" />
+    </feature-usage>
+    -->
+  </control>
+</manifest>
