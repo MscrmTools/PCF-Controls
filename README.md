@@ -2,6 +2,7 @@
 Controls using PowerApps Components Framework
 
 [NN Checkboxes](#nn-checkboxes)
+
 [Custom Switch](#custom-switch)
 
 ## NN Checkboxes
