@@ -1,6 +1,9 @@
 # PCF-Controls
 Controls using PowerApps Components Framework
 
+[NN Checkboxes](#nn-checkboxes)
+[Custom Switch](#custom-switch)
+
 ## NN Checkboxes
 
 [Download](https://github.com/MscrmTools/PCF-Controls/releases/)
@@ -36,4 +39,26 @@ This is the list of parameters that can be set on the control
 |**Switch On color**|Default background color when the switch is On. *This parameter is overriden by the parameter **Background color***||X|
 
 
+## Custom Switch
 
+[Download](https://github.com/MscrmTools/PCF-Controls/releases/)
+
+### Purpose
+The purpose of this control is to allow user to add switch for Two Options attribute and apply the color and shape they want to fit with the color of the company.
+
+### Samples
+
+![Screenshot](https://github.com/MscrmTools/PCF-Controls/blob/master/CustomSwitch/screenshots/capture.png?raw=true)
+
+### Configuration
+
+This is the list of parameters that can be set on the control
+
+|Parameter|Description|Required|Bound to an attribute|
+|---------|-----------|:----:|:---:|
+|**Attribute**|The attribute to display as a switch|X|X|
+|**Off color**|Color used for the switch background when the value is Off|||
+|**On color**|Color used for the switch background when the value is On|||
+|**Switch color**|Color used for the switch|||
+|**Layout**|Square or Round|X||
+|**Display label**|Indicates if selected option label must be displayed next to the switch||
