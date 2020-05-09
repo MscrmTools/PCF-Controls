@@ -5,6 +5,8 @@ Controls using PowerApps Components Framework
 
 [Custom Switch](#custom-switch)
 
+[Date as checkbox](#date-as-checkbox)
+
 ## NN Checkboxes
 
 [Download](https://github.com/MscrmTools/PCF-Controls/releases/)
@@ -63,3 +65,11 @@ This is the list of parameters that can be set on the control
 |**Switch color**|Color used for the switch|||
 |**Layout**|Square or Round|X||
 |**Display label**|Indicates if selected option label must be displayed next to the switch||
+
+## Date as checkbox
+
+### Purpose
+As mentioned by MVP Gus Gonzalez in [this 2 minutes Tuesday video](https://www.youtube.com/watch?v=cuQIIAQPHbk), Two Options attribute could be replaced with Datetime attribute for some business needs. This PCF allows to transform a date time attribute in custom switch to keep the behavior of a checkbox while storing value as the current date time.
+
+### Configuration
+See documentation of [Custom Switch](#custom-switch). This is the same.
