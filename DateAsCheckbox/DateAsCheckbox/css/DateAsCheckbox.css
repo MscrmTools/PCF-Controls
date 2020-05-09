@@ -1,0 +1,121 @@
+body {
+    margin: 0;
+}
+
+input[type=checkbox] + label {
+    vertical-align: middle;
+    position: relative;
+    bottom: 1px;
+    font-weight: bold;
+}
+
+input[type=checkbox]:checked + label{
+    font-weight: normal;
+    text-decoration: line-through;
+}
+
+div.dac-main{
+    margin-top:10px;
+}
+
+/* Customize the label (the container) */
+.dac-container {
+    display: block;
+    position: relative;
+    top:6px;
+    padding-bottom: 1px;
+    margin-bottom: 12px;
+    margin-right:10px;
+    border-radius: 5px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-family: "Segoe UI",tahoma,Arial;
+    font-size: 14px;
+    color: #444444;
+    text-align:left;
+}
+
+/* Hide the browser's default checkbox */
+.dac-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* toggle switch */
+/* The switch - the box around the slider */
+.dac-container-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+    display:inline-block;
+    vertical-align:middle;
+  }
+  
+  /* Hide default HTML checkbox */
+  .dac-container-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .dac-slider-default {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #FFFFFF;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border:solid 2px black;
+  }
+
+  .dac-slider-default:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 2px;
+    bottom: 2px;
+    background-color: black;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  input:checked + .dac-slider-default{
+    background-color: #008800;
+    border:solid 2px #008800;
+  }
+  
+  input:checked + .dac-slider-default:before{
+      background-color:white;
+      -webkit-transform: translateX(18px);
+      -ms-transform: translateX(18px);
+      transform: translateX(18px);
+  }
+  
+  /* Rounded sliders */
+  input:checked + .dac-slider-default.dac-round {
+    border-radius: 34px;
+  }
+
+  .dac-round {
+    border-radius: 34px;
+  }
+  
+  .dac-slider-default.dac-round:before{
+    border-radius: 50%;
+  }
+
+  span.dac-switch-label{
+    padding-left:5px;
+    display:inline-block;
+    vertical-align:middle;
+  }
