@@ -71,5 +71,8 @@ This is the list of parameters that can be set on the control
 ### Purpose
 As mentioned by MVP Gus Gonzalez in [this 2 minutes Tuesday video](https://www.youtube.com/watch?v=cuQIIAQPHbk), Two Options attribute could be replaced with Datetime attribute for some business needs. This PCF allows to transform a date time attribute in custom switch to keep the behavior of a checkbox while storing value as the current date time.
 
+### Samples
+![Screenshot](https://github.com/MscrmTools/PCF-Controls/raw/master/DateAsCheckbox/screenshots/dateAsCheckbox.gif?raw=true)
+
 ### Configuration
 See documentation of [Custom Switch](#custom-switch). This is the same.
