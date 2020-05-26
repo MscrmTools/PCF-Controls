@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <control namespace="MscrmTools" constructor="SimpleNotification" version="0.0.6" display-name-key="SimpleNotification" description-key="SimpleNotification_Desc" control-type="standard" preview-image="imgs/reactnotification.png">
+    <property name="fakeAttribute" display-name-key="fakeAttribute_Display_Key" description-key="fakeAttribute_Desc" of-type="SingleLine.Text" usage="bound" required="true" />
+    <property name="messageType" display-name-key="messageType_Display_Key" description-key="messageType_Desc" of-type="Enum" usage="input" required="true">
+      <value name="Info" display-name-key="Info_Key" description-key="Info_Desc">Info</value>
+      <value name="Warning" display-name-key="Warning_Key" description-key="Warning_Desc">Warning</value>
+      <value name="Error" display-name-key="Error_Key" description-key="Error_Desc">Error</value>
+      <value name="Blocked" display-name-key="Blocked_Key" description-key="Blocked_Desc">Blocked</value>
+      <value name="SevereWarning" display-name-key="SevereWarning_Key" description-key="SevereWarning_Desc">SeverWarning</value>
+      <value name="Success" display-name-key="Success_Key" description-key="Success_Desc" default="true">Success</value>
+    </property>
+    <property name="message" display-name-key="message_Display_Key" description-key="message_Desc_Key" of-type="SingleLine.Text" usage="input" required="true" />
+    <property name="showLink" display-name-key="showLink_Display_Key" description-key="showLink_Desc_Key" of-type="Enum" usage="input" required="true">
+      <value name="Yes" display-name-key="Yes_Key" description-key="Yes_Desc">Yes</value>
+      <value name="No" display-name-key="No_Key" description-key="No_Desc" default="true">No</value>
+    </property>
+    <property name="linkText" display-name-key="linkText_Display_Key" description-key="linkText_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="link" display-name-key="link_Display_Key" description-key="link_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" />
+    <resources>
+      <code path="index.ts" order="1" />
+      <resx path="strings/ReactNotifier.1033.resx" version="1.0.0" />
+      <resx path="strings/ReactNotifier.1036.resx" version="1.0.0" />
+      <!-- UNCOMMENT TO ADD MORE RESOURCES
+      <css path="css/ReactNotifier.css" order="1" />
+      -->
+    </resources>
+  </control>
+</manifest>
