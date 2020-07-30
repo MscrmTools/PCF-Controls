@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <control namespace="MscrmTools" constructor="ActionButton" version="0.0.4" display-name-key="ActionButton_Display_Key" description-key="ActionButton_Desc_Key" control-type="standard" preview-image="imgs/logo.png">
+    <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
+    <property name="BoundAttribute" display-name-key="BoundAttribute_Display_Key" description-key="BoundAttribute_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
+    <property name="ActionText" display-name-key="ActionText_Display_Key" description-key="ActionText_Desc_Key" of-type="SingleLine.Text" default-value="" usage="input" required="false" />
+    <!-- <property name="SetAsFormState" display-name-key="SetAsFormState_Display_Key" description-key="SetAsFormState_Desc_Key" of-type="Enum" usage="input" default-value="True" required="true">
+      <value name="True" display-name-key="true_Display_Key" description-key="true_Desc_Key">True</value>
+      <value name="False" display-name-key="false_Display_Key" description-key="false_Desc_Key">False</value>
+    </property> -->
+    <resources>
+      <code path="index.ts" order="1" />
+      <resx path="strings/ActionButton.1033.resx" version="1.0.0" />
+      <resx path="strings/ActionButton.1036.resx" version="1.0.0" />
+   </resources>
+  </control>
+</manifest>
