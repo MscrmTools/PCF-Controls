@@ -119,7 +119,7 @@ function onChange(context){
   }
   // Clear the value and avoid to submit data
   attribute.setValue(null);
-  attribute.setSubmitMode(never);
+  attribute.setSubmitMode("never");
 }
 ```
 
