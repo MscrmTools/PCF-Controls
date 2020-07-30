@@ -117,6 +117,9 @@ function onChange(context){
   if(value === "Run this!"){
     Xrm.Navigation.openAlertDialog({text: "Action button has been triggered!"});
   }
+  // Clear the value and avoid to submit data
+  attribute.setValue(null);
+  attribute.setSubmitMode(never);
 }
 ```
 
