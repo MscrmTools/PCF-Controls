@@ -9,6 +9,8 @@ Controls using PowerApps Components Framework
 
 [Simple Notification](#simple-notification)
 
+[Action Button](#action-button)
+
 ## NN Checkboxes
 
 [Download](https://github.com/MscrmTools/PCF-Controls/releases/)
@@ -97,3 +99,30 @@ Allows to display a notification or an helpful message to the user in a section.
 |**Display a link?**|Indicates if an hypertext link must be added at the end of the message|||
 |**Link text**|Text to be used for the link|||
 |**Link**|Url to navigate to when clicking on the link||
+
+## Action Button
+
+### Purpose
+Allows to display a button to perform an action. To allow developer to do anything they want from the form, this button simply copies the text of the action button on the bound string attribute. The developer needs to add an onChange event to this string attribute, check for the value of the attribute (should be the text of the action button) and perform the action needed.
+
+### Samples
+![Screenshot](https://github.com/MscrmTools/PCF-Controls/blob/master/ActionButton/ActionButton/screenshots/screenshot.png?raw=true)
+
+
+Sample script to be implemented to execute an action when the button is clicked
+```
+function onChange(context){
+  let attribute = context.getEventSource();
+  let value = attribute.getValue();
+  if(value === "Run this!"){
+    Xrm.Navigation.openAlertDialog({text: "Action button has been triggered!"});
+  }
+}
+```
+
+### Configuration
+
+|Parameter|Description|Required|Bound to an attribute|Additional info|
+|---------|-----------|:----:|:---:|------|
+|**Attribute**|The attribute to use to display the control|X|X|| 
+|**ActionText**|Text of the action button|X||Can be a static string or a json object with language id like {"1033":"Run this!","1036":"Exécute ça!"}|
