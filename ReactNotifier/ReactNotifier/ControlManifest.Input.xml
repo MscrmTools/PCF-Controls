@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest>
-  <control namespace="MscrmTools" constructor="SimpleNotification" version="0.0.6" display-name-key="SimpleNotification" description-key="SimpleNotification_Desc" control-type="standard" preview-image="imgs/reactnotification.png">
+  <control namespace="MscrmTools" constructor="SimpleNotification" version="0.0.8" display-name-key="SimpleNotification" description-key="SimpleNotification_Desc" control-type="standard" preview-image="imgs/reactnotification.png">
     <property name="fakeAttribute" display-name-key="fakeAttribute_Display_Key" description-key="fakeAttribute_Desc" of-type="SingleLine.Text" usage="bound" required="true" />
     <property name="messageType" display-name-key="messageType_Display_Key" description-key="messageType_Desc" of-type="Enum" usage="input" required="true">
       <value name="Info" display-name-key="Info_Key" description-key="Info_Desc">Info</value>

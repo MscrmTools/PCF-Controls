@@ -2,7 +2,8 @@ import {IInputs, IOutputs} from "./generated/ManifestTypes";
 import NotificationControl from "./NotificationControl";
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import {    MessageBarType  } from 'office-ui-fabric-react';
+import { MessageBarType } from "office-ui-fabric-react/lib/components/MessageBar/MessageBar.types";
+
 
 export class SimpleNotification implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 

@@ -1,14 +1,6 @@
 import * as React from 'react'
-import {
-    MessageBarButton,
-    Link,
-    Stack,
-    StackItem,
-    MessageBar,
-    MessageBarType,
-    ChoiceGroup,
-    IStackProps,
-  } from 'office-ui-fabric-react';
+import { MessageBar, MessageBarType } from 'office-ui-fabric-react/lib/components/MessageBar';
+import { Link } from 'office-ui-fabric-react/lib/components/Link';
   
 
   export interface IMessageProps {
