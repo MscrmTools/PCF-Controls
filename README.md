@@ -7,6 +7,8 @@ Controls using PowerApps Components Framework
 
 [Date as checkbox](#date-as-checkbox)
 
+[Simple Notification](#simple-notification)
+
 ## NN Checkboxes
 
 [Download](https://github.com/MscrmTools/PCF-Controls/releases/)
@@ -76,3 +78,22 @@ As mentioned by MVP Gus Gonzalez in [this 2 minutes Tuesday video](https://www.y
 
 ### Configuration
 See documentation of [Custom Switch](#custom-switch). This is the same.
+
+## Simple Notification
+
+### Purpose
+Allows to display a notification or an helpful message to the user in a section. This should avoid to create static web resource to display information.
+
+### Samples
+![Screenshot](https://github.com/MscrmTools/PCF-Controls/raw/master/ReactNotifier/screenshots/SimpleNotification.png?raw=true)
+
+### Configuration
+
+|Parameter|Description|Required|Bound to an attribute|
+|---------|-----------|:----:|:---:|
+|**Attribute**|The attribute to use to display the control|X|X|
+|**Notification type**|Type of notification|X||
+|**Message**|Message to display|X||
+|**Display a link?**|Indicates if an hypertext link must be added at the end of the message|||
+|**Link text**|Text to be used for the link|||
+|**Link**|Url to navigate to when clicking on the link||
