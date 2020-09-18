@@ -37,6 +37,7 @@ div.nncb-main{
     font-family: "Segoe UI",tahoma,Arial;
     font-size: 14px;
     color: #444444;
+    white-space:normal;
 }
 
 /* Hide the browser's default checkbox */
