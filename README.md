@@ -16,7 +16,17 @@ Controls using PowerApps Components Framework
 [Download](https://github.com/MscrmTools/PCF-Controls/releases/)
 
 ### Purpose
-The purpose of this control is to allow user to associate/disassociate records for a many-to-many relationship displaying all possible records as checkboxes or toggle switches
+Allows to display a button to perform an action. To allow developer to do anything they want from the form, this button simply copies the text of the action button on the bound attribute. 
+
+This can be one of the following types:
+- SingleLine.Text
+- DateAndTime.DateAndTime
+- DateAndTime.DateOnly
+- Decimal
+- Whole.None
+- SingleLine.TextArea
+
+The developer needs to add an onChange event to this string attribute, check for the value of the attribute (should be the text of the action button) and perform the action needed.
 
 ![Vidéo](https://github.com/MscrmTools/PCF-Controls/blob/master/NNCheckboxes/Screenshots/video.gif?raw=true)
 
