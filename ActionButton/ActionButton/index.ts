@@ -9,6 +9,7 @@ export class ActionButton implements ComponentFramework.StandardControl<IInputs,
 	private notifyOutputChanged: () => void;
 	private currentValue:string|null;
 	private actionText:string;
+	private  controlType : string;
 	/**
 	 * Empty constructor.
 	 */
@@ -31,6 +32,7 @@ export class ActionButton implements ComponentFramework.StandardControl<IInputs,
 		this.notifyOutputChanged = notifyOutputChanged;
 
 		this.actionText = context.parameters.ActionText.raw??"";
+		this.controlType = context.parameters.BoundAttribute.type;
 
 		if(this.actionText.trim().startsWith("{")){
 			let json = JSON.parse(this.actionText);
@@ -52,7 +54,7 @@ export class ActionButton implements ComponentFramework.StandardControl<IInputs,
 
 		let props: IButtonProps = {
 			text: this.actionText,
-			disabled: false, //context.parameters.SetAsFormState.raw === "True" ? context.mode.isControlDisabled : false,
+			disabled: context.parameters.EnableButtonOnDisabledForm.raw === "1" ? false : context.mode.isControlDisabled,
 			onClick: () => {
 				this.notifyOutputChanged();
 			}
@@ -79,8 +81,15 @@ export class ActionButton implements ComponentFramework.StandardControl<IInputs,
 	 */
 	public getOutputs(): IOutputs
 	{
+		debugger;
+		if(this.controlType === "SingleLine.Text"){
+			return {
+				BoundAttribute: this.actionText
+			};	
+		}
+
 		return {
-			BoundAttribute: this.actionText
+			BoundAttribute: new Date()
 		};
 	}
 

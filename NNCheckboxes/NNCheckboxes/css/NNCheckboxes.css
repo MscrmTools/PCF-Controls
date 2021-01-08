@@ -173,4 +173,5 @@ div.nncb-flex >div {
 
   span.nncb-switch-label{
     padding-left:5px;
+    white-space: normal;
   }

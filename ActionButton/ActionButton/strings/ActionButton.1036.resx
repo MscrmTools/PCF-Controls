@@ -76,23 +76,23 @@
    <data name="ActionText_Desc_Key" xml:space="preserve">
     <value>Texte à afficher sur le bouton d'action</value>
   </data>
-  <data name="SetAsFormState_Display_Key" xml:space="preserve">
-    <value>Appliquer l'état du contrôle</value>
+<data name="EnableButtonOnDisabledForm_Display_Key" xml:space="preserve">
+    <value>Toujours activer le boutton</value>
   </data>
-  <data name="SetAsFormState_Desc_Key" xml:space="preserve">
-    <value>Indique si le contrôle doit suivre la désactivation système</value>
+    <data name="EnableButtonOnDisabledForm_Desc_Key" xml:space="preserve">
+    <value>Indique si le bouton doit toujours être activé, même si le contrôle ou le formulaire sont en lecture seule</value>
   </data>
-  <data name="true_Display_Key" xml:space="preserve">
-    <value>Oui</value>
+    <data name="yes_Display_Key" xml:space="preserve">
+    <value>Yes</value>
   </data>
-   <data name="true_Desc_Key" xml:space="preserve">
-    <value>Oui</value>
+    <data name="yes_Desc_Key" xml:space="preserve">
+    <value>Yes</value>
   </data>
-  <data name="false_Display_Key" xml:space="preserve">
-    <value>Non</value>
+    <data name="no_Display_Key" xml:space="preserve">
+    <value>No</value>
   </data>
-  <data name="false_Desc_Key" xml:space="preserve">
-    <value>Non</value>
-  </data>
+     <data name="no_Desc_Key" xml:space="preserve">
+    <value>No</value>
+    </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
 </root>

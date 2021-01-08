@@ -76,23 +76,27 @@
    <data name="ActionText_Desc_Key" xml:space="preserve">
     <value>Text to display on action button</value>
   </data>
-  <data name="SetAsFormState_Display_Key" xml:space="preserve">
-    <value>Apply disabled state to the button</value>
+  
+
+  <data name="EnableButtonOnDisabledForm_Display_Key" xml:space="preserve">
+    <value>Always unable button</value>
   </data>
-  <data name="SetAsFormState_Desc_Key" xml:space="preserve">
-    <value>Indicates if button must follow control disabled state</value>
+    <data name="EnableButtonOnDisabledForm_Desc_Key" xml:space="preserve">
+    <value>Indicates if button should be always enabled even when control or form is disabled</value>
   </data>
-  <data name="true_Display_Key" xml:space="preserve">
+    <data name="yes_Display_Key" xml:space="preserve">
     <value>Yes</value>
   </data>
-   <data name="true_Desc_Key" xml:space="preserve">
+    <data name="yes_Desc_Key" xml:space="preserve">
     <value>Yes</value>
   </data>
-  <data name="false_Display_Key" xml:space="preserve">
+    <data name="no_Display_Key" xml:space="preserve">
     <value>No</value>
   </data>
-  <data name="false_Desc_Key" xml:space="preserve">
+     <data name="no_Desc_Key" xml:space="preserve">
     <value>No</value>
-  </data>
+    </data>
+
+
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
 </root>

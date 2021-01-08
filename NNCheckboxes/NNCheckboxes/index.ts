@@ -63,7 +63,9 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 				// @ts-ignore
 				let rules = styleSheet.rules;
 				for(let i=0;i<rules.length;i++){
+					// @ts-ignore
 					let rule = rules[i];
+					// @ts-ignore
 					if(rule.selectorText === "input:checked + .nncb-slider"){
 						// @ts-ignore
 						styleSheet.deleteRule(i);
@@ -83,6 +85,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 				let rules = styleSheet.rules;
 				for(let i=0;i<rules.length;i++){
 					let rule = rules[i];
+					// @ts-ignore
 					if(rule.selectorText === ".nncb-slider"){
 						// @ts-ignore
 						styleSheet.deleteRule(i);

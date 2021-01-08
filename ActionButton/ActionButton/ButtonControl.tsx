@@ -21,7 +21,7 @@ export default class ButtonControl extends React.Component<IButtonProps, IButton
     this.state = {
       text:props.text,
       onClick: props.onClick,
-      disabled: false
+      disabled: props.disabled
     }
   }
     render(){

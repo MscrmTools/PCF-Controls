@@ -111,8 +111,9 @@ export class CustomSwitch implements ComponentFramework.StandardControl<IInputs,
 		for(let i=0;i<this._options.length;i++){
 			//@ts-ignore
 			if(this._options[i].Value === expectedValue){
+			let ctrl = document.getElementById(this._labelid);
 			//@ts-ignore
-			document.getElementById(this._labelid).textContent = this._options[i].Label;
+			if(ctrl) ctrl.textContent = this._options[i].Label;
 			}
 		}
 	}
