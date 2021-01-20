@@ -148,5 +148,23 @@
   <data name="useToggleSwitchFalse_Desc" xml:space="preserve">
     <value>Affiche les sélecteurs en tant que cases à cocher</value>
   </data>
+    <data name="addCategorySelector_Display_Key" xml:space="preserve">
+    <value>Permettre de sélectionner une catégorie</value>
+  </data>
+  <data name="addCategorySelector_Desc_Key" xml:space="preserve">
+    <value>Affiche des liens pour sélectionner/déselectionner tous les enregistremetns d'une catégorie</value>
+  </data>
+    <data name="yes_Display_Key" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+    <data name="yes_Desc_Key" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+    <data name="no_Display_Key" xml:space="preserve">
+    <value>No</value>
+  </data>
+     <data name="no_Desc_Key" xml:space="preserve">
+    <value>No</value>
+    </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
 </root>

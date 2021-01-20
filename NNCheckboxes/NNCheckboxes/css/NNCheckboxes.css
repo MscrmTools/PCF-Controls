@@ -99,6 +99,15 @@ div.nncb-flex{
     flex-grow:1;
 }
 
+a.nncb-category-link:hover,
+a.nncb-category-link:active,
+a.nncb-category-link:visited
+{
+  float:right;
+  cursor: pointer;
+  color:rgb(17, 96, 183);
+}
+
 div.nncb-flex >div {
     flex: 0 50%;
     margin-bottom:5px;

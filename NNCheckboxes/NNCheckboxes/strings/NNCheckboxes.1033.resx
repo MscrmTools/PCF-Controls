@@ -148,5 +148,23 @@
   <data name="useToggleSwitchFalse_Desc" xml:space="preserve">
     <value>Display selector as check boxes</value>
   </data>
+  <data name="addCategorySelector_Display_Key" xml:space="preserve">
+    <value>Allow to select a category</value>
+  </data>
+  <data name="addCategorySelector_Desc_Key" xml:space="preserve">
+    <value>Display links to select/unselect all records in a category</value>
+  </data>
+    <data name="yes_Display_Key" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+    <data name="yes_Desc_Key" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+    <data name="no_Display_Key" xml:space="preserve">
+    <value>No</value>
+  </data>
+     <data name="no_Desc_Key" xml:space="preserve">
+    <value>No</value>
+    </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
 </root>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest>
-  <control namespace="MscrmTools" constructor="NNCheckboxes" version="1.0.21" display-name-key="NNCheckboxes_Display_Key" description-key="NNCheckboxes_Desc_Key" control-type="standard" preview-image="imgs/nncheckboxes.png">
+  <control namespace="MscrmTools" constructor="NNCheckboxes" version="1.0.35" display-name-key="NNCheckboxes_Display_Key" description-key="NNCheckboxes_Desc_Key" control-type="standard" preview-image="imgs/nncheckboxes.png">
     <data-set name="nnRelationshipDataSet" display-name-key="nnRelationshipDataSet_Display_Key">
       <property-set name="displayAttribute" display-name-key="targetEntity_Display_Key" description-key="targetEntity_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
       <property-set name="backgroundColorAttribute" display-name-key="backgroundColorAttribute_Display_Key" description-key="backgroundColorAttribute_Desc_Key" of-type-group="colorTypes" usage="bound" required="false" />
@@ -15,6 +15,10 @@
     </property>
     <property name="toggleDefaultBackgroundColorOff" display-name-key="toggleDefaultBackgroundColorOff_Display_Key" description-key="toggleDefaultBackgroundColorOff_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" default-value="#CC0000" />
     <property name="toggleDefaultBackgroundColorOn" display-name-key="toggleDefaultBackgroundColorOn_Display_Key" description-key="toggleDefaultBackgroundColorOn_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" default-value="#008800" />
+    <property name="addCategorySelector" display-name-key="addCategorySelector_Display_Key" description-key="addCategorySelector_Desc_Key" of-type="Enum" default-value="0" usage="input" required="true">
+      <value name="Yes" display-name-key="yes_Display_Key" description-key="yes_Desc_Key">1</value>
+      <value name="No" display-name-key="no_Display_Key" description-key="no_Desc_Key">0</value>
+    </property>
     <type-group name="categoryTypes">
       <type>SingleLine.Text</type>
       <type>OptionSet</type>

@@ -183,6 +183,61 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 									categoryDiv.setAttribute("style", "margin-bottom: 10px;border-bottom: solid 1px #828181;padding-bottom: 5px;");
 									categoryDiv.innerHTML = label;
 									
+									// If we need to add all records category selection
+									if(thisCtrl._context.parameters.addCategorySelector?.raw === "1"){
+										var selectAnchor = <HTMLAnchorElement>document.createElement("a");
+										selectAnchor.className = "nncb-category-link"
+										selectAnchor.text = "select";
+										selectAnchor.style.float = "right";
+										selectAnchor.href="#";
+										selectAnchor.style.paddingRight = "4px";
+										selectAnchor.addEventListener("click", function (event) {
+											event.preventDefault();
+											var items = this.parentElement?.nextElementSibling?.children || [];
+											for(let i=0;i<items.length;i++){
+												let input = thisCtrl._useToggleSwitch ?												
+												<HTMLInputElement>items[i].firstChild?.firstChild || null:
+												<HTMLInputElement>items[i].firstChild?.firstChild?.nextSibling || null;
+												if(input && !input.checked){
+													input.click();
+												}
+											}
+										});
+
+										var unselectAnchor = <HTMLAnchorElement>document.createElement("a");
+										unselectAnchor.className = "nncb-category-link"
+										unselectAnchor.text = "unselect";
+										unselectAnchor.style.float = "right";
+										unselectAnchor.href="#";
+										unselectAnchor.addEventListener("click", function (event) {
+											event.preventDefault();
+											var items = this.parentElement?.nextElementSibling?.children || [];
+											for(let i=0;i<items.length;i++){
+												let input = thisCtrl._useToggleSwitch ?												
+												<HTMLInputElement>items[i].firstChild?.firstChild || null:
+												<HTMLInputElement>items[i].firstChild?.firstChild?.nextSibling || null;
+												if(input && input.checked){
+													input.click();
+												}
+											}
+										});
+
+										var allTerm = document.createElement("span");
+										allTerm.innerText = "all";
+										allTerm.style.float = "right";
+										allTerm.style.paddingLeft = "4px";
+
+										var slash = document.createElement("span");
+										slash.innerText = "/";
+										slash.style.float = "right";
+										slash.style.paddingRight = "4px";
+
+										categoryDiv.appendChild(allTerm);
+										categoryDiv.appendChild(unselectAnchor);
+										categoryDiv.appendChild(slash);
+										categoryDiv.appendChild(selectAnchor);
+									}
+
 									thisCtrl._container.appendChild(categoryDiv);
 		
 									// Add a new flex box
@@ -399,6 +454,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 			}
 		);
 	}
+
 	public GetStyleSheet() {
 		for(var i=0; i<document.styleSheets.length; i++) {
 		  var sheet = document.styleSheets[i];
