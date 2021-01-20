@@ -44,7 +44,7 @@ This is the list of parameters that can be set on the control
 |**Layout**|Choose the layout for the rendering|X||
 |**Switch Off color**|Default background color when the switch is Off. *This parameter is overriden by the parameter **Background color***||X|
 |**Switch On color**|Default background color when the switch is On. *This parameter is overriden by the parameter **Background color***||X|
-
+|**Allow to select a category**|Indicates if links must be added for each category to select/unselect all records|X||
 
 ## Custom Switch
 
