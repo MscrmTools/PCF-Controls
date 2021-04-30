@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <control namespace="MscrmTools" constructor="LinearSliderWithSteps" version="0.0.16" display-name-key="LinearSliderWithSteps" description-key="LinearSliderWithSteps_description" control-type="standard" preview-image="imgs/screenshot.png">
+    <type-group name="numbers">
+      <type>Whole.None</type>
+      <type>Currency</type>
+      <type>FP</type>
+      <type>Decimal</type>
+    </type-group>
+    <property name="controlValue" display-name-key="controlValue_Display_Key" description-key="controlValue_Desc_Key" of-type-group="numbers" usage="bound" required="true" />
+    <property name="min" display-name-key="min_Display_Key" description-key="min_Desc_Key" of-type="Whole.None" usage="input" required="true" />
+    <property name="max" display-name-key="max_Display_Key" description-key="max_Desc_Key" of-type="Whole.None" usage="input" required="true" />
+    <property name="step" display-name-key="step_Display_Key" description-key="step_Desc_Key" of-type="Whole.None" usage="input" required="true" />
+    <property name="color" display-name-key="color_Display_Key" description-key="color_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="labelPrefix" display-name-key="labelPrefix_Display_Key" description-key="labelPrefix_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="labelSuffix" display-name-key="labelSuffix_Display_Key" description-key="labelSuffix_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="labelPosition" display-name-key="labelPosition_Display_Key" description-key="labelPosition_Desc_Key" of-type="Enum" usage="input" required="true">
+      <value name="Left" display-name-key="Left_Key" description-key="Left_Desc">Left</value>
+      <value name="Center" display-name-key="Center_Key" description-key="Center_Desc" default="true">Center</value>
+      <value name="Right" display-name-key="Right_Key" description-key="Right_Desc">Right</value>
+    </property>
+    <resources>
+      <code path="index.ts" order="1" />
+      <css path="css/LinearSliderWithSteps.css" order="2" />
+      <resx path="strings/LinearSliderWithSteps.1033.resx" version="1.0.0" />
+      <resx path="strings/LinearSliderWithSteps.1036.resx" version="1.0.0" />
+    </resources>
+  </control>
+</manifest>
