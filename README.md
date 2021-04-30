@@ -11,6 +11,8 @@ Controls using PowerApps Components Framework
 
 [Action Button](#action-button)
 
+[Linear Slider with steps](#linear-slider-with-steps)
+
 ## NN Checkboxes
 
 [Download](https://github.com/MscrmTools/PCF-Controls/releases/)
@@ -129,3 +131,32 @@ function onChange(context){
 |---------|-----------|:----:|:---:|------|
 |**Attribute**|The attribute to use to display the control|X|X|| 
 |**ActionText**|Text of the action button|X||Can be a static string or a json object with language id like {"1033":"Run this!","1036":"Exécute ça!"}|
+
+
+## Linear Slider with steps
+
+### Purpose
+Displays a linear slider that can be configured to allow only specific step. This control can also be configured to change the color of the slider, specify minimum and maximum values, and add text before and/or after the selected value.
+This control is an adaptation of the [TSLinearInputControl](https://docs.microsoft.com/en-us/powerapps/developer/component-framework/sample-controls/linear-input-control) sample from Microsoft
+
+### Samples
+
+Slider with blue color, minimum 0, maximum 100, step by 5, prefix "Percentage: " and suffix " %" 
+
+![image](https://user-images.githubusercontent.com/10774317/116671071-d0549e00-a9a0-11eb-92d3-66825d1115ff.png)
+
+
+
+### Configuration
+
+|Parameter|Description|Required|Bound to an attribute|Additional info|
+|---------|-----------|:----:|:---:|------|
+|**Attribute**|The attribute to use to display the control|X|X|| 
+|**Minimum**|Minimum value for the slider control|X|||
+|**Maximum**|Maximum value for the slider control|X|||
+|**Step**|Step for the slider control|X|||
+|**Color**|Color of the slider||||
+|**Label prefix**|Define a text to be inserted before the value of the column||||
+|**Label suffix**|Define a text to be added after the value of the column||||
+|**Label position**|Position of the label under the slider|X||Left, Center or Right|
+
