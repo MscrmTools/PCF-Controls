@@ -1,3 +1,4 @@
+import { timingSafeEqual } from "crypto";
 import {IInputs, IOutputs} from "./generated/ManifestTypes";
 
 export class LinearSliderWithSteps implements ComponentFramework.StandardControl<IInputs, IOutputs> {
@@ -53,6 +54,10 @@ constructor() {
 		this.inputElement = document.createElement("input");
 		this.inputElement.setAttribute("type","range");
 		this.inputElement.addEventListener("input",this._refreshData);
+
+		if(context.mode.isControlDisabled){
+			this.inputElement.setAttribute("disabled","disabled");
+		}
 
 		//setting the max and min values for the control.
 		this.inputElement.setAttribute("min",context.parameters.min.raw?.toString()??"0");
@@ -134,6 +139,12 @@ constructor() {
 	 */
 	public updateView(context: ComponentFramework.Context<IInputs>): void
 	{
+		if(context.mode.isControlDisabled){
+			this.inputElement.setAttribute("disabled","disabled");
+		}else{
+			this.inputElement.removeAttribute("disabled");
+		}
+
 		// storing the latest context from the control.
 		this._value = context.parameters.controlValue.raw!;
 		this._context = context;
