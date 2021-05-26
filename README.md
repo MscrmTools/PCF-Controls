@@ -37,16 +37,20 @@ This is the list of parameters that can be set on the control
 
 |Parameter|Description|Required|Bound to an attribute|
 |---------|-----------|:----:|:---:|
-|**Display attribute**|Attribute to use as label for the checkbox|X|X|
-|**Relationship schema name**|Schema name of the relationship. *required only if multiple many-to-many relationship exist for both related entities*|?||
-|**Background color**|Attribute to use as background color||X|
-|**Color**|Attribute to use as forecolor||X|
+|**DataSet/Label**|Attribute to use as label for the checkbox|X|X|
+|**DataSet/Background color**|Attribute to use as background color||X|
+|**DataSet/Color**|Attribute to use as forecolor||X|
+|**DataSet/Group by**|Attribute used to group records. *If used, this attribute must be the first attribute used to sort the view used by this control*||X
+|**DataSet/Filter attribute**|Filter attribute for related records. *If used, this attribute must be of the same type as the control parameter Filter attribute *||X
+|**Filter attribute**|Filter attribute for related records. *If used, this attribute must be of the same type as the control parameter DataSet/Filter attribute *||X
+|**Relationship**|Schema name of the relationship. *required only if multiple many-to-many relationship exist for both related entities*|?||
 |**Columns**|Number of columns to display checkboxes|X||
-|**Grouping Attribute**|Attribute used to group records. *If used, this attribute must be the first attribute used to sort the view used by this control*||X
 |**Layout**|Choose the layout for the rendering|X||
 |**Switch Off color**|Default background color when the switch is Off. *This parameter is overriden by the parameter **Background color***||X|
 |**Switch On color**|Default background color when the switch is On. *This parameter is overriden by the parameter **Background color***||X|
 |**Allow to select a category**|Indicates if links must be added for each category to select/unselect all records|X||
+
+⚠️Even if Lookup.Simple type of column can be selected for filter, do not use it until it is supported by Microsoft and the bug that breaks dataset content is fixed.
 
 ## Custom Switch
 
