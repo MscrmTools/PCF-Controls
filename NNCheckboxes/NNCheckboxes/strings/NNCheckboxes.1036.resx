@@ -1,170 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
     <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
+        <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+        <xsd:element name="root" msdata:IsDataSet="true">
             <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+                <xsd:choice maxOccurs="unbounded">
+                    <xsd:element name="metadata">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" use="required" type="xsd:string"/>
+                            <xsd:attribute name="type" type="xsd:string"/>
+                            <xsd:attribute name="mimetype" type="xsd:string"/>
+                            <xsd:attribute ref="xml:space"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="assembly">
+                        <xsd:complexType>
+                            <xsd:attribute name="alias" type="xsd:string"/>
+                            <xsd:attribute name="name" type="xsd:string"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="data">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+                            <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+                            <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+                            <xsd:attribute ref="xml:space"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="resheader">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:choice>
             </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <data name="NNCheckboxes_Display_Key" xml:space="preserve">
-    <value>Liste de case à cocher</value>
-  </data>
-  <data name="NNCheckboxes_Desc_Key" xml:space="preserve">
-    <value>Ce contrôle affiche les enregistrements d'une entité référentielle en tant que liste de case à cocher. Les enregistrements liés sont cochés.</value>
-  </data>
-  <data name="nnRelationshipDataSet_Display_Key" xml:space="preserve">
-    <value>Jeu de données des enregistrements associés</value>
-  </data>
-  <data name="targetEntity_Display_Key" xml:space="preserve">
-    <value>Libellé</value>
-  </data>
-  <data name="targetEntity_Desc_Key" xml:space="preserve">
-    <value>Champ utilisé comme libellé pour les cases à cocher</value>
-  </data>
-     <data name="relationshipSchemaName_Display_Key" xml:space="preserve">
-    <value>Relation</value>
-  </data>
-  <data name="relationshipSchemaName_Desc_Key" xml:space="preserve">
-    <value>Nom de schéma de la relation utilisée (la casse est importante). Nécessaire uniquement si plusieurs relations NN existent pour ces deux entités</value>
-  </data>
-  <data name="parentEntityLogicalName_Display_Key" xml:space="preserve">
-    <value>Entité parente</value>
-  </data>
-  <data name="parentEntityLogicalName_Desc_Key" xml:space="preserve">
-    <value>Nom logique de l'entité parente (l'entité de ce formulaire)</value>
-  </data>
-  <data name="useToggleSwitch_Display_Key" xml:space="preserve">
-    <value>Mise en forme</value>
-  </data>
-  <data name="useToggleSwitch_Desc_Key" xml:space="preserve">
-    <value>Sélectionne la mise en forme pour les sélecteurs</value>
-  </data>
-  <data name="toggleDefaultBackgroundColorOff_Display_Key" xml:space="preserve">
-    <value>Couleur Switch Off</value>
-  </data>
-  <data name="toggleDefaultBackgroundColorOff_Desc_Key" xml:space="preserve">
-    <value>Couleur utilisée lorsque le switch est Off</value>
-  </data>
-  <data name="toggleDefaultBackgroundColorOn_Display_Key" xml:space="preserve">
-    <value>Couleur Switch On</value>
-  </data>
-  <data name="toggleDefaultBackgroundColorOn_Desc_Key" xml:space="preserve">
-    <value>Couleur utilisée lorsque le switch est On</value>
-  </data>
-  <data name="backgroundColorAttribute_Display_Key" xml:space="preserve">
-    <value>Couleur de fond</value>
-  </data>
-  <data name="backgroundColorAttribute_Desc_Key" xml:space="preserve">
-    <value>Attribut qui sert à définir la couleur de fond de l'enregistrement. Si attribut de type texte, la valeur doit être un nom de couleur ou un code hexadécimal. Si attribut de type OptionSet, la couleur de l'option sera utilisée. L'attribut doit être exposé dans la vue sélectionnée</value>
-  </data>
-  <data name="foreColorAttribute_Display_Key" xml:space="preserve">
-    <value>Couleur du texte</value>
-  </data>
-  <data name="foreColorAttribute_Desc_Key" xml:space="preserve">
-    <value>Attribut qui sert à définir la couleur d'affichage de l'enregistrement. Si attribut de type texte, la valeur doit être un nom de couleur ou un code hexadécimal. Si attribut de type OptionSet, la couleur de l'option sera utilisée. L'attribut doit être exposé dans la vue sélectionnée</value>
-  </data>
-  <data name="categoryAttribute_Display_Key" xml:space="preserve">
-    <value>Grouper par</value>
-  </data>
-  <data name="categoryAttribute_Desc_Key" xml:space="preserve">
-    <value>Attribut utilisé pour grouper les enregistrements. L'attribut doit être exposé dans la vue sélectionnée</value>
-  </data>
-  <data name="columnsNumber_Display_Key" xml:space="preserve">
-    <value>Colonnes</value>
-  </data>
-  <data name="columnsNumber_Desc_Key" xml:space="preserve">
-    <value>Nombre de colonnes à utiliser pour afficher les enregistrements</value>
-  </data>
-  <data name="No_Relationship_Found" xml:space="preserve">
-    <value>Aucune relation plusieurs à plusieurs n'a été trouvé pour ces entités</value>
-  </data>
-  <data name="Multiple_Relationships_Found" xml:space="preserve">
-    <value>Plusieurs relations plusieurs à plusieurs ont été trouvé pour ces entités. Veuillez spécifier le nom de schéma de la relation à utiliser dans la configuration de ce contrôle</value>
-  </data>
-  <data name="No_Category" xml:space="preserve">
-    <value>Enregistrements non catégorisés</value>
-  </data>
-  <data name="useToggleSwitchTrue" xml:space="preserve">
-    <value>Interrupteur</value>
-  </data>  
-  <data name="useToggleSwitchTrue_Desc" xml:space="preserve">
-    <value>Affiche les sélecteurs en tant qu'interrupteur</value>
-  </data>
-  <data name="useToggleSwitchFalse" xml:space="preserve">
-    <value>Cases à cocher</value>
-  </data>  
-  <data name="useToggleSwitchFalse_Desc" xml:space="preserve">
-    <value>Affiche les sélecteurs en tant que cases à cocher</value>
-  </data>
-    <data name="addCategorySelector_Display_Key" xml:space="preserve">
-    <value>Permettre de sélectionner une catégorie</value>
-  </data>
-  <data name="addCategorySelector_Desc_Key" xml:space="preserve">
-    <value>Affiche des liens pour sélectionner/déselectionner tous les enregistremetns d'une catégorie</value>
-  </data>
-    <data name="yes_Display_Key" xml:space="preserve">
-    <value>Yes</value>
-  </data>
-    <data name="yes_Desc_Key" xml:space="preserve">
-    <value>Yes</value>
-  </data>
-    <data name="no_Display_Key" xml:space="preserve">
-    <value>No</value>
-  </data>
-     <data name="no_Desc_Key" xml:space="preserve">
-    <value>No</value>
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="NNCheckboxes_Display_Key" xml:space="preserve">
+        <value>Liste de case à cocher</value>
     </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <data name="NNCheckboxes_Desc_Key" xml:space="preserve">
+        <value>Ce contrôle affiche les enregistrements d'une entité référentielle en tant que liste de case à cocher. Les enregistrements liés sont cochés.</value>
+    </data>
+    <data name="nnRelationshipDataSet_Display_Key" xml:space="preserve">
+        <value>Jeu de données des enregistrements associés</value>
+    </data>
+    <data name="targetEntity_Display_Key" xml:space="preserve">
+        <value>Libellé</value>
+    </data>
+    <data name="targetEntity_Desc_Key" xml:space="preserve">
+        <value>Champ utilisé comme libellé pour les cases à cocher</value>
+    </data>
+    <data name="relationshipSchemaName_Display_Key" xml:space="preserve">
+        <value>Relation</value>
+    </data>
+    <data name="relationshipSchemaName_Desc_Key" xml:space="preserve">
+        <value>Nom de schéma de la relation utilisée (la casse est importante). Nécessaire uniquement si plusieurs relations NN existent pour ces deux entités</value>
+    </data>
+    <data name="parentEntityLogicalName_Display_Key" xml:space="preserve">
+        <value>Entité parente</value>
+    </data>
+    <data name="parentEntityLogicalName_Desc_Key" xml:space="preserve">
+        <value>Nom logique de l'entité parente (l'entité de ce formulaire)</value>
+    </data>
+    <data name="useToggleSwitch_Display_Key" xml:space="preserve">
+        <value>Mise en forme</value>
+    </data>
+    <data name="useToggleSwitch_Desc_Key" xml:space="preserve">
+        <value>Sélectionne la mise en forme pour les sélecteurs</value>
+    </data>
+    <data name="toggleDefaultBackgroundColorOff_Display_Key" xml:space="preserve">
+        <value>Couleur Switch Off</value>
+    </data>
+    <data name="toggleDefaultBackgroundColorOff_Desc_Key" xml:space="preserve">
+        <value>Couleur utilisée lorsque le switch est Off</value>
+    </data>
+    <data name="toggleDefaultBackgroundColorOn_Display_Key" xml:space="preserve">
+        <value>Couleur Switch On</value>
+    </data>
+    <data name="toggleDefaultBackgroundColorOn_Desc_Key" xml:space="preserve">
+        <value>Couleur utilisée lorsque le switch est On</value>
+    </data>
+    <data name="backgroundColorAttribute_Display_Key" xml:space="preserve">
+        <value>Couleur de fond</value>
+    </data>
+    <data name="backgroundColorAttribute_Desc_Key" xml:space="preserve">
+        <value>Attribut qui sert à définir la couleur de fond de l'enregistrement. Si attribut de type texte, la valeur doit être un nom de couleur ou un code hexadécimal. Si attribut de type OptionSet, la couleur de l'option sera utilisée. L'attribut doit être exposé dans la vue sélectionnée</value>
+    </data>
+    <data name="foreColorAttribute_Display_Key" xml:space="preserve">
+        <value>Couleur du texte</value>
+    </data>
+    <data name="foreColorAttribute_Desc_Key" xml:space="preserve">
+        <value>Attribut qui sert à définir la couleur d'affichage de l'enregistrement. Si attribut de type texte, la valeur doit être un nom de couleur ou un code hexadécimal. Si attribut de type OptionSet, la couleur de l'option sera utilisée. L'attribut doit être exposé dans la vue sélectionnée</value>
+    </data>
+    <data name="categoryAttribute_Display_Key" xml:space="preserve">
+        <value>Grouper par</value>
+    </data>
+    <data name="categoryAttribute_Desc_Key" xml:space="preserve">
+        <value>Attribut utilisé pour grouper les enregistrements. L'attribut doit être exposé dans la vue sélectionnée</value>
+    </data>
+    <data name="columnsNumber_Display_Key" xml:space="preserve">
+        <value>Colonnes</value>
+    </data>
+    <data name="columnsNumber_Desc_Key" xml:space="preserve">
+        <value>Nombre de colonnes à utiliser pour afficher les enregistrements</value>
+    </data>
+    <data name="No_Relationship_Found" xml:space="preserve">
+        <value>Aucune relation plusieurs à plusieurs n'a été trouvé pour ces entités</value>
+    </data>
+    <data name="Multiple_Relationships_Found" xml:space="preserve">
+        <value>Plusieurs relations plusieurs à plusieurs ont été trouvé pour ces entités. Veuillez spécifier le nom de schéma de la relation à utiliser dans la configuration de ce contrôle</value>
+    </data>
+    <data name="No_Category" xml:space="preserve">
+        <value>Enregistrements non catégorisés</value>
+    </data>
+    <data name="useToggleSwitchTrue" xml:space="preserve">
+        <value>Interrupteur</value>
+    </data>
+    <data name="useToggleSwitchTrue_Desc" xml:space="preserve">
+        <value>Affiche les sélecteurs en tant qu'interrupteur</value>
+    </data>
+    <data name="useToggleSwitchFalse" xml:space="preserve">
+        <value>Cases à cocher</value>
+    </data>
+    <data name="useToggleSwitchFalse_Desc" xml:space="preserve">
+        <value>Affiche les sélecteurs en tant que cases à cocher</value>
+    </data>
+    <data name="addCategorySelector_Display_Key" xml:space="preserve">
+        <value>Permettre de sélectionner une catégorie</value>
+    </data>
+    <data name="addCategorySelector_Desc_Key" xml:space="preserve">
+        <value>Affiche des liens pour sélectionner/déselectionner tous les enregistremetns d'une catégorie</value>
+    </data>
+    <data name="yes_Display_Key" xml:space="preserve">
+        <value>Oui</value>
+    </data>
+    <data name="yes_Desc_Key" xml:space="preserve">
+        <value>Oui</value>
+    </data>
+    <data name="no_Display_Key" xml:space="preserve">
+        <value>Non</value>
+    </data>
+    <data name="no_Desc_Key" xml:space="preserve">
+        <value>Non</value>
+    </data>
+    <data name="filterDataSetAttribute_Display_Key" xml:space="preserve">
+        <value>Attribut de filtre</value>
+    </data>
+    <data name="filterDataSetAttribute_Desc_Key" xml:space="preserve">
+        <value>Attribut de l'enregistrement lié permettant de filtrer les enregistrements disponibles</value>
+    </data>
+    <data name="fpa_Display_Key" xml:space="preserve">
+        <value>Attribut de filtre</value>
+    </data>
+    <data name="fpa_Desc_Key" xml:space="preserve">
+        <value>Attribut de l'enregistrement parent permettant de filtrer les enregistrements</value>
+    </data>
+    <data name="Error_Retrieve_Records" xml:space="preserve">
+        <value>Une erreur est survenue lors de la recherche des enregistrements</value>
+    </data>
+    <data name="Error_Retrieve_View" xml:space="preserve">
+        <value>Une erreur est survenue lors de la récupération de la vue courante</value>
+    </data>
+    <data name="No_Relationship_Found_For_Provided_SchemaName" xml:space="preserve">
+        <value>Aucune relation n'a été trouvée avec le nom de schéma fourni dans la configuration</value>
+    </data>
+    <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
 </root>

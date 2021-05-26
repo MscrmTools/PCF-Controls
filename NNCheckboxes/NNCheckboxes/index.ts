@@ -17,6 +17,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 	private _parentRecordType: string;
 	private _childRecordType: string;
 	private _labelAttributeName: string;
+	private _datasetFilterAttributeName: string;
 	private _backgroundColorAttributeName: string;
 	private _backgroundColorIsFromOptionSet: boolean;
 	private _foreColorAttributeName: string;
@@ -132,37 +133,100 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 				this._categoryAttributeName = column.name;
 				this._categoryUseDisplayName = column.dataType === "Lookup.Simple" ||  column.dataType === "OptionSet" ||  column.dataType === "TwoOptions" || column.dataType === "" && column.name === "statuscode";
 			}
+			else if(column.alias === "filterDataSetAttribute"){
+				this._datasetFilterAttributeName = column.name;
+			}
 		}
 
-		// If no category grouping, then only one flexbox is needed
-		if(!this._categoryAttributeName){
-			this._divFlexBox = document.createElement("div");
-			this._divFlexBox.setAttribute("class", "nncb-flex");
-			this._container.appendChild(this._divFlexBox);
-		}
+	
 
 		try{
 			this._relationshipSchemaName = await this.GetNNRelationshipNameByEntityNames();
 		}
 		catch(error){
-			this._context.navigation.openAlertDialog(
+			this._context.navigation.openErrorDialog(
 				{ 
-					text: "NNCheckboxes " + error
+					message: "NNCheckboxes " + error
 				});
 			return;
 		}
 
-		var thisCtrl = this;
+		this.DisplayRecords();
+	}
 
-		context.webAPI.retrieveRecord("savedquery", context.parameters.nnRelationshipDataSet.getViewId(),"?$select=fetchxml")
+	private DisplayRecords(){
+		var thisCtrl = this;
+		this._context.webAPI.retrieveRecord("savedquery", this._context.parameters.nnRelationshipDataSet.getViewId(),"?$select=fetchxml")
 		.then(
 			function(view){
-				context.webAPI.retrieveMultipleRecords(thisCtrl._childRecordType, "?fetchXml=" + encodeURIComponent(<string>view.fetchxml)
+				// If both properties are set to filter content
+				if(thisCtrl._context.parameters.fpa && thisCtrl._datasetFilterAttributeName){
+					const parser = new DOMParser();
+					var queryContent = parser.parseFromString(<string>view.fetchxml, "text/xml");
+
+					var condition = queryContent.createElement("condition");
+					condition.setAttribute("attribute",thisCtrl._datasetFilterAttributeName);
+
+					if(thisCtrl._context.parameters.fpa.raw){
+						let value = thisCtrl._context.parameters.fpa.raw;
+						if(thisCtrl._context.parameters.fpa.type === "Lookup.Simple"){
+							if((<Array<any>>thisCtrl._context.parameters.fpa.raw).length === 1){
+								value = (<Array<any>>thisCtrl._context.parameters.fpa.raw)[0].id;
+								condition.setAttribute("operator", "eq");
+								condition.setAttribute("value", value); 
+							}
+							else{
+								condition.setAttribute("operator", "null");
+							}
+						}
+						else{
+							condition.setAttribute("operator", "eq");
+							condition.setAttribute("value", value); 
+						}
+					}
+					else{
+						condition.setAttribute("operator", "null");
+					}
+
+					var attrFilter = queryContent.createElement("filter");
+					attrFilter.appendChild(condition);
+
+					queryContent.documentElement.firstChild?.appendChild(attrFilter);
+
+					view.fetchxml = queryContent.documentElement.outerHTML;
+				}
+
+				thisCtrl._context.webAPI.retrieveMultipleRecords(thisCtrl._childRecordType, "?fetchXml=" + encodeURIComponent(<string>view.fetchxml)
 					)
 					.then(function (result) {
 						var category = "";
 						var divFlexCtrl = document.createElement("div");
-				
+
+						if(thisCtrl._divFlexBox){
+							thisCtrl._divFlexBox.innerHTML = "";
+						}
+
+						thisCtrl._container.innerHTML = "";
+						if(result.entities.length === 0){
+							// @ts-ignore
+							let word = thisCtrl._context.parameters.nnRelationshipDataSet.entityDisplayCollectionName ?? "records";
+
+							let emptyDiv = document.createElement("div");
+							emptyDiv.setAttribute("style", "text-align:center;")
+							emptyDiv.innerText = "No " + word + " found for this filter"
+							
+							thisCtrl._container.appendChild(emptyDiv);
+
+							return;
+						}else{
+							// If no category grouping, then only one flexbox is needed
+							if(!thisCtrl._categoryAttributeName){
+								thisCtrl._divFlexBox = document.createElement("div");
+								thisCtrl._divFlexBox.setAttribute("class", "nncb-flex");
+								thisCtrl._container.appendChild(thisCtrl._divFlexBox);
+							}
+						}
+
 						for (var i = 0; i < result.entities.length; i++) {
 							var record = result.entities[i];
 		
@@ -175,7 +239,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 		
 									let label = record[thisCtrl._categoryAttributeName + (thisCtrl._categoryUseDisplayName ? "@OData.Community.Display.V1.FormattedValue" : "")];
 									if(!label){
-										label = context.resources.getString("No_Category");
+										label = thisCtrl._context.resources.getString("No_Category");
 									}
 
 									// Add the category
@@ -250,6 +314,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 							// Add flex content
 							divFlexCtrl = document.createElement("div");
 							divFlexCtrl.setAttribute("style", "flex: 0 " + (100/thisCtrl._numberOfColumns) + "% !important");
+						
 							thisCtrl._divFlexBox.appendChild(divFlexCtrl);
 							
 							// With style if configured with colors
@@ -299,6 +364,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 							
 							var chk = document.createElement("input");
 							chk.setAttribute("type", "checkbox");
+							chk.setAttribute("class","nncb-control")
 							chk.setAttribute("id", thisCtrl._relationshipInfo.Name + "|" + record[thisCtrl._childRecordType + "id"]);
 							chk.setAttribute("value", thisCtrl._relationshipInfo.Name + "|" + record[thisCtrl._childRecordType + "id"]);
 							chk.addEventListener("change", function () {
@@ -411,7 +477,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 								}
 							});
 		
-							if (context.mode.isControlDisabled) {
+							if (thisCtrl._context.mode.isControlDisabled) {
 								chk.setAttribute("disabled", "disabled");
 							}
 							
@@ -439,17 +505,19 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 						thisCtrl._context.parameters.nnRelationshipDataSet.refresh();
 					},
 					function (error) {
-						thisCtrl._context.navigation.openAlertDialog(
+						thisCtrl._context.navigation.openErrorDialog(
 							{ 
-								text: "NNCheckboxes: " + error 
+								message: thisCtrl._context.resources.getString("Error_Retrieve_Records"),
+								details: "NN Checkboxes: " + error.message
 							});
 					}
 				);
 			},
 			function(error){
-				thisCtrl._context.navigation.openAlertDialog(
+				thisCtrl._context.navigation.openErrorDialog(
 					{ 
-						text: "NNCheckboxes: " + error 
+						message: thisCtrl._context.resources.getString("Error_Retrieve_View"),
+						details: "NN Checkboxes: " + error.message
 					});
 			}
 		);
@@ -503,7 +571,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 			let nnRelationships = entityMetadata.ManyToManyRelationships.getAll();
 
 			for (let i = 0; i < nnRelationships.length; i++) {
-				if (nnRelationships[i].IntersectEntityName.toLowerCase() === this._context.parameters.relationshipSchemaName.raw.toLowerCase()) {
+				if (nnRelationships[i].SchemaName.toLowerCase() === this._context.parameters.relationshipSchemaName.raw.toLowerCase()) {
 					this._relationshipInfo = new RelationshipInfo();
 					this._relationshipInfo.Entity1LogicalName = nnRelationships[i].Entity1LogicalName;
 					this._relationshipInfo.Entity1AttributeName = nnRelationships[i].Entity1IntersectAttribute;
@@ -511,6 +579,10 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 					this._relationshipInfo.Entity2AttributeName = nnRelationships[i].Entity2IntersectAttribute;
 					this._relationshipInfo.Name = nnRelationships[i].SchemaName;
 				}
+			}
+
+			if(!this._relationshipInfo){
+				return Promise.reject(new Error(this._context.resources.getString("No_Relationship_Found_For_Provided_SchemaName")));
 			}
 			
 			return Promise.resolve(<string>schemaNameParameter.raw); 
@@ -551,19 +623,37 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 	 * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to names defined in the manifest, as well as utility functions
 	 */
 	public updateView(context: ComponentFramework.Context<IInputs>): void {
-		if(!context.updatedProperties.includes("nnRelationshipDataSet")) return;
 
-		if(context.parameters.nnRelationshipDataSet.paging.hasNextPage)
-		{
-			context.parameters.nnRelationshipDataSet.paging.loadNextPage();
-			return;
+		if(context.updatedProperties.includes("fpa")){
+			this.DisplayRecords();
 		}
 
-		var selectedIds = context.parameters.nnRelationshipDataSet.sortedRecordIds;
-		for (var j = 0; j < selectedIds.length; j++) {
-			let chk = <HTMLInputElement>window.document.getElementById(this._relationshipInfo.Name + "|" + selectedIds[j]);
-			if(chk){
-				chk.checked = true;
+		if(context.updatedProperties.includes("nnRelationshipDataSet")){
+
+			if(context.parameters.nnRelationshipDataSet.paging.hasNextPage)
+			{
+				context.parameters.nnRelationshipDataSet.paging.loadNextPage();
+				return;
+			}
+		
+			var selectedIds = context.parameters.nnRelationshipDataSet.sortedRecordIds;
+			for (var j = 0; j < selectedIds.length; j++) {
+				let chk = <HTMLInputElement>window.document.getElementById(this._relationshipInfo.Name + "|" + selectedIds[j]);
+				if(chk){
+					chk.checked = true;
+				}
+			}
+		}
+
+		// Handle change of parent record state
+		var allControls = window.document.getElementsByClassName("nncb-control");
+		for(let i=0;i<allControls.length;i++){
+			if(context.mode.isControlDisabled)
+			{
+				allControls[i].setAttribute("disabled","disabled");
+			}
+			else{
+				allControls[i].removeAttribute("disabled");
 			}
 		}
 	}
