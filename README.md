@@ -51,6 +51,7 @@ This is the list of parameters that can be set on the control
 |**Allow to select a category**|Indicates if links must be added for each category to select/unselect all records|X||
 
 ⚠️Even if Lookup.Simple type of column can be selected for filter, do not use it until it is supported by Microsoft and the bug that breaks dataset content is fixed.
+⚠️When using filter feature, the control won't disassociate related records that don't fit with the selected filter. It's your responsability to disassociate these records.
 
 ## Custom Switch
 
