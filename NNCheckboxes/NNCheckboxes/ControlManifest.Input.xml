@@ -17,6 +17,10 @@
     </property>
     <property name="toggleDefaultBackgroundColorOff" display-name-key="toggleDefaultBackgroundColorOff_Display_Key" description-key="toggleDefaultBackgroundColorOff_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" default-value="#CC0000" />
     <property name="toggleDefaultBackgroundColorOn" display-name-key="toggleDefaultBackgroundColorOn_Display_Key" description-key="toggleDefaultBackgroundColorOn_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" default-value="#008800" />
+    <property name="showCustomErrors" display-name-key="showCustomErrors_Display_Key" description-key="showCustomErrors_Desc_Key" of-type="Enum" usage="input" required="true" default-value="0">
+      <value name="Yes" display-name-key="yes_Display_Key" description-key="yes_Desc_Key">1</value>
+      <value name="No" display-name-key="no_Display_Key" description-key="no_Desc_Key" default="true">0</value>
+    </property>
     <property name="addCategorySelector" display-name-key="addCategorySelector_Display_Key" description-key="addCategorySelector_Desc_Key" of-type="Enum" default-value="0" usage="input" required="true">
       <value name="Yes" display-name-key="yes_Display_Key" description-key="yes_Desc_Key">1</value>
       <value name="No" display-name-key="no_Display_Key" description-key="no_Desc_Key">0</value>

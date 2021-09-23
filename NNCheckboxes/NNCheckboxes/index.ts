@@ -138,22 +138,89 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 			}
 		}
 
-	
-
 		try{
 			this._relationshipSchemaName = await this.GetNNRelationshipNameByEntityNames();
 		}
 		catch(error){
-			this._context.navigation.openErrorDialog(
-				{ 
-					message: "NNCheckboxes " + error
-				});
+			this.DisplayError(error);
 			return;
 		}
 
 		this.DisplayRecords();
 	}
 
+	private DisplayError(error: any | undefined, genericError : string | undefined = undefined){
+		if (genericError === undefined){
+			genericError = this._context.resources.getString("Error_Generic") ?? "NN Checkboxes: an unknown error occurred.";
+		}
+
+		let msg = "";
+		let details = undefined as string | undefined;
+
+		if (this._context.parameters.showCustomErrors.raw == "1"){ // Try display custom error message in modal
+			switch (typeof(error)){
+				case "string":
+					if (error.length > 0){
+						msg = error;
+					}
+					else{
+						msg = genericError;
+					}
+					break;
+				case "object":
+					if (error === null){
+						msg = genericError;
+						break;
+					}
+					if (error.message != undefined && error.message.length > 0){
+						msg = error.message;
+						break;
+					}
+					else if (error.text != undefined && error.text.length > 0){
+						msg = error.text;
+					}
+					break;
+				case "undefined":
+				default:
+					msg = genericError;
+					break;
+			}
+		}
+		else { // Retrieve generic error for modal, try put custom error in details.
+			msg = genericError;
+			switch (typeof(error)){
+				case "string":
+					if (error.length > 0){
+						details = error;
+					}
+					break;
+				case "object": // Run through a number of standard error object text fields
+					if (error === null){
+						break;
+					}
+					if (error.message != undefined && error.message.length > 0){
+						details = error.message;
+					}
+					else if (error.text != undefined && error.text.length > 0){
+						details = error.text;
+					}
+					break;
+				case "undefined":
+				default:
+					break;
+			}
+		}
+
+		this._context.navigation.openErrorDialog(
+			{ 
+				message: msg,
+				details: details
+			});
+	}
+
+	/**
+	 * Responsible for compiling / rendering the output DOM of the PCF and wiring up event handlers for association/dissasociations.
+	 */
 	private DisplayRecords(){
 		var thisCtrl = this;
 		this._context.webAPI.retrieveRecord("savedquery", this._context.parameters.nnRelationshipDataSet.getViewId(),"?$select=fetchxml")
@@ -430,7 +497,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 											},
 											// @ts-ignore
 											function (error) {
-												thisCtrl._context.navigation.openAlertDialog({ text: "An error occured when associating records. Please check NNCheckboxes control configuration" });
+												thisCtrl.DisplayError(error, thisCtrl._context.resources.getString("Error_Associate"));
 											}
 										);
 								}
@@ -471,7 +538,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 											},
 											// @ts-ignore
 											function (error) {
-												thisCtrl._context.navigation.openAlertDialog({ text: "An error occured when disassociating records. Please check NNCheckboxes control configuration" });
+												thisCtrl.DisplayError(error, thisCtrl._context.resources.getString("Error_Disassociate"));
 											}
 										);
 								}
@@ -505,20 +572,12 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 						thisCtrl._context.parameters.nnRelationshipDataSet.refresh();
 					},
 					function (error) {
-						thisCtrl._context.navigation.openErrorDialog(
-							{ 
-								message: thisCtrl._context.resources.getString("Error_Retrieve_Records"),
-								details: "NN Checkboxes: " + error.message
-							});
+						thisCtrl.DisplayError(error, thisCtrl._context.resources.getString("Error_Retrieve_Records"));
 					}
 				);
 			},
 			function(error){
-				thisCtrl._context.navigation.openErrorDialog(
-					{ 
-						message: thisCtrl._context.resources.getString("Error_Retrieve_View"),
-						details: "NN Checkboxes: " + error.message
-					});
+				thisCtrl.DisplayError(error, thisCtrl._context.resources.getString("Error_Retrieve_View"));
 			}
 		);
 	}
@@ -535,7 +594,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 
 	public async GetOptionSetColors(attribute:string){
 		let requestUrl =
-		"/api/data/v9.0/EntityDefinitions(LogicalName='"+ this._childRecordType +"')/Attributes/Microsoft.Dynamics.CRM.PicklistAttributeMetadata?$select=LogicalName&$filter=LogicalName eq '"+attribute+"'&$expand=OptionSet";
+		"/api/data/v9.2/EntityDefinitions(LogicalName='"+ this._childRecordType +"')/Attributes/Microsoft.Dynamics.CRM.PicklistAttributeMetadata?$select=LogicalName&$filter=LogicalName eq '"+attribute+"'&$expand=OptionSet";
 	
 		var thisCtrl = this;
 		let request = new XMLHttpRequest();
@@ -559,8 +618,8 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 					let errorText = request.responseText;
 					console.log(errorText);
 				}
-				}
-			};
+			}
+		};
 		request.send();
 	}
 
@@ -582,7 +641,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 			}
 
 			if(!this._relationshipInfo){
-				return Promise.reject(new Error(this._context.resources.getString("No_Relationship_Found_For_Provided_SchemaName")));
+				return Promise.reject(new Error(this._context.resources.getString("Error_No_Relationship_Found_For_Provided_SchemaName")));
 			}
 			
 			return Promise.resolve(<string>schemaNameParameter.raw); 
@@ -609,10 +668,10 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 		}
 
 		if(foundSchemaName.length === 0){
-			return Promise.reject(new Error(this._context.resources.getString("No_Relationship_Found")));
+			return Promise.reject(new Error(this._context.resources.getString("Error_No_Relationship_Found")));
 		}
 		if(count > 1){
-			return Promise.reject(new Error(this._context.resources.getString("Multiple_Relationships_Found")));
+			return Promise.reject(new Error(this._context.resources.getString("Error_Multiple_Relationships_Found")));
 		}
 
 		return Promise.resolve(<string>foundSchemaName);

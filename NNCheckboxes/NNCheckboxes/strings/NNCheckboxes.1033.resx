@@ -127,12 +127,6 @@
     <data name="categoryAttribute_Desc_Key" xml:space="preserve">
         <value>Attribute used to group records. This attribute must be exposed in the selected view</value>
     </data>
-    <data name="No_Relationship_Found" xml:space="preserve">
-        <value>No many-to-many relationship has been found for these entities</value>
-    </data>
-    <data name="Multiple_Relationships_Found" xml:space="preserve">
-        <value>Mutliple many-to-many relationships have been found for these entities. Please define the relationship in this control configuration</value>
-    </data>
     <data name="No_Category" xml:space="preserve">
         <value>Uncategorized records</value>
     </data>
@@ -178,11 +172,35 @@
     <data name="fpa_Desc_Key" xml:space="preserve">
         <value>Filter attribute for parent record. Must be of the same type as the filter for the related records </value>
     </data>
-    <data name="Error_Retrieve_Records" xml:space="preserve">
-        <value>An error occured when retrieving records</value>
+    <data name="showCustomErrors_Display_Key" xml:space="preserve">
+        <value>Show custom errors</value>
     </data>
-    <data name="No_Relationship_Found_For_Provided_SchemaName" xml:space="preserve">
-        <value>No relationship has been found with the provided schema name in configuration</value>
+    <data name="showCustomErrors_Desc_Key" xml:space="preserve">
+        <value>Whether or not to show custom errors from the platform (ie synchronous plugin exception messages) [Yes] or to instead show a generic error message [No].</value>
+    </data>
+    <data name="Error_Generic" xml:space="preserve">
+        <value>NNCheckboxes: An error occured. Please check this control configuration or any applicable trace logs.</value>
+    </data>
+    <data name="Error_Retrieve_Records" xml:space="preserve">
+        <value>NNCheckboxes: An error occured when retrieving records for the relationship. Please check NNCheckboxes control configuration.</value>
+    </data>
+    <data name="Error_Retrieve_View" xml:space="preserve">
+        <value>NNCheckboxes: An error occured when retrieving the view for the relationship. Please check NNCheckboxes control configuration.</value>
+    </data>
+    <data name="Error_No_Relationship_Found_For_Provided_SchemaName" xml:space="preserve">
+        <value>NNCheckboxes: No relationship has been found with the provided schema name in configuration.</value>
+    </data>
+    <data name="Error_No_Relationship_Found" xml:space="preserve">
+        <value>NNCheckboxes: No many-to-many relationship has been found for these entities.</value>
+    </data>
+    <data name="Error_Multiple_Relationships_Found" xml:space="preserve">
+        <value>NNCheckboxes: Multiple many-to-many relationships have been found for these entities. Please define the relationship in this control configuration.</value>
+    </data>
+    <data name="Error_Associate" xml:space="preserve">
+        <value>NNCheckboxes: An error occured when associating records. Please check this control configuration or any applicable trace logs.</value>
+    </data>
+    <data name="Error_Disassociate" xml:space="preserve">
+        <value>NNCheckboxes: An error occured when disassociating records. Please check this control configuration or any applicable trace logs.</value>
     </data>
     <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
 </root>
