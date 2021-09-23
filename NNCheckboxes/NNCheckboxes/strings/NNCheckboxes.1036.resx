@@ -127,12 +127,6 @@
     <data name="columnsNumber_Desc_Key" xml:space="preserve">
         <value>Nombre de colonnes à utiliser pour afficher les enregistrements</value>
     </data>
-    <data name="No_Relationship_Found" xml:space="preserve">
-        <value>Aucune relation plusieurs à plusieurs n'a été trouvé pour ces entités</value>
-    </data>
-    <data name="Multiple_Relationships_Found" xml:space="preserve">
-        <value>Plusieurs relations plusieurs à plusieurs ont été trouvé pour ces entités. Veuillez spécifier le nom de schéma de la relation à utiliser dans la configuration de ce contrôle</value>
-    </data>
     <data name="No_Category" xml:space="preserve">
         <value>Enregistrements non catégorisés</value>
     </data>
@@ -178,14 +172,35 @@
     <data name="fpa_Desc_Key" xml:space="preserve">
         <value>Attribut de l'enregistrement parent permettant de filtrer les enregistrements</value>
     </data>
+    <data name="showCustomErrors_Display_Key" xml:space="preserve">
+        <value>Afficher les erreurs personnalisées</value>
+    </data>
+    <data name="showCustomErrors_Desc_Key" xml:space="preserve">
+        <value>Afficher ou non les erreurs personnalisées de la plate-forme (c'est-à-dire les messages d'exception de plug-in synchrones) [Oui] ou afficher à la place un message d'erreur générique [Non].</value>
+    </data>
+    <data name="Error_Generic" xml:space="preserve">
+        <value>NN Cases à cocher : une erreur s'est produite. Veuillez vérifier cette configuration de contrôle ou tout journal de suivi applicable.</value>
+    </data>
     <data name="Error_Retrieve_Records" xml:space="preserve">
         <value>Une erreur est survenue lors de la recherche des enregistrements</value>
     </data>
     <data name="Error_Retrieve_View" xml:space="preserve">
         <value>Une erreur est survenue lors de la récupération de la vue courante</value>
     </data>
-    <data name="No_Relationship_Found_For_Provided_SchemaName" xml:space="preserve">
+    <data name="Error_No_Relationship_Found_For_Provided_SchemaName" xml:space="preserve">
         <value>Aucune relation n'a été trouvée avec le nom de schéma fourni dans la configuration</value>
+    </data>
+    <data name="Error_No_Relationship_Found" xml:space="preserve">
+        <value>Aucune relation plusieurs à plusieurs n'a été trouvé pour ces entités</value>
+    </data>
+    <data name="Error_Multiple_Relationships_Found" xml:space="preserve">
+        <value>Plusieurs relations plusieurs à plusieurs ont été trouvé pour ces entités. Veuillez spécifier le nom de schéma de la relation à utiliser dans la configuration de ce contrôle</value>
+    </data>
+    <data name="Error_Associate" xml:space="preserve">
+        <value>NN Cases à cocher : une erreur s'est produite lors de l'association d'enregistrements. Veuillez vérifier cette configuration de contrôle ou tout journal de suivi applicable.</value>
+    </data>
+    <data name="Error_Disassociate" xml:space="preserve">
+        <value>Cases à cocher NN : une erreur s'est produite lors de la dissociation des enregistrements. Veuillez vérifier cette configuration de contrôle ou tout journal de suivi applicable.</value>
     </data>
     <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
 </root>
