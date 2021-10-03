@@ -79,7 +79,7 @@
   
 
   <data name="EnableButtonOnDisabledForm_Display_Key" xml:space="preserve">
-    <value>Always unable button</value>
+    <value>Always enable button</value>
   </data>
     <data name="EnableButtonOnDisabledForm_Desc_Key" xml:space="preserve">
     <value>Indicates if button should be always enabled even when control or form is disabled</value>
