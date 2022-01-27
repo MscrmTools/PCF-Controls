@@ -1,35 +1,36 @@
 import * as React from 'react'
 import {Stack} from 'office-ui-fabric-react/lib/components/Stack';
-import {PrimaryButton} from 'office-ui-fabric-react/lib/components/Button';
+import {IBaseButtonProps, IBaseButtonState, IButtonStyles, PrimaryButton} from 'office-ui-fabric-react/lib/components/Button';
 
-export interface IButtonProps {
-    text: string,
-    onClick: () => void
-    disabled: boolean,
+export interface IButtonControlProps extends IBaseButtonProps{
+    hoverBackgroundColor:string,
+    hoverBorderColor:string,
+    hoverColor:string
   }
 
-export interface IButtonState {
-  text: string,
-  onClick: () => void
-  disabled: boolean,
-
-}
-
-export default class ButtonControl extends React.Component<IButtonProps, IButtonState>{
-  constructor(props :IButtonProps){
+export default class ButtonControl extends React.Component<IButtonControlProps, IBaseButtonState>{
+  constructor(props :IButtonControlProps){
     super(props);
-    this.state = {
-      text:props.text,
-      onClick: props.onClick,
-      disabled: props.disabled
+  }
+  styles : IButtonStyles ={
+    root:{
+      backgroundColor:this.props.style?.backgroundColor ?? "#0078d4",
+      borderColor:this.props.style?.borderColor ?? "#0078d4",
+      color:this.props.style?.color ?? "#FFFFFF"
+    },
+    rootHovered:{
+      backgroundColor:this.props.hoverBackgroundColor ?? "#106EBE",
+      borderColor:this.props.hoverBorderColor ?? "#106EBE",
+      color:this.props.hoverColor ?? "#FFFFFF"
     }
   }
+
     render(){
         return(
           <Stack horizontal>
-            <PrimaryButton text={this.state.text} disabled={this.state.disabled} onClick={this.state.onClick}/>
+            <PrimaryButton styles={this.styles} text={this.props.text} disabled={this.props.disabled} onClick={this.props.onClick}/>
           </Stack>
-                
         );
     }
 }
+

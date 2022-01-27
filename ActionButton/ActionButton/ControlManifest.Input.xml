@@ -1,22 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest>
-  <control namespace="MscrmTools" constructor="ActionButton" version="0.0.10" display-name-key="ActionButton_Display_Key" description-key="ActionButton_Desc_Key" control-type="standard" preview-image="imgs/logo.png">
+  <control namespace="MscrmTools" constructor="ActionButton" version="0.1.4" display-name-key="ActionButton_Display_Key" description-key="ActionButton_Desc_Key" control-type="standard" preview-image="imgs/logo.png">
     <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
     <property name="BoundAttribute" display-name-key="BoundAttribute_Display_Key" description-key="BoundAttribute_Desc_Key" of-type-group="ValidTypes" usage="bound" required="true" />
     <property name="ActionText" display-name-key="ActionText_Display_Key" description-key="ActionText_Desc_Key" of-type="SingleLine.Text" default-value="" usage="input" required="false" />
-    <property name="EnableButtonOnDisabledForm" display-name-key="EnableButtonOnDisabledForm_Display_Key" description-key="EnableButtonOnDisabledForm_Desc_Key" of-type="Enum" default-value="1" usage="input" required="true" >
+    <property name="Id" display-name-key="Id_Display_Key" description-key="Id_Desc_Key" of-type="SingleLine.Text" default-value="" usage="input" required="false" />
+    <property name="SendId" display-name-key="SendId_Display_Key" description-key="SendId_Desc_Key" of-type="Enum" default-value="0" usage="input" required="true">
+      <value name="IdChoice" display-name-key="IdChoice_Display_Key" description-key="IdChoice_Desc_Key">1</value>
+      <value name="LabelChoice" display-name-key="LabelChoice_Display_Key" description-key="LabelChoice_Desc_Key">0</value>
+    </property>
+    <property name="EnableButtonOnDisabledForm" display-name-key="EnableButtonOnDisabledForm_Display_Key" description-key="EnableButtonOnDisabledForm_Desc_Key" of-type="Enum" default-value="1" usage="input" required="true">
       <value name="Yes" display-name-key="yes_Display_Key" description-key="yes_Desc_Key">1</value>
       <value name="No" display-name-key="no_Display_Key" description-key="no_Desc_Key">0</value>
     </property>
+    <property name="BackColor" display-name-key="BackColor_Display_Key" description-key="BackColor_Desc_Key" of-type="SingleLine.Text" default-value="#0078d4" usage="input" required="false" />
+    <property name="BorderColor" display-name-key="BorderColor_Display_Key" description-key="BorderColor_Desc_Key" of-type="SingleLine.Text" default-value="#0078d4" usage="input" required="false" />
+    <property name="Color" display-name-key="Color_Display_Key" description-key="Color_Desc_Key" of-type="SingleLine.Text" default-value="#FFFFFF" usage="input" required="false" />
+    <property name="HoverBackColor" display-name-key="HoverBackColor_Display_Key" description-key="HoverBackColor_Desc_Key" of-type="SingleLine.Text" default-value="#106EBE" usage="input" required="false" />
+    <property name="HoverBorderColor" display-name-key="HoverBorderColor_Display_Key" description-key="HoverBorderColor_Desc_Key" of-type="SingleLine.Text" default-value="#106EBE" usage="input" required="false" />
+    <property name="HoverColor" display-name-key="HoverColor_Display_Key" description-key="HoverColor_Desc_Key" of-type="SingleLine.Text" default-value="#FFFFFF" usage="input" required="false" />
     <type-group name="ValidTypes">
       <type>DateAndTime.DateAndTime</type>
       <type>DateAndTime.DateOnly</type>
       <type>SingleLine.Text</type>
     </type-group>
-     <resources>
+    <resources>
       <code path="index.ts" order="1" />
       <resx path="strings/ActionButton.1033.resx" version="1.0.0" />
       <resx path="strings/ActionButton.1036.resx" version="1.0.0" />
-   </resources>
+    </resources>
   </control>
 </manifest>

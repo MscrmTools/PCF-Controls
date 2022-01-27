@@ -1,98 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
     <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
+        <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+        <xsd:element name="root" msdata:IsDataSet="true">
             <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+                <xsd:choice maxOccurs="unbounded">
+                    <xsd:element name="metadata">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" use="required" type="xsd:string"/>
+                            <xsd:attribute name="type" type="xsd:string"/>
+                            <xsd:attribute name="mimetype" type="xsd:string"/>
+                            <xsd:attribute ref="xml:space"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="assembly">
+                        <xsd:complexType>
+                            <xsd:attribute name="alias" type="xsd:string"/>
+                            <xsd:attribute name="name" type="xsd:string"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="data">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+                            <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+                            <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+                            <xsd:attribute ref="xml:space"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="resheader">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:choice>
             </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <data name="ActionButton_Display_Key" xml:space="preserve">
-    <value>Bouton d'action</value>
-  </data>
-  <data name="ActionButton_Desc_Key" xml:space="preserve">
-    <value>Un controle pour afficher une bouton d'action. Le bouton met à jour la valeur du champ texte associé avec le nom de l'action</value>
-  </data>
-  <data name="BoundAttribute_Display_Key" xml:space="preserve">
-    <value>Champ</value>
-  </data>
-  <data name="BoundAttribute_Desc_Key" xml:space="preserve">
-    <value>Le champ à remplacer par un bouton d'action</value>
-  </data>
-  <data name="ActionText_Display_Key" xml:space="preserve">
-    <value>Texte</value>
-  </data>
-   <data name="ActionText_Desc_Key" xml:space="preserve">
-    <value>Texte à afficher sur le bouton d'action</value>
-  </data>
-<data name="EnableButtonOnDisabledForm_Display_Key" xml:space="preserve">
-    <value>Toujours activer le boutton</value>
-  </data>
-    <data name="EnableButtonOnDisabledForm_Desc_Key" xml:space="preserve">
-    <value>Indique si le bouton doit toujours être activé, même si le contrôle ou le formulaire sont en lecture seule</value>
-  </data>
-    <data name="yes_Display_Key" xml:space="preserve">
-    <value>Yes</value>
-  </data>
-    <data name="yes_Desc_Key" xml:space="preserve">
-    <value>Yes</value>
-  </data>
-    <data name="no_Display_Key" xml:space="preserve">
-    <value>No</value>
-  </data>
-     <data name="no_Desc_Key" xml:space="preserve">
-    <value>No</value>
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="ActionButton_Display_Key" xml:space="preserve">
+        <value>Bouton d'action</value>
     </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <data name="ActionButton_Desc_Key" xml:space="preserve">
+        <value>Un controle pour afficher une bouton d'action. Le bouton met à jour la valeur du champ texte associé avec le nom de l'action</value>
+    </data>
+    <data name="BoundAttribute_Display_Key" xml:space="preserve">
+        <value>Champ</value>
+    </data>
+    <data name="BoundAttribute_Desc_Key" xml:space="preserve">
+        <value>Le champ à remplacer par un bouton d'action</value>
+    </data>
+    <data name="ActionText_Display_Key" xml:space="preserve">
+        <value>Texte</value>
+    </data>
+    <data name="ActionText_Desc_Key" xml:space="preserve">
+        <value>Texte à afficher sur le bouton d'action</value>
+    </data>
+    <data name="EnableButtonOnDisabledForm_Display_Key" xml:space="preserve">
+        <value>Toujours activer le boutton</value>
+    </data>
+    <data name="EnableButtonOnDisabledForm_Desc_Key" xml:space="preserve">
+        <value>Indique si le bouton doit toujours être activé, même si le contrôle ou le formulaire sont en lecture seule</value>
+    </data>
+    <data name="yes_Display_Key" xml:space="preserve">
+        <value>Yes</value>
+    </data>
+    <data name="yes_Desc_Key" xml:space="preserve">
+        <value>Yes</value>
+    </data>
+    <data name="no_Display_Key" xml:space="preserve">
+        <value>No</value>
+    </data>
+    <data name="no_Desc_Key" xml:space="preserve">
+        <value>No</value>
+    </data>
+    <data name="BackColor_Display_Key" xml:space="preserve">
+        <value>Couleur de fond</value>
+    </data>
+    <data name="BorderColor_Display_Key" xml:space="preserve">
+        <value>Couleur de bordure</value>
+    </data>
+    <data name="Color_Display_Key" xml:space="preserve">
+        <value>Couleur du texte</value>
+    </data>
+    <data name="HoverBackColor_Display_Key" xml:space="preserve">
+        <value>Couleur de fond (survolé)</value>
+    </data>
+    <data name="HoverBorderColor_Display_Key" xml:space="preserve">
+        <value>Couleur de bordure (survolé)</value>
+    </data>
+    <data name="HoverColor_Display_Key" xml:space="preserve">
+        <value>Couleur du texte (survolé)</value>
+    </data>
+    <data name="BackColor_Desc_Key" xml:space="preserve">
+        <value>Couleur de fond du bouton en affichage normal</value>
+    </data>
+    <data name="BorderColor_Desc_Key" xml:space="preserve">
+        <value>Couleur de la bordure du bouton en affichage normal</value>
+    </data>
+    <data name="Color_Desc_Key" xml:space="preserve">
+        <value>Couleur du texte du bouton en affichage normal</value>
+    </data>
+    <data name="HoverBackColor_Desc_Key" xml:space="preserve">
+        <value>Couleur de fond du bouton lors du survol par la souris</value>
+    </data>
+    <data name="HoverBorderColor_Desc_Key" xml:space="preserve">
+        <value>Couleur de la bordure du bouton lors du survol par la souris</value>
+    </data>
+    <data name="HoverColor_Desc_Key" xml:space="preserve">
+        <value>Couleur du texte du bouton lors du survol par la souris</value>
+    </data>
+    <data name="Id_Display_Key" xml:space="preserve">
+        <value>Identifiant pour le bouton</value>
+    </data>
+    <data name="Id_Desc_Key" xml:space="preserve">
+        <value>L'identifiant pourra être envoyé comme valeur à la colonne liée</value>
+    </data>
+    <data name="SendId_Display_Key" xml:space="preserve">
+        <value>Envoyer l'identifiant?</value>
+    </data>
+    <data name="SendId_Desc_Key" xml:space="preserve">
+        <value>Indique quelle valeur envoyer à la colonne liée lors du clic sur le bouton</value>
+    </data>
+    <data name="IdChoice_Display_Key" xml:space="preserve">
+        <value>Identifiant</value>
+    </data>
+    <data name="IdChoice_Desc_Key" xml:space="preserve">
+        <value>L'identifiant du bouton sera envoyé à la colonne liée</value>
+    </data>
+    <data name="LabelChoice_Display_Key" xml:space="preserve">
+        <value>Libellé</value>
+    </data>
+    <data name="LabelChoice_Desc_Key" xml:space="preserve">
+        <value>Le libellé du bouton sera envoyé à la colonne liée</value>
+    </data>
+    <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
 </root>

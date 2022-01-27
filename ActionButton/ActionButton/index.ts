@@ -1,7 +1,8 @@
 import {IInputs, IOutputs} from "./generated/ManifestTypes";
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import ButtonControl, { IButtonProps } from "./ButtonControl";
+import ButtonControl, { IButtonControlProps } from "./ButtonControl";
+import { IBaseButtonProps } from "office-ui-fabric-react";
 
 export class ActionButton implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 
@@ -9,6 +10,8 @@ export class ActionButton implements ComponentFramework.StandardControl<IInputs,
 	private notifyOutputChanged: () => void;
 	private currentValue:string|null;
 	private actionText:string;
+	private id:string;
+	private sendId:boolean;
 	private  controlType : string;
 	/**
 	 * Empty constructor.
@@ -32,6 +35,8 @@ export class ActionButton implements ComponentFramework.StandardControl<IInputs,
 		this.notifyOutputChanged = notifyOutputChanged;
 
 		this.actionText = context.parameters.ActionText.raw??"";
+		this.id = context.parameters.Id.raw??"";
+		this.sendId = context.parameters.SendId.raw  === "1";
 		this.controlType = context.parameters.BoundAttribute.type;
 
 		if(this.actionText.trim().startsWith("{")){
@@ -52,13 +57,20 @@ export class ActionButton implements ComponentFramework.StandardControl<IInputs,
 
 	private renderControl(context: ComponentFramework.Context<IInputs>): void {
 
-		let props: IButtonProps = {
-			text: this.actionText,
-			disabled: context.parameters.EnableButtonOnDisabledForm.raw === "1" ? false : context.mode.isControlDisabled,
-			onClick: () => {
-				this.notifyOutputChanged();
-			}
-		};
+		let props :IButtonControlProps={
+			text:this.actionText,
+			disabled:context.parameters.EnableButtonOnDisabledForm.raw === "1" ? false : context.mode.isControlDisabled,
+			style:{
+				backgroundColor:context.parameters.BackColor.raw ?? "#0078d4",
+				borderColor:context.parameters.BorderColor.raw ?? "#0078d4",
+				color:context.parameters.Color.raw ?? "#FFFFFF",
+				
+			},
+			hoverBackgroundColor: context.parameters.HoverBackColor.raw ?? "#106EBE",
+			hoverBorderColor: context.parameters.HoverBorderColor.raw ?? "#106EBE",
+			hoverColor: context.parameters.HoverColor.raw ?? "#FFFFF",
+			onClick:()=>{this.notifyOutputChanged();}
+		}
 
 		ReactDOM.render(React.createElement(ButtonControl, props), this.container);
 	}
@@ -84,7 +96,7 @@ export class ActionButton implements ComponentFramework.StandardControl<IInputs,
 		debugger;
 		if(this.controlType === "SingleLine.Text"){
 			return {
-				BoundAttribute: this.actionText
+				BoundAttribute: this.sendId ? this.id : this.actionText
 			};	
 		}
 
