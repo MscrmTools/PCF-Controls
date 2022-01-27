@@ -111,7 +111,7 @@ Allows to display a notification or an helpful message to the user in a section.
 ## Action Button
 
 ### Purpose
-Allows to display a button to perform an action. To allow developer to do anything they want from the form, this button simply copies the text of the action button on the bound string attribute. The developer needs to add an onChange event to this string attribute, check for the value of the attribute (should be the text of the action button) and perform the action needed.
+Allows to display a button to perform an action. To allow developer to do anything they want from the form, this button simply copies the text of the action button or its identifier (see configuration) on the bound string attribute. The developer needs to add an onChange event to this string attribute, check for the value of the attribute (should be the text of the action button) and perform the action needed.
 
 ### Samples
 ![Screenshot](https://github.com/MscrmTools/PCF-Controls/blob/master/ActionButton/ActionButton/screenshots/screenshot.png?raw=true)
@@ -137,6 +137,14 @@ function onChange(context){
 |---------|-----------|:----:|:---:|------|
 |**Attribute**|The attribute to use to display the control|X|X|| 
 |**ActionText**|Text of the action button|X||Can be a static string or a json object with language id like {"1033":"Run this!","1036":"Exécute ça!"}|
+|**Button identifier**|An identifier of your choice for the button||||
+|**Send Identifier**|Indicates if the identifier or the label should be sent when clicking on the button||||
+|**Background color**|Background color for default display||||
+|**Border color**|Border color for default display||||
+|**Color**|Text color for default display||||
+|**Background color (hovered)**|Background color when the mouse hovers the button||||
+|**Border color (hovered)**|Border color when the mouse hovers the button||||
+|**Color (hovered)**|Text color when the mouse hovers the button||||
 
 
 ## Linear Slider with steps
