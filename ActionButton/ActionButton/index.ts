@@ -2,7 +2,9 @@ import {IInputs, IOutputs} from "./generated/ManifestTypes";
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import ButtonControl, { IButtonControlProps } from "./ButtonControl";
-import { IBaseButtonProps } from "office-ui-fabric-react";
+import { initializeIcons } from '@fluentui/font-icons-mdl2';
+import { AwayStatusIcon, SettingsIcon } from '@fluentui/react-icons';
+
 
 export class ActionButton implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 
@@ -18,7 +20,7 @@ export class ActionButton implements ComponentFramework.StandardControl<IInputs,
 	 */
 	constructor()
 	{
-		
+		initializeIcons();
 	}
 
 	/**
@@ -69,6 +71,7 @@ export class ActionButton implements ComponentFramework.StandardControl<IInputs,
 			hoverBackgroundColor: context.parameters.HoverBackColor.raw ?? "#106EBE",
 			hoverBorderColor: context.parameters.HoverBorderColor.raw ?? "#106EBE",
 			hoverColor: context.parameters.HoverColor.raw ?? "#FFFFF",
+			iconName: context.parameters.IconName.raw,
 			onClick:()=>{this.notifyOutputChanged();}
 		}
 

@@ -154,5 +154,11 @@
     <data name="LabelChoice_Desc_Key" xml:space="preserve">
         <value>Le libellé du bouton sera envoyé à la colonne liée</value>
     </data>
+    <data name="IconName_Display_Key" xml:space="preserve">
+        <value>Icône</value>
+    </data>
+    <data name="IconName_Desc_Key" xml:space="preserve">
+        <value>Une icône de la librairie Fluent UI</value>
+    </data>
     <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
 </root>

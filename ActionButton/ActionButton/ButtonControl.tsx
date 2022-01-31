@@ -1,11 +1,13 @@
 import * as React from 'react'
-import {Stack} from 'office-ui-fabric-react/lib/components/Stack';
-import {IBaseButtonProps, IBaseButtonState, IButtonStyles, PrimaryButton} from 'office-ui-fabric-react/lib/components/Button';
+import {Stack} from '@fluentui/react/lib/Stack';
+import {IBaseButtonProps, IBaseButtonState, IButtonStyles, PrimaryButton} from '@fluentui/react/lib/Button';
+import { IIconProps } from '@fluentui/react';
 
 export interface IButtonControlProps extends IBaseButtonProps{
     hoverBackgroundColor:string,
     hoverBorderColor:string,
-    hoverColor:string
+    hoverColor:string,
+    iconName:string | null
   }
 
 export default class ButtonControl extends React.Component<IButtonControlProps, IBaseButtonState>{
@@ -25,10 +27,12 @@ export default class ButtonControl extends React.Component<IButtonControlProps, 
     }
   }
 
+  icon : IIconProps = {iconName : this.props.iconName ?? ""};
+
     render(){
         return(
           <Stack horizontal>
-            <PrimaryButton styles={this.styles} text={this.props.text} disabled={this.props.disabled} onClick={this.props.onClick}/>
+            <PrimaryButton iconProps={this.icon} styles={this.styles} text={this.props.text} disabled={this.props.disabled} onClick={this.props.onClick}/>
           </Stack>
         );
     }
