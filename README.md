@@ -114,7 +114,7 @@ Allows to display a notification or an helpful message to the user in a section.
 Allows to display a button to perform an action. To allow developer to do anything they want from the form, this button simply copies the text of the action button or its identifier (see configuration) on the bound string attribute. The developer needs to add an onChange event to this string attribute, check for the value of the attribute (should be the text of the action button) and perform the action needed.
 
 ### Samples
-![Screenshot](https://github.com/MscrmTools/PCF-Controls/blob/master/ActionButton/ActionButton/screenshots/screenshot.png?raw=true)
+![image](https://user-images.githubusercontent.com/10774317/151808531-afd6b96f-d11e-4cc8-80a7-ff204ec20274.png)
 
 
 Sample script to be implemented to execute an action when the button is clicked
@@ -145,7 +145,7 @@ function onChange(context){
 |**Background color (hovered)**|Background color when the mouse hovers the button||||
 |**Border color (hovered)**|Border color when the mouse hovers the button||||
 |**Color (hovered)**|Text color when the mouse hovers the button||||
-
+|**Icon**|Icon to use on the action button|||[Available icons](https://developer.microsoft.com/en-us/fluentui#/styles/web/icons#available-icons)|
 
 ## Linear Slider with steps
 
