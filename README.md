@@ -13,6 +13,8 @@ Controls using PowerApps Components Framework
 
 [Linear Slider with steps](#linear-slider-with-steps)
 
+[Year Dropdown](#year-dropdown)
+
 ## NN Checkboxes
 
 [Download](https://github.com/MscrmTools/PCF-Controls/releases/)
@@ -173,4 +175,28 @@ Slider with blue color, minimum 0, maximum 100, step by 5, prefix "Percentage: "
 |**Label prefix**|Define a text to be inserted before the value of the column||||
 |**Label suffix**|Define a text to be added after the value of the column||||
 |**Label position**|Position of the label under the slider|X||Left, Center or Right|
+
+
+## Year Dropdown
+
+[Download](https://github.com/MscrmTools/PCF-Controls/releases/)
+
+### Purpose
+The purpose of this control is to allow user to select a year in a dropdown and store the result in a DateTime, Whole number or Single line of text column.
+
+### Samples
+
+![Screenshot](https://github.com/MscrmTools/PCF-Controls/blob/master/YearDropdown/screenshots/YearDropdown.gif?raw=true)
+
+### Configuration
+
+This is the list of parameters that can be set on the control
+
+|Parameter|Description|Required|Bound to an attribute|
+|---------|-----------|:----:|:---:|
+|**Target column**|The column bound to this control|X|X|
+|**Years before**|The number of years to add in the dropdown prior of current year|||
+|**Years after**|The number of years to add in the dropdown after of current year|||
+|**Default month**|Default month to generate the date when the target column is of type Date|||
+|**Default day**|Default day to generate the date when the target column is of type Date|||
 
