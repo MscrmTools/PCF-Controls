@@ -47,7 +47,8 @@
 	<ProjectReference Include="..\DateAsCheckbox\DateAsCheckbox.pcfproj" />
 	<ProjectReference Include="..\NNCheckboxes\NNCheckboxes.pcfproj" />
 	<ProjectReference Include="..\ReactNotifier\ReactNotifier.pcfproj" />
-  <ProjectReference Include="..\LinearSliderWithSteps\LinearSliderWithSteps.pcfproj" />
+  	<ProjectReference Include="..\LinearSliderWithSteps\LinearSliderWithSteps.pcfproj" />
+	<ProjectReference Include="..\YearDropdown\YearDropdown.pcfproj" />
   </ItemGroup>
 
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />

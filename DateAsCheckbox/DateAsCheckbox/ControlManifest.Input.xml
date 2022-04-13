@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest>
-  <control namespace="MscrmTools" constructor="DateAsCheckbox" version="0.0.2" display-name-key="DateAsCheckbox" description-key="DateAsCheckbox_description" control-type="standard">
+  <control namespace="MscrmTools" constructor="DateAsCheckbox" version="0.0.3" display-name-key="DateAsCheckbox" description-key="DateAsCheckbox_description" control-type="standard">
     <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
     <property name="DateAttribute" display-name-key="DateAttribute_Display_Key" description-key="DateAttribute_Desc_Key" of-type-group="dates" usage="bound" required="true" />
     <property name="offColor" display-name-key="offColor_Display_Key" description-key="offColor_Desc_Key" of-type="SingleLine.Text" default-value="" usage="input" required="false" />

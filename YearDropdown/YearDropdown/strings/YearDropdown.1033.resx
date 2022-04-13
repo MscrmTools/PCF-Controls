@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-        <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="https://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:import namespace="https://www.w3.org/XML/1998/namespace"/>
         <xsd:element name="root" msdata:IsDataSet="true">
             <xsd:complexType>
                 <xsd:choice maxOccurs="unbounded">
@@ -58,59 +58,40 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="DateAsCheckbox" xml:space="preserve">
-        <value>Date en case à cocher</value>
+    <data name="targetColumn_Display_Key" xml:space="preserve">
+        <value>Target column</value>
     </data>
-    <data name="DateAsCheckbox_description" xml:space="preserve">
-        <value>Affiche un attribut de type date en tant que case à cocher. Quand coché, la date est défine à la date courante. Quand décoché, la date est vidée</value>
+    <data name="targetColumn_Desc_Key" xml:space="preserve">
+        <value>The column bound to this control</value>
     </data>
-    <data name="DateAttribute_Display_Key" xml:space="preserve">
-        <value>Colonne</value>
+    <data name="yearsBefore_Display_Key" xml:space="preserve">
+        <value>Years before</value>
     </data>
-    <data name="DateAttribute_Desc_Key" xml:space="preserve">
-        <value>La colonne de type Date à afficher en tant qu'interrupteur</value>
+    <data name="yearsBefore_Desc_Key" xml:space="preserve">
+        <value>The number of years to add in the dropdown prior of current year</value>
     </data>
-    <data name="onColor_Display_Key" xml:space="preserve">
-        <value>Couleur de l'état Activé</value>
+    <data name="yearsAfter_Display_Key" xml:space="preserve">
+        <value>Years after</value>
     </data>
-    <data name="onColor_Desc_Key" xml:space="preserve">
-        <value>Couleur d'arrière plan quand l'interrupteur est à l'état Activé</value>
+    <data name="yearsAfter_Desc_Key" xml:space="preserve">
+        <value>The number of years to add in the dropdown after of current year</value>
     </data>
-    <data name="offColor_Display_Key" xml:space="preserve">
-        <value>Couleur de l'état Désactivé</value>
+    <data name="dateDefaultMonth_Display_Key" xml:space="preserve">
+        <value>Default month</value>
     </data>
-    <data name="offColor_Desc_Key" xml:space="preserve">
-        <value>Couleur d'arrière plan quand l'interrupteur est à l'état Désactivé</value>
+    <data name="dateDefaultMonth_Desc_Key" xml:space="preserve">
+        <value>Default month to generate the date when the target column is of type Date</value>
     </data>
-    <data name="switchColor_Display_Key" xml:space="preserve">
-        <value>Couleur</value>
+    <data name="dateDefaultDay_Display_Key" xml:space="preserve">
+        <value>Default day</value>
     </data>
-    <data name="switchColor_Desc_Key" xml:space="preserve">
-        <value>Couleur de l'interrupteur</value>
+    <data name="dateDefaultDay_Desc_Key" xml:space="preserve">
+        <value>Default day to generate the date when the target column is of type Date</value>
     </data>
-    <data name="layout_Display_Key" xml:space="preserve">
-        <value>Mise en forme</value>
+    <data name="YearDropdown" xml:space="preserve">
+        <value>Year selection dropdown</value>
     </data>
-    <data name="layout_Desc_Key" xml:space="preserve">
-        <value>Sélectionner la mise en forme pour l'interrupteur</value>
+    <data name="YearDropdown description" xml:space="preserve">
+        <value>A control to select a year and store it in DateTime, Whole number or string column</value>
     </data>
-    <data name="layoutRound_Display_Key" xml:space="preserve">
-        <value>Ronde</value>
-    </data>
-    <data name="layoutRound_Desc_Key" xml:space="preserve">
-        <value>Afficher l'interrupteur avec des bords rond</value>
-    </data>
-    <data name="layoutSquare_Display_Key" xml:space="preserve">
-        <value>Carrée</value>
-    </data>
-    <data name="layoutSquare_Desc_Key" xml:space="preserve">
-        <value>Afficher l'interrupteur avec des bords carrés</value>
-    </data>
-    <data name="displayLabel_Display_Key" xml:space="preserve">
-        <value>Afficher le libellé</value>
-    </data>
-    <data name="displayLabel_Desc_Key" xml:space="preserve">
-        <value>Définit si le libellé de l'option sélectionné doit être affiché à coté de l'interrupteur</value>
-    </data>
-    <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
 </root>

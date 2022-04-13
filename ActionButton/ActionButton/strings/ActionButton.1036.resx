@@ -83,16 +83,16 @@
         <value>Indique si le bouton doit toujours être activé, même si le contrôle ou le formulaire sont en lecture seule</value>
     </data>
     <data name="yes_Display_Key" xml:space="preserve">
-        <value>Yes</value>
+        <value>Oui</value>
     </data>
     <data name="yes_Desc_Key" xml:space="preserve">
-        <value>Yes</value>
+        <value>Oui</value>
     </data>
     <data name="no_Display_Key" xml:space="preserve">
-        <value>No</value>
+        <value>Non</value>
     </data>
     <data name="no_Desc_Key" xml:space="preserve">
-        <value>No</value>
+        <value>Non</value>
     </data>
     <data name="BackColor_Display_Key" xml:space="preserve">
         <value>Couleur de fond</value>

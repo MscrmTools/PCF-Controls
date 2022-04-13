@@ -100,10 +100,10 @@
   <data name="layoutRound_Desc_Key" xml:space="preserve">
     <value>Afficher l'interrupteur avec des bords rond</value>
   </data>
-  <data name="squareRound_Display_Key" xml:space="preserve">
+  <data name="layoutSquare_Display_Key" xml:space="preserve">
     <value>Carrée</value>
   </data>
-  <data name="squareRound_Desc_Key" xml:space="preserve">
+  <data name="layoutSquare_Desc_Key" xml:space="preserve">
     <value>Afficher l'interrupteur avec des bords carrés</value>
   </data>
 
@@ -120,7 +120,7 @@
     <value>Oui</value>
   </data>
   <data name="false_Display_Key" xml:space="preserve">
-    <value>Nom</value>
+    <value>Non</value>
   </data>
   <data name="false_Desc_Key" xml:space="preserve">
     <value>Non</value>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="MscrmTools" constructor="YearDropdown" version="0.0.3" display-name-key="YearDropdown" description-key="YearDropdown description" control-type="standard" preview-image="img/yeardropdown.png">
+    <external-service-usage enabled="false">
+    </external-service-usage>
+    <property name="targetColumn" display-name-key="targetColumn_Display_Key" description-key="targetColumn_Desc_Key" of-type-group="customGroup" usage="bound" required="true" />
+    <property name="yearsBefore" display-name-key="yearsBefore_Display_Key" description-key="yearsBefore_Desc_Key" of-type="Whole.None" usage="input" required="true" />
+    <property name="yearsAfter" display-name-key="yearsAfter_Display_Key" description-key="yearsAfter_Desc_Key" of-type="Whole.None" usage="input" required="true" />
+    <property name="dateDefaultMonth" display-name-key="dateDefaultMonth_Display_Key" description-key="dateDefaultMonth_Desc_Key" of-type="Whole.None" usage="input" required="false" />
+    <property name="dateDefaultDay" display-name-key="dateDefaultDay_Display_Key" description-key="dateDefaultDay_Desc_Key" of-type="Whole.None" usage="input" required="false" />
+    <type-group name="customGroup">
+        <type>Whole.None</type>
+        <type>DateAndTime.DateOnly</type>
+        <type>DateAndTime.DateAndTime</type>
+        <type>SingleLine.Text</type>
+      </type-group>
+    <resources>
+      <code path="index.ts" order="1"/>
+      <resx path="strings/YearDropdown.1033.resx" version="1.0.0" />
+      <resx path="strings/YearDropdown.1036.resx" version="1.0.0" />
+    </resources>
+  </control>
+</manifest>
