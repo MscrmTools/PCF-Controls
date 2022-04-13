@@ -141,6 +141,7 @@ function onChange(context){
 |**ActionText**|Text of the action button|X||Can be a static string or a json object with language id like {"1033":"Run this!","1036":"Exécute ça!"}|
 |**Button identifier**|An identifier of your choice for the button||||
 |**Send Identifier**|Indicates if the identifier or the label should be sent when clicking on the button||||
+|**Always enable button**|Indicates if button should be always enabled even when control or form is disabled||||
 |**Background color**|Background color for default display||||
 |**Border color**|Border color for default display||||
 |**Color**|Text color for default display||||
