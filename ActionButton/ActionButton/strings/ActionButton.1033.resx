@@ -160,5 +160,23 @@
     <data name="IconName_Desc_Key" xml:space="preserve">
         <value>An icon from the Fluent UI library</value>
     </data>
+    <data name="PressedBackColor_Display_Key" xml:space="preserve">
+        <value>Background color (pressed)</value>
+    </data>
+    <data name="PressedBackColor_Desc_Key" xml:space="preserve">
+        <value>Background color when the mouse clicks the button</value>
+    </data>
+    <data name="PressedBorderColor_Display_Key" xml:space="preserve">
+        <value>Border color (pressed)</value>
+    </data>
+    <data name="PressedBorderColor_Desc_Key" xml:space="preserve">
+        <value>Border color when the mouse clicks the button</value>
+    </data>
+    <data name="PressedColor_Display_Key" xml:space="preserve">
+        <value>Text color (pressed)</value>
+    </data>
+    <data name="PressedColor_Desc_Key" xml:space="preserve">
+        <value>Text color when the mouse clicks the button</value>
+    </data>
     <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
 </root>

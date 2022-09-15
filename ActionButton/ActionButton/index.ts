@@ -60,19 +60,21 @@ export class ActionButton implements ComponentFramework.StandardControl<IInputs,
 	private renderControl(context: ComponentFramework.Context<IInputs>): void {
 
 		let props :IButtonControlProps={
-			text:this.actionText,
-			disabled:context.parameters.EnableButtonOnDisabledForm.raw === "1" ? false : context.mode.isControlDisabled,
-			style:{
-				backgroundColor:context.parameters.BackColor.raw ?? "#0078d4",
-				borderColor:context.parameters.BorderColor.raw ?? "#0078d4",
-				color:context.parameters.Color.raw ?? "#FFFFFF",
-				
+			text: this.actionText,
+			disabled: context.parameters.EnableButtonOnDisabledForm.raw === "1" ? false : context.mode.isControlDisabled,
+			style: {
+				backgroundColor: context.parameters.BackColor.raw ?? "#0078d4",
+				borderColor: context.parameters.BorderColor.raw ?? "#0078d4",
+				color: context.parameters.Color.raw ?? "#FFFFFF",
 			},
 			hoverBackgroundColor: context.parameters.HoverBackColor.raw ?? "#106EBE",
 			hoverBorderColor: context.parameters.HoverBorderColor.raw ?? "#106EBE",
 			hoverColor: context.parameters.HoverColor.raw ?? "#FFFFF",
+			checkedBackgroundColor: context.parameters.PressedBackColor.raw ?? "#0078d4",
+			checkedBorderColor: context.parameters.PressedBorderColor.raw ?? "#0078d4",
+			checkedColor: context.parameters.PressedColor.raw ?? "#FFFFFF",
 			iconName: context.parameters.IconName.raw,
-			onClick:()=>{this.notifyOutputChanged();}
+			onClick: () => { this.notifyOutputChanged(); }			
 		}
 
 		ReactDOM.render(React.createElement(ButtonControl, props), this.container);

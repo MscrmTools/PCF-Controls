@@ -7,6 +7,9 @@ export interface IButtonControlProps extends IBaseButtonProps{
     hoverBackgroundColor:string,
     hoverBorderColor:string,
     hoverColor:string,
+    checkedBackgroundColor:string,
+    checkedBorderColor:string,
+    checkedColor:string,
     iconName:string | null
   }
 
@@ -24,6 +27,11 @@ export default class ButtonControl extends React.Component<IButtonControlProps, 
       backgroundColor:this.props.hoverBackgroundColor ?? "#106EBE",
       borderColor:this.props.hoverBorderColor ?? "#106EBE",
       color:this.props.hoverColor ?? "#FFFFFF"
+    },
+    rootPressed:{
+      backgroundColor:this.props.checkedBackgroundColor ?? "#0078d4",
+      borderColor:this.props.checkedBorderColor ?? "#0078d4",
+      color:this.props.checkedColor ?? "#FFFFFF"
     }
   }
 
