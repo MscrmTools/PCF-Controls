@@ -202,5 +202,26 @@
     <data name="Error_Disassociate" xml:space="preserve">
         <value>Cases à cocher NN : une erreur s'est produite lors de la dissociation des enregistrements. Veuillez vérifier cette configuration de contrôle ou tout journal de suivi applicable.</value>
     </data>
+    <data name="tooltipAttribute_Display_Key" xml:space="preserve">
+        <value>Infobulle</value>
+    </data>
+    <data name="tooltipAttribute_Desc_Key" xml:space="preserve">
+        <value>Une infobulle à aficher lorsque la souris est au-dessus d'une case à cocher</value>
+    </data>
+    <data name="displaySearch_Display_Key" xml:space="preserve">
+        <value>Afficher la recherche</value>
+    </data>
+    <data name="displaySearch_Desc_Key" xml:space="preserve">
+        <value>Permet d'afficher une barre de recherche pour filtrer les enregistrements </value>
+    </data>
+    <data name="Search_Placeholder" xml:space="preserve">
+        <value>Rechercher</value>
+    </data>
+    <data name="FilterNotFoundMask" xml:space="preserve">
+        <value>Aucun {{entityname}} trouvé pour ce filtre</value>
+    </data>
+    <data name="Records" xml:space="preserve">
+        <value>enregistrement</value>
+    </data>
     <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
 </root>

@@ -40,15 +40,18 @@ This is the list of parameters that can be set on the control
 |**DataSet/Label**|Attribute to use as label for the checkbox|X|X|
 |**DataSet/Background color**|Attribute to use as background color||X|
 |**DataSet/Color**|Attribute to use as forecolor||X|
-|**DataSet/Group by**|Attribute used to group records. *If used, this attribute must be the first attribute used to sort the view used by this control*||X
-|**DataSet/Filter attribute**|Filter attribute for related records. *If used, this attribute must be of the same type as the control parameter Filter attribute *||X
-|**Filter attribute**|Filter attribute for related records. *If used, this attribute must be of the same type as the control parameter DataSet/Filter attribute *||X
+|**DataSet/Group by**|Attribute used to group records. *If used, this attribute must be the first attribute used to sort the view used by this control*||X|
+|**DataSet/Filter attribute**|Filter attribute for related records. *If used, this attribute must be of the same type as the control parameter Filter attribute *||X|
+|**DataSet/Tooltip**|Attribute used to display a tooltip on the checkbox or the switch. *If used, this attribute must be present on the view used to display records*||X|
+|**Filter attribute**|Filter attribute for related records. *If used, this attribute must be of the same type as the control parameter DataSet/Filter attribute *||X|
 |**Relationship**|Schema name of the relationship. *required only if multiple many-to-many relationship exist for both related entities*|?||
 |**Columns**|Number of columns to display checkboxes|X||
 |**Layout**|Choose the layout for the rendering|X||
 |**Switch Off color**|Default background color when the switch is Off. *This parameter is overriden by the parameter **Background color***||X|
 |**Switch On color**|Default background color when the switch is On. *This parameter is overriden by the parameter **Background color***||X|
 |**Allow to select a category**|Indicates if links must be added for each category to select/unselect all records|X||
+|**Allow to select a category**|Indicates if links must be added for each category to select/unselect all records|X||
+|**Display Search**|Indicates if a search bar must be displayed|||
 
 ⚠️Even if Lookup.Simple type of column can be selected for filter, do not use it until it is supported by Microsoft and the bug that breaks dataset content is fixed.
 
@@ -145,6 +148,9 @@ function onChange(context){
 |**Background color (hovered)**|Background color when the mouse hovers the button||||
 |**Border color (hovered)**|Border color when the mouse hovers the button||||
 |**Color (hovered)**|Text color when the mouse hovers the button||||
+|**Background color (pressed)**|Background color when the mouse clicks on the button||||
+|**Border color (pressed)**|Border color when the mouse clicks on the button||||
+|**Color (pressed)**|Text color when the mouse clicks on the button||||
 |**Icon**|Icon to use on the action button|||[Available icons](https://developer.microsoft.com/en-us/fluentui#/styles/web/icons#available-icons)|
 
 ## Linear Slider with steps

@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest>
-  <control namespace="MscrmTools" constructor="NNCheckboxes" version="1.0.69" display-name-key="NNCheckboxes_Display_Key" description-key="NNCheckboxes_Desc_Key" control-type="standard" preview-image="imgs/nncheckboxes.png">
+  <control namespace="MscrmTools" constructor="NNCheckboxes" version="1.0.84" display-name-key="NNCheckboxes_Display_Key" description-key="NNCheckboxes_Desc_Key" control-type="standard" preview-image="imgs/nncheckboxes.png">
     <data-set name="nnRelationshipDataSet" display-name-key="nnRelationshipDataSet_Display_Key">
       <property-set name="displayAttribute" display-name-key="targetEntity_Display_Key" description-key="targetEntity_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
       <property-set name="backgroundColorAttribute" display-name-key="backgroundColorAttribute_Display_Key" description-key="backgroundColorAttribute_Desc_Key" of-type-group="colorTypes" usage="bound" required="false" />
       <property-set name="foreColorAttribute" display-name-key="foreColorAttribute_Display_Key" description-key="foreColorAttribute_Desc_Key" of-type-group="colorTypes" usage="bound" required="false" />
       <property-set name="categoryAttribute" display-name-key="categoryAttribute_Display_Key" description-key="categoryAttribute_Desc_Key" of-type-group="categoryTypes" usage="bound" required="false" />
       <property-set name="filterDataSetAttribute" display-name-key="filterDataSetAttribute_Display_Key" description-key="filterDataSetAttribute_Desc_Key" of-type-group="filterTypes" usage="bound" required="false" />
+      <property-set name="tooltipAttribute" display-name-key="tooltipAttribute_Display_Key" description-key="tooltipAttribute_Desc_Key" of-type-group="text" usage="bound" required="false" />
     </data-set>
     <property name="fpa" display-name-key="fpa_Display_Key" description-key="fpa_Desc_Key" of-type-group="filterTypes" usage="input" required="false" />
     <property name="relationshipSchemaName" display-name-key="relationshipSchemaName_Display_Key" description-key="relationshipSchemaName_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" />
@@ -25,6 +26,10 @@
       <value name="Yes" display-name-key="yes_Display_Key" description-key="yes_Desc_Key">1</value>
       <value name="No" display-name-key="no_Display_Key" description-key="no_Desc_Key">0</value>
     </property>
+     <property name="displaySearch" display-name-key="displaySearch_Display_Key" description-key="displaySearch_Desc_Key" of-type="Enum"  default-value="0" usage="input" required="true">
+      <value name="Yes" display-name-key="yes_Display_Key" description-key="yes_Desc_Key">1</value>
+      <value name="No" display-name-key="no_Display_Key" description-key="no_Desc_Key">0</value>
+    </property>
     <type-group name="categoryTypes">
       <type>SingleLine.Text</type>
       <type>OptionSet</type>
@@ -39,6 +44,10 @@
     <type-group name="colorTypes">
       <type>SingleLine.Text</type>
       <type>OptionSet</type>
+    </type-group>
+    <type-group name="text">
+      <type>SingleLine.Text</type>
+      <type>Multiple</type>
     </type-group>
     <resources>
       <code path="index.ts" order="1" />

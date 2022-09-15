@@ -202,5 +202,26 @@
     <data name="Error_Disassociate" xml:space="preserve">
         <value>NNCheckboxes: An error occured when disassociating records. Please check this control configuration or any applicable trace logs.</value>
     </data>
+    <data name="tooltipAttribute_Display_Key" xml:space="preserve">
+        <value>Tooltip</value>
+    </data>
+    <data name="tooltipAttribute_Desc_Key" xml:space="preserve">
+        <value>A value to show when the mouse is over a checkbox</value>
+    </data>
+    <data name="displaySearch_Display_Key" xml:space="preserve">
+        <value>Display Search</value>
+    </data>
+    <data name="displaySearch_Desc_Key" xml:space="preserve">
+        <value>Allow to display a search bar to filter records</value>
+    </data>
+    <data name="Search_Placeholder" xml:space="preserve">
+        <value>Search</value>
+    </data>
+    <data name="FilterNotFoundMask" xml:space="preserve">
+        <value>No {{entityname}} found for this filter</value>
+    </data>
+    <data name="Records" xml:space="preserve">
+        <value>record</value>
+    </data>
     <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
 </root>

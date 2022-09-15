@@ -2,6 +2,7 @@ import { IInputs, IOutputs } from "./generated/ManifestTypes";
 import DataSetInterfaces = ComponentFramework.PropertyHelper.DataSetApi;
 import { SpawnSyncOptionsWithBufferEncoding } from "child_process";
 import { RelationshipInfo} from "./reldef";
+import { isRegExp } from "util";
 type DataSet = ComponentFramework.PropertyTypes.DataSet;
 
 export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs, IOutputs> {
@@ -17,6 +18,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 	private _parentRecordType: string;
 	private _childRecordType: string;
 	private _labelAttributeName: string;
+	private _tooltipAttributeName: string;
 	private _datasetFilterAttributeName: string;
 	private _backgroundColorAttributeName: string;
 	private _backgroundColorIsFromOptionSet: boolean;
@@ -29,6 +31,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 	private _relationshipSchemaName: string | null;
 	private _colors: any;
 	private _relationshipInfo: RelationshipInfo;
+	private _currentControlClassName : string;
 	/**
 	 * Empty constructor.
 	 */
@@ -55,6 +58,8 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 		// @ts-ignore
 		this._parentRecordType = context.mode.contextInfo.entityTypeName;
 
+		let id = Math.random().toString().split('.')[1];
+		this._currentControlClassName = "nncb-" + id;
 
 		if(context.parameters.toggleDefaultBackgroundColorOn && context.parameters.toggleDefaultBackgroundColorOn.raw)
 		{
@@ -107,6 +112,9 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 			if (column.alias === "displayAttribute") {
 				this._labelAttributeName = column.name;
 			}
+			if (column.alias === "tooltipAttribute") {
+				this._tooltipAttributeName = column.name;
+			}
 			else if(column.alias === "backgroundColorAttribute"){
 				this._backgroundColorAttributeName = column.name;
 
@@ -147,6 +155,41 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 		}
 
 		this.DisplayRecords();
+	}
+
+	addSearchBar() {
+		let thisCtrl = this;
+
+		let inputSearch = document.createElement("input") as HTMLInputElement;
+		inputSearch.type = "text";
+		inputSearch.id = "nncb_searchbox";
+		inputSearch.placeholder = this._context.resources.getString("Search_Placeholder");
+		inputSearch.style.width = "200px";
+		inputSearch.addEventListener("input", function (event) {
+			debugger;
+			let switches = document.getElementsByClassName("nncb-switch-label " + thisCtrl._currentControlClassName);
+			let searchTerm = (<HTMLInputElement>event.target).value.toLowerCase();
+
+			for(let i=0;i<switches.length;i++){
+				let label = switches[i].innerHTML.toLowerCase();
+
+				(<HTMLDivElement>(<HTMLSpanElement>switches[i]).parentElement).style.display = label.indexOf(searchTerm) >= 0 ? "" : "none";
+			}
+
+			let checkmarks = document.getElementsByClassName("nncb-container "+ thisCtrl._currentControlClassName);
+			for(let i=0;i<checkmarks.length;i++){
+				let label = checkmarks[i].textContent?.toLowerCase() ?? "";
+
+				(<HTMLDivElement>(<HTMLLabelElement>checkmarks[i]).parentElement).style.display = label.indexOf(searchTerm) >= 0 ? "" : "none";
+			}
+		});
+
+		let divSearch = document.createElement("div");
+		divSearch.id = "nncb-search";
+		divSearch.style.textAlign = "right";
+		divSearch.appendChild(inputSearch);
+
+		this._container.appendChild(divSearch);
 	}
 
 	private DisplayError(error: any | undefined, genericError : string | undefined = undefined){
@@ -274,13 +317,18 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 						}
 
 						thisCtrl._container.innerHTML = "";
+
+						if(thisCtrl._context.parameters.displaySearch && thisCtrl._context.parameters.displaySearch.raw === "1"){
+							thisCtrl.addSearchBar();
+						}
+
 						if(result.entities.length === 0){
 							// @ts-ignore
-							let word = thisCtrl._context.parameters.nnRelationshipDataSet.entityDisplayCollectionName ?? "records";
+							let word = thisCtrl._context.parameters.nnRelationshipDataSet.entityDisplayCollectionName ?? thisCtrl._context.resources.getString("Records");
 
 							let emptyDiv = document.createElement("div");
 							emptyDiv.setAttribute("style", "text-align:center;")
-							emptyDiv.innerText = "No " + word + " found for this filter"
+							emptyDiv.innerText = (thisCtrl._context.resources.getString("FilterNotFoundMask")??"").replace("{{entityname}}",word);
 							
 							thisCtrl._container.appendChild(emptyDiv);
 
@@ -420,12 +468,12 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 								lblContainer.setAttribute("class", "nncb-container-switch");
 						
 								var spanLabel = document.createElement("span");
-								spanLabel.setAttribute("class", "nncb-switch-label");
+								spanLabel.setAttribute("class", "nncb-switch-label " + thisCtrl._currentControlClassName);
 								spanLabel.textContent = record[thisCtrl._labelAttributeName];
 								divFlexCtrl.appendChild(spanLabel);
 							}
 							else{
-								lblContainer.setAttribute("class", "nncb-container");
+								lblContainer.setAttribute("class", "nncb-container " + thisCtrl._currentControlClassName);
 								lblContainer.setAttribute("style", styles.join(";"))
 							}
 							
@@ -544,6 +592,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 								}
 							});
 		
+							
 							if (thisCtrl._context.mode.isControlDisabled) {
 								chk.setAttribute("disabled", "disabled");
 							}
@@ -551,6 +600,10 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 							if(thisCtrl._useToggleSwitch){
 								var toggle = document.createElement("span");
 								toggle.setAttribute("class","nncb-slider nncb-round");
+
+								if(thisCtrl._tooltipAttributeName && record[thisCtrl._tooltipAttributeName]){
+									toggle.setAttribute("title", record[thisCtrl._tooltipAttributeName]);
+								}
 								
 								if(styles.length > 0)
 									toggle.setAttribute("style", styles.join(";"))
@@ -561,6 +614,11 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 							else{
 								var mark = document.createElement("span");
 								mark.setAttribute("class", "nncb-checkmark");
+
+								if(thisCtrl._tooltipAttributeName && record[thisCtrl._tooltipAttributeName]){
+									mark.setAttribute("title", record[thisCtrl._tooltipAttributeName]);
+								}
+	
 
 								lblContainer.innerHTML += record[thisCtrl._labelAttributeName];
 								lblContainer.appendChild(chk);
