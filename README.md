@@ -13,6 +13,8 @@ Controls using PowerApps Components Framework
 
 [Linear Slider with steps](#linear-slider-with-steps)
 
+[Year Dropdown](#year-dropdown)
+
 ## NN Checkboxes
 
 [Download](https://github.com/MscrmTools/PCF-Controls/releases/)
@@ -142,6 +144,7 @@ function onChange(context){
 |**ActionText**|Text of the action button|X||Can be a static string or a json object with language id like {"1033":"Run this!","1036":"Exécute ça!"}|
 |**Button identifier**|An identifier of your choice for the button||||
 |**Send Identifier**|Indicates if the identifier or the label should be sent when clicking on the button||||
+|**Always enable button**|Indicates if button should be always enabled even when control or form is disabled||||
 |**Background color**|Background color for default display||||
 |**Border color**|Border color for default display||||
 |**Color**|Text color for default display||||
@@ -179,4 +182,28 @@ Slider with blue color, minimum 0, maximum 100, step by 5, prefix "Percentage: "
 |**Label prefix**|Define a text to be inserted before the value of the column||||
 |**Label suffix**|Define a text to be added after the value of the column||||
 |**Label position**|Position of the label under the slider|X||Left, Center or Right|
+
+
+## Year Dropdown
+
+[Download](https://github.com/MscrmTools/PCF-Controls/releases/)
+
+### Purpose
+The purpose of this control is to allow user to select a year in a dropdown and store the result in a DateTime, Whole number or Single line of text column.
+
+### Samples
+
+![Screenshot](https://github.com/MscrmTools/PCF-Controls/blob/master/YearDropdown/screenshots/YearDropdown.gif?raw=true)
+
+### Configuration
+
+This is the list of parameters that can be set on the control
+
+|Parameter|Description|Required|Bound to an attribute|
+|---------|-----------|:----:|:---:|
+|**Target column**|The column bound to this control|X|X|
+|**Years before**|The number of years to add in the dropdown prior of current year|||
+|**Years after**|The number of years to add in the dropdown after of current year|||
+|**Default month**|Default month to generate the date when the target column is of type Date|||
+|**Default day**|Default day to generate the date when the target column is of type Date|||
 
