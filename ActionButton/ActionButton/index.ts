@@ -39,7 +39,9 @@ export class ActionButton implements ComponentFramework.StandardControl<IInputs,
 		this.actionText = context.parameters.ActionText.raw??"";
 		this.id = context.parameters.Id.raw??"";
 		this.sendId = context.parameters.SendId.raw  === "1";
-		this.controlType = context.parameters.BoundAttribute.type;
+
+		// @ts-ignore
+		this.controlType = context.parameters.BoundAttribute.attributes.Type;
 
 		if(this.actionText.trim().startsWith("{")){
 			let json = JSON.parse(this.actionText);
@@ -66,6 +68,7 @@ export class ActionButton implements ComponentFramework.StandardControl<IInputs,
 				backgroundColor: context.parameters.BackColor.raw ?? "#0078d4",
 				borderColor: context.parameters.BorderColor.raw ?? "#0078d4",
 				color: context.parameters.Color.raw ?? "#FFFFFF",
+				width: context.parameters.Width.raw ?? "auto"
 			},
 			hoverBackgroundColor: context.parameters.HoverBackColor.raw ?? "#106EBE",
 			hoverBorderColor: context.parameters.HoverBorderColor.raw ?? "#106EBE",
@@ -98,8 +101,7 @@ export class ActionButton implements ComponentFramework.StandardControl<IInputs,
 	 */
 	public getOutputs(): IOutputs
 	{
-		debugger;
-		if(this.controlType === "SingleLine.Text"){
+		if(this.controlType === "string"){
 			return {
 				BoundAttribute: this.sendId ? this.id : this.actionText
 			};	

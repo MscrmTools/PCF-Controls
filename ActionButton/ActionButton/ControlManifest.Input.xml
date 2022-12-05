@@ -9,6 +9,7 @@
       <value name="IdChoice" display-name-key="IdChoice_Display_Key" description-key="IdChoice_Desc_Key">1</value>
       <value name="LabelChoice" display-name-key="LabelChoice_Display_Key" description-key="LabelChoice_Desc_Key">0</value>
     </property>
+    <property name="Width" display-name-key="Width_Display_Key" description-key="Width_Desc_Key" of-type="SingleLine.Text" default-value="" usage="input" required="false" />
     <property name="EnableButtonOnDisabledForm" display-name-key="EnableButtonOnDisabledForm_Display_Key" description-key="EnableButtonOnDisabledForm_Desc_Key" of-type="Enum" default-value="1" usage="input" required="true">
       <value name="Yes" display-name-key="yes_Display_Key" description-key="yes_Desc_Key">1</value>
       <value name="No" display-name-key="no_Display_Key" description-key="no_Desc_Key">0</value>
