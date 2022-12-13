@@ -15,6 +15,8 @@ Controls using PowerApps Components Framework
 
 [Year Dropdown](#year-dropdown)
 
+[Lookup as Dropdown](#lookup-as-dropdown)
+
 ## NN Checkboxes
 
 [Download](https://github.com/MscrmTools/PCF-Controls/releases/)
@@ -221,7 +223,7 @@ This control has the following features:
 
 ### Samples
 
-
+![LookupToDropdown](https://user-images.githubusercontent.com/10774317/207386540-fefab6c1-f744-4e2c-b6ed-a01a6105ce9e.gif)
 
 ### Configuration
 
