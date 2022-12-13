@@ -155,6 +155,7 @@ function onChange(context){
 |**Border color (pressed)**|Border color when the mouse clicks on the button||||
 |**Color (pressed)**|Text color when the mouse clicks on the button||||
 |**Icon**|Icon to use on the action button|||[Available icons](https://developer.microsoft.com/en-us/fluentui#/styles/web/icons#available-icons)|
+|**Width**|Width of the button. Can be in pixel or percentage||||
 
 ## Linear Slider with steps
 
