@@ -116,7 +116,7 @@ Allows to display a notification or an helpful message to the user in a section.
 ## Action Button
 
 ### Purpose
-Allows to display a button to perform an action. To allow developer to do anything they want from the form, this button simply copies the text of the action button or its identifier (see configuration) on the bound string attribute. The developer needs to add an onChange event to this string attribute, check for the value of the attribute (should be the text of the action button) and perform the action needed.
+Allows to display a button to perform an action. To allow developer to do anything they want from the form, this button simply copies the text of the action button or its identifier (see configuration) on the bound string attribute. If the bound attribute is a datetime, the current date is set as the attribute value. The developer needs to add an onChange event to this string or datetime attribute, check for the value of the attribute (can be the text or id of the action button for string attribute, current datetime for datetime attribute) and perform the action needed.
 
 ### Samples
 ![image](https://user-images.githubusercontent.com/10774317/151808531-afd6b96f-d11e-4cc8-80a7-ff204ec20274.png)
@@ -141,7 +141,7 @@ function onChange(context){
 |Parameter|Description|Required|Bound to an attribute|Additional info|
 |---------|-----------|:----:|:---:|------|
 |**Attribute**|The attribute to use to display the control|X|X|| 
-|**ActionText**|Text of the action button|X||Can be a static string or a json object with language id like {"1033":"Run this!","1036":"Exécute ça!"}|
+|**ActionText**|Text of the action button|||Can be a static string or a json object with language id like {"1033":"Run this!","1036":"Exécute ça!"}|
 |**Button identifier**|An identifier of your choice for the button||||
 |**Send Identifier**|Indicates if the identifier or the label should be sent when clicking on the button||||
 |**Always enable button**|Indicates if button should be always enabled even when control or form is disabled||||
@@ -155,7 +155,7 @@ function onChange(context){
 |**Border color (pressed)**|Border color when the mouse clicks on the button||||
 |**Color (pressed)**|Text color when the mouse clicks on the button||||
 |**Icon**|Icon to use on the action button|||[Available icons](https://developer.microsoft.com/en-us/fluentui#/styles/web/icons#available-icons)|
-|**Width**|Width of the button. Can be in pixel or percentage||||
+|**Width**|Width of the button. |||Can be in pixel or percentage|
 
 ## Linear Slider with steps
 
