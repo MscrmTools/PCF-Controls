@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <control namespace="MscrmTools" constructor="LookupToPicklist" version="0.0.2" display-name-key="Control_Display_Name_Key" description-key="Control_Description_Key" control-type="standard" preview-image="img/LookupToPicklist_preview.png">
+    <property name="lookup" display-name-key="lookup_Display_Key" description-key="lookup_Desc_Key" of-type="Lookup.Simple" usage="bound" required="true" />
+    <property name="attributemask" display-name-key="attributemask_Display_Key" description-key="attributemask_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="sortByName" display-name-key="sortByName_Display_Key" description-key="sortByName_Desc_Key" of-type="Enum" default-value="0" usage="input" required="true">
+      <value name="Yes" display-name-key="yes_Display_Key" description-key="yes_Desc_Key">1</value>
+      <value name="No" display-name-key="no_Display_Key" description-key="no_Desc_Key">0</value>
+    </property>
+      <property name="addNew" display-name-key="addNew_Display_Key" description-key="addNew_Desc_Key" of-type="Enum" default-value="0" usage="input" required="true">
+      <value name="Yes" display-name-key="yes_Display_Key" description-key="yes_Desc_Key">1</value>
+      <value name="No" display-name-key="no_Display_Key" description-key="no_Desc_Key">0</value>
+    </property>
+    <resources>
+      <code path="index.ts" order="1" />
+      <resx path="strings/LookupToPicklist.1036.resx" version="1.0.0" />
+      <resx path="strings/LookupToPicklist.1033.resx" version="1.0.0" />
+    </resources>
+    <external-service-usage enabled="false">
+    </external-service-usage>
+    <feature-usage>
+      <uses-feature name="Utility" required="true" />
+      <uses-feature name="WebAPI" required="true" />
+    </feature-usage>
+  </control>
+</manifest>

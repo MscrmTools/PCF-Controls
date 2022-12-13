@@ -208,3 +208,28 @@ This is the list of parameters that can be set on the control
 |**Default month**|Default month to generate the date when the target column is of type Date|||
 |**Default day**|Default day to generate the date when the target column is of type Date|||
 
+## Lookup as Dropdown
+
+[Download](https://github.com/MscrmTools/PCF-Controls/releases/)
+
+### Purpose
+The purpose of this control is to display a Dropdown that allows to select records from an entity. Records displayed are the ones returned by the view configured for the Lookup column.
+
+This control has the following features:
+- Localized label (optional) : If the table targeted has columns for specific language, the control can show the label for the user selected language. For example, if the targeted table has columns new_name1033 (for US English), new_name1036 (for French) and you configure the control to have a mask set to new_name{lcid}, the control will now what label to display if the user has set his language to US English or French.
+- Create new record (optional) : You can configure the control so that it shows a "Add new" option to open a new form for the targeted table. It also requires that the user has at least basic privileges for Create and Read on the targeted table.
+
+### Samples
+
+
+
+### Configuration
+
+This is the list of parameters that can be set on the control
+
+|Parameter|Description|Required|Bound to an attribute|
+|---------|-----------|:----:|:---:|
+|**Lookup column**|The column bound to this control|X|X|
+|**Display mask**|The mask to find the localized column on the targeted table. Use {lcid} as a language token in the mask. It will be replace by the user language code|||
+|**Sort by display name**|Indicates if options must be sorted|X||
+|**Add new**|Indicates if "Add new" item must be added in the dropdown|X||
