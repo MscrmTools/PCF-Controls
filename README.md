@@ -232,6 +232,7 @@ This is the list of parameters that can be set on the control
 |Parameter|Description|Required|Bound to an attribute|
 |---------|-----------|:----:|:---:|
 |**Lookup column**|The column bound to this control|X|X|
+|**Filtering column**|Set the Lookup column to use to filter this control. Must be the same Lookup than the one defined in this control filter configuration|||
 |**Display mask**|The mask to find the localized column on the targeted table. Use {lcid} as a language token in the mask. It will be replace by the user language code|||
 |**Sort by display name**|Indicates if options must be sorted|X||
 |**Add new**|Indicates if "Add new" item must be added in the dropdown|X||

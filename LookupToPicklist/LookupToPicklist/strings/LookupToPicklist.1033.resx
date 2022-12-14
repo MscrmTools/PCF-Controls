@@ -103,4 +103,10 @@
     <data name="addNew_Desc_Key" xml:space="preserve">
         <value>Allow user to create new records from the dropdown. Requires appropriate privileges</value>
     </data>
+    <data name="dependantLookup_Display_Key" xml:space="preserve">
+        <value>Filtering column</value>
+    </data>
+    <data name="dependantLookup_Desc_Key" xml:space="preserve">
+        <value>Set the Lookup column to use to filter this control. Must be the same Lookup than the one defined in this control filter configuration</value>
+    </data>
 </root>

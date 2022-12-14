@@ -103,4 +103,10 @@
     <data name="addNew_Desc_Key" xml:space="preserve">
         <value>Permettre aux utilisateurs de créer de nouveau enregistrements à partir de la liste déroulante. Nécessite les privilèges appropriés</value>
     </data>
+    <data name="dependantLookup_Display_Key" xml:space="preserve">
+        <value>Colonne de filtrage</value>
+    </data>
+    <data name="dependantLookup_Desc_Key" xml:space="preserve">
+        <value>Indique la colonne de type Recherche qui doit permettre de filtrer le contrôle courant. Doit être la même valeur que la colonne indiquée dans le filtrage au niveau du formulaire</value>
+    </data>
 </root>
