@@ -377,7 +377,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 												let input = thisCtrl._useToggleSwitch ?												
 												<HTMLInputElement>items[i].firstChild?.firstChild || null:
 												<HTMLInputElement>items[i].firstChild?.firstChild?.nextSibling || null;
-												if(input && !input.checked){
+												if((<HTMLDivElement>items[i]).style.display !== "none" && input && !input.checked){
 													input.click();
 												}
 											}
@@ -395,7 +395,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 												let input = thisCtrl._useToggleSwitch ?												
 												<HTMLInputElement>items[i].firstChild?.firstChild || null:
 												<HTMLInputElement>items[i].firstChild?.firstChild?.nextSibling || null;
-												if(input && input.checked){
+												if((<HTMLDivElement>items[i]).style.display !== "none" && input && input.checked){
 													input.click();
 												}
 											}
