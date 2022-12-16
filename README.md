@@ -219,11 +219,14 @@ The purpose of this control is to display a Dropdown that allows to select recor
 
 This control has the following features:
 - Localized label (optional) : If the table targeted has columns for specific language, the control can show the label for the user selected language. For example, if the targeted table has columns new_name1033 (for US English), new_name1036 (for French) and you configure the control to have a mask set to new_name{lcid}, the control will now what label to display if the user has set his language to US English or French.
+![ltd](https://user-images.githubusercontent.com/10774317/207603166-1147b99c-2911-4013-b1a5-cc5d7f0468f5.gif)
+
+
 - Create new record (optional) : You can configure the control so that it shows a "Add new" option to open a new form for the targeted table. It also requires that the user has at least basic privileges for Create and Read on the targeted table.
-
-### Samples
-
 ![LookupToDropdown](https://user-images.githubusercontent.com/10774317/207386540-fefab6c1-f744-4e2c-b6ed-a01a6105ce9e.gif)
+
+- Lookup filtering (optional) : If the lookup is filtered by another lookup (and both targeted tables are in a 1N relationship), you can filter records available in the second dropdown, based on the first dropdown selected record.
+![ltd_filter](https://user-images.githubusercontent.com/10774317/207603990-ca9ab428-c8d5-4923-8aeb-cc1980290a15.gif)
 
 ### Configuration
 
