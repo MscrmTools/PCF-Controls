@@ -221,6 +221,13 @@ This control has the following features:
 - Localized label (optional) : If the table targeted has columns for specific language, the control can show the label for the user selected language. For example, if the targeted table has columns new_name1033 (for US English), new_name1036 (for French) and you configure the control to have a mask set to new_name{lcid}, the control will now what label to display if the user has set his language to US English or French.
 ![ltd](https://user-images.githubusercontent.com/10774317/207603166-1147b99c-2911-4013-b1a5-cc5d7f0468f5.gif)
 
+- Most recently used items (optional) : Allows to display a specific number of recent items. This feature is handled by the lookup column configuration (which is technically unsupported, ie. not exposed by the PCF SDK). The PCF configuration can be used to limit the number of items to display
+
+![image](https://user-images.githubusercontent.com/10774317/208404328-55be891b-d354-4d2f-8bac-7f953ab6e3b5.png)
+
+- Favorites (optional) : Allows to display some items first because they are the ones generally most used. Unique identifiers of items must be configured as a JSON array in the PCF 
+
+![image](https://user-images.githubusercontent.com/10774317/208404977-3048a540-dbbe-4d50-be95-0937fd89f4cd.png)
 
 - Create new record (optional) : You can configure the control so that it shows a "Add new" option to open a new form for the targeted table. It also requires that the user has at least basic privileges for Create and Read on the targeted table.
 ![LookupToDropdown](https://user-images.githubusercontent.com/10774317/207386540-fefab6c1-f744-4e2c-b6ed-a01a6105ce9e.gif)
@@ -239,3 +246,6 @@ This is the list of parameters that can be set on the control
 |**Display mask**|The mask to find the localized column on the targeted table. Use {lcid} as a language token in the mask. It will be replace by the user language code|||
 |**Sort by display name**|Indicates if options must be sorted|X||
 |**Add new**|Indicates if "Add new" item must be added in the dropdown|X||
+|**Display Search bar**|Indicates if a search bar must be added on top of the dropdown|||
+|**Favorites**|List of records unique identifiers to show as favorites|||
+|**Number of recent items**|Indicates the number of recent items to display|||
