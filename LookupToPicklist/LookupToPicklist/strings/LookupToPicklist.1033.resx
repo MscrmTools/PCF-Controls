@@ -133,4 +133,7 @@
     <data name="mruSize_Desc_Key" xml:space="preserve">
         <value>Indicates the number of recent items to display</value>
     </data>
+    <data name="addSearch_Desc_Key" xml:space="preserve">
+        <value>Indicates if a search bar must be added on top of the dropdown</value>
+    </data>
 </root>
