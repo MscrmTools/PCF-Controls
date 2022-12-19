@@ -109,4 +109,31 @@
     <data name="dependantLookup_Desc_Key" xml:space="preserve">
         <value>Indique la colonne de type Recherche qui doit permettre de filtrer le contrôle courant. Doit être la même valeur que la colonne indiquée dans le filtrage au niveau du formulaire</value>
     </data>
+    <data name="addSearch_Display_Key" xml:space="preserve">
+        <value>Afficher recherche</value>
+    </data>
+    <data name="addSearch_Desc_Key" xml:space="preserve">
+        <value>Indique s'il faut afficher une barre de recherche des enregistrements</value>
+    </data>
+    <data name="searchPlaceHolder" xml:space="preserve">
+        <value>Rechercher</value>
+    </data>
+    <data name="recentItems" xml:space="preserve">
+        <value>Eléments récents</value>
+    </data>
+    <data name="favorites" xml:space="preserve">
+        <value>Favoris</value>
+    </data>
+    <data name="favorites_Display_Key" xml:space="preserve">
+        <value>Favoris</value>
+    </data>
+    <data name="favorites_Desc_Key" xml:space="preserve">
+        <value>Liste d'identifiants des enregistrements à proposer en favoris</value>
+    </data>
+    <data name="mruSize_Display_Key" xml:space="preserve">
+        <value>Nombre d'éléments récents</value>
+    </data>
+    <data name="mruSize_Desc_Key" xml:space="preserve">
+        <value>Indique le nombre d'éléments récents à afficher</value>
+    </data>
 </root>

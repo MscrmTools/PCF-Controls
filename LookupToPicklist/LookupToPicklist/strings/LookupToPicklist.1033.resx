@@ -109,4 +109,28 @@
     <data name="dependantLookup_Desc_Key" xml:space="preserve">
         <value>Set the Lookup column to use to filter this control. Must be the same Lookup than the one defined in this control filter configuration</value>
     </data>
+    <data name="addSearch_Display_Key" xml:space="preserve">
+        <value>Display Search bar</value>
+    </data>
+    <data name="recentItems" xml:space="preserve">
+        <value>Recent items</value>
+    </data>
+    <data name="searchPlaceHolder" xml:space="preserve">
+        <value>Search</value>
+    </data>
+    <data name="favorites" xml:space="preserve">
+        <value>Favorites</value>
+    </data>
+    <data name="favorites_Display_Key" xml:space="preserve">
+        <value>Favorites</value>
+    </data>
+    <data name="favorites_Desc_Key" xml:space="preserve">
+        <value>List of records unique identifiers to show as favorites</value>
+    </data>
+    <data name="mruSize_Display_Key" xml:space="preserve">
+        <value>Number of recent items</value>
+    </data>
+    <data name="mruSize_Desc_Key" xml:space="preserve">
+        <value>Indicates the number of recent items to display</value>
+    </data>
 </root>

@@ -1,8 +1,8 @@
 import { IInputs, IOutputs } from './generated/ManifestTypes'
 import * as React from 'react'
 import * as ReactDom from 'react-dom'
-import { RecordSelector } from './RecordSelector'
 import { DropdownMenuItemType, IDropdownOption } from '@fluentui/react/lib/Dropdown'
+import { SearchableDropdown } from './SearchableDropdown'
 
 export class LookupToPicklist implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 
@@ -18,6 +18,7 @@ export class LookupToPicklist implements ComponentFramework.StandardControl<IInp
 	private actionOptions: IDropdownOption[];
 	private currentValue?: ComponentFramework.LookupValue[];
 	private newlyCreatedId: string|null;
+	private parentId: string|null;
 
 	constructor() {
 	}
@@ -29,9 +30,6 @@ export class LookupToPicklist implements ComponentFramework.StandardControl<IInp
 
 		this.entityName = context.parameters.lookup.getTargetEntityType()
 		this.viewId = context.parameters.lookup.getViewId();
-
-console.log("Entité: " + this.entityName + " / Vue : " + this.viewId);
-
 		var self = this;
 
 		context.utils.getEntityMetadata(this.entityName).then(metadata => {
@@ -61,7 +59,16 @@ console.log("Entité: " + this.entityName + " / Vue : " + this.viewId);
 	private retrieveRecords(){
 		var thisCtrl = this;
 	
-		thisCtrl._context.webAPI.retrieveRecord('savedquery', this.viewId, "?$select=fetchxml,returnedtypecode").then(view =>{
+		let filter = "";
+		if(this.viewId){
+			filter = "?$top=1&$select=fetchxml,returnedtypecode&$filter=savedqueryid eq " + this.viewId;
+		}
+		else{
+			filter = "?$top=1&$select=fetchxml,returnedtypecode&$filter=returnedtypecode eq '" + this.entityName + "' and querytype eq 64";
+		}
+
+		thisCtrl._context.webAPI.retrieveMultipleRecords('savedquery',filter).then(result =>{
+			let view =result.entities[0]; 
 			var xml = view.fetchxml;
 			if(thisCtrl._context.parameters.dependantLookup && thisCtrl._context.parameters.dependantLookup.raw && thisCtrl._context.parameters.dependantLookup.raw.length > 0){
 				var dependentId = thisCtrl._context.parameters.dependantLookup.raw[0].id;
@@ -113,9 +120,15 @@ console.log("Entité: " + this.entityName + " / Vue : " + this.viewId);
 
 	public updateView(context: ComponentFramework.Context<IInputs>): void {
 		if(context.updatedProperties.includes("dependantLookup")){
-			this.retrieveRecords();
+			let newParentId = context.parameters.dependantLookup.raw.length > 0 ? context.parameters.dependantLookup.raw[0].id : null;
+			if(newParentId !== this.parentId){
+				this.parentId = newParentId;
+				this.currentValue = undefined;
+				this.notifyOutputChanged();
+				this.retrieveRecords();
+			}
 		}
-		else{
+		else if(context.updatedProperties.includes("lookup")){
 			this.renderControl(context);
 		}
 	}
@@ -144,8 +157,52 @@ console.log("Entité: " + this.entityName + " / Vue : " + this.viewId);
 				return 0;
 			})
 		}
+
+		let searchOptions = thisCtrl._context.parameters.addSearch.raw === "1" ? [ 
+			{ key: 'FilterHeader', text: '-', itemType: DropdownMenuItemType.Header, data:{label: thisCtrl._context.resources.getString("searchPlaceHolder")} },
+			{ key: 'divider_filterHeader', text: '-', itemType: DropdownMenuItemType.Divider }
+		] : [];
 		
-		let options = [{key: '---', text:'---'},...this.availableOptions];
+		let mruOptions = [];
+		// @ts-ignore
+		let mrus = thisCtrl._context.parameters.lookup.getRecentItems();
+		// @ts-ignore
+		if(mrus?.length > 0 && context.parameters.lookup.getLookupConfiguration().isMruDisabled === false){
+			let maxSize = thisCtrl._context.parameters.mruSize?.raw ?? 999;
+
+			mruOptions.push({key:"mru", text:thisCtrl._context.resources.getString("recentItems"), itemType: DropdownMenuItemType.Header},{ key: 'mru_divider1', text: '-', itemType: DropdownMenuItemType.Divider });
+			for(let i=0;i< mrus.length && i < maxSize; i++){
+				mruOptions.push({key: mrus[i].objectId+"_mru", text:this.availableOptions.find(o => o.key===mrus[i].objectId)?.text ?? mrus[i].title, itemType: DropdownMenuItemType.Normal, data:{isMru:true}});
+			}
+
+			mruOptions.push({ key: 'mru_divider2', text: '-', itemType: DropdownMenuItemType.Divider });
+		}
+
+		let favoritesOptions = [];
+		if(thisCtrl._context.parameters.favorites.raw !== null && thisCtrl._context.parameters.favorites.raw.length > 0){
+			favoritesOptions.push({key:"favorite", text:thisCtrl._context.resources.getString("favorites"), itemType: DropdownMenuItemType.Header},{ key: 'mru_divider4', text: '-', itemType: DropdownMenuItemType.Divider });
+			let favorites = <Array<String>>JSON.parse(thisCtrl._context.parameters.favorites.raw);
+
+			for(let i of favorites){
+				let favOption = this.availableOptions.find(o => o.key===i);
+				if(favOption){
+					favoritesOptions.push({key: i +"_fav", text:favOption.text, itemType: DropdownMenuItemType.Normal, data:{isFavorite:true}});
+				}
+			}
+
+			favoritesOptions.push({ key: 'mru_divider5', text: '-', itemType: DropdownMenuItemType.Divider });
+		}
+
+		if(favoritesOptions.length > 0){
+			favoritesOptions.push({ key: 'records_header', text: thisCtrl.entityDisplayName, itemType: DropdownMenuItemType.Header });
+			favoritesOptions.push({ key: 'mru_divider3', text: '-', itemType: DropdownMenuItemType.Divider });
+		}
+		else if(mruOptions.length > 0){
+			mruOptions.push({ key: 'records_header', text: thisCtrl.entityDisplayName, itemType: DropdownMenuItemType.Header });
+			mruOptions.push({ key: 'mru_divider3', text: '-', itemType: DropdownMenuItemType.Divider });
+		}
+
+		let options = [...searchOptions,...mruOptions,...favoritesOptions,{key: '---', text:'---'},...this.availableOptions];
 		if(thisCtrl._context.parameters.addNew.raw === "1")
 		{
 			// If rights to read and create entity
@@ -155,34 +212,37 @@ console.log("Entité: " + this.entityName + " / Vue : " + this.viewId);
 			}
 		}
 
-		const recordSelector = React.createElement(RecordSelector, {
-			selectedRecordId: recordId,
-			availableOptions:  options,
+		const recordSelector = React.createElement(SearchableDropdown, {
+			selectedKey: recordId,
+			options:  options,
 			isDisabled: context.mode.isControlDisabled,
-			onChange: (selectedOption?: IDropdownOption) => {
-				if(selectedOption?.key === "new"){
+			onChange: (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption, index?: number) => {
+				if(option?.key === "new"){
 					context.navigation.openForm({
 						entityName : this.entityName,
 						useQuickCreateForm: true,
 						windowPosition: 2
 					}).then((result)=>{
-						if(result.savedEntityReference.length > 0){
+						if(result.savedEntityReference?.length > 0){
 							thisCtrl.newlyCreatedId = result.savedEntityReference[0].id.replace('{','').replace('}','').toLowerCase();
 						}
 						thisCtrl.retrieveRecords();
 					});
 				}
-				else if (typeof selectedOption === 'undefined' || selectedOption.key === '---') {
+				else if (typeof option === 'undefined' || option.key === '---') {
 					this.currentValue = undefined
-				} else {
-					this.currentValue = [{
-						id: <string>selectedOption.key,
-						name: selectedOption.text,
-						entityType: this.entityName
-					}]
-				}
 
-				this.notifyOutputChanged();
+					this.notifyOutputChanged();
+				} else {
+					option.selected = true;
+					this.currentValue = [{
+						id: (<string>option.key).split('_mru')[0].split('_fav')[0],
+						name: option.text,
+						entityType: this.entityName
+					}];
+
+					this.notifyOutputChanged();
+				}
 			}
 		})
 
