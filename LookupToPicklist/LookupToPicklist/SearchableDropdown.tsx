@@ -101,6 +101,13 @@ export const DropdownStyle = (props: IDropdownStyleProps): Partial<IDropdownStyl
           ":focus:after": {
               borderColor: "transparent"
           }
+      },
+      dropdownItems: {
+        selectors: {
+          "@media(min-width: 640px)": {
+            maxHeight: 400
+          }
+        }
       }
   })
 });
