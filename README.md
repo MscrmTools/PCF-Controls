@@ -121,7 +121,8 @@ Allows to display a notification or an helpful message to the user in a section.
 Allows to display a button to perform an action. To allow developer to do anything they want from the form, this button simply copies the text of the action button or its identifier (see configuration) on the bound string attribute. If the bound attribute is a datetime, the current date is set as the attribute value. The developer needs to add an onChange event to this string or datetime attribute, check for the value of the attribute (can be the text or id of the action button for string attribute, current datetime for datetime attribute) and perform the action needed.
 
 ### Samples
-![image](https://user-images.githubusercontent.com/10774317/151808531-afd6b96f-d11e-4cc8-80a7-ff204ec20274.png)
+![image](https://github.com/MscrmTools/PCF-Controls/assets/10774317/a166efea-412f-45d1-a59f-652e9b8d9980)
+
 
 
 Sample script to be implemented to execute an action when the button is clicked
