@@ -10,16 +10,22 @@
   },
   "dependencies": {
     "@fluentui/font-icons-mdl2": "^8.1.20",
+    "@fluentui/react": "^8.112.7",
+    "@fluentui/react-icons": "^2.0.222",
     "@types/node": "^10.12.18",
     "@types/powerapps-component-framework": "^1.2.0",
     "@types/react": "^16.9.43",
     "@types/react-dom": "^16.9.8",
-    "office-ui-fabric-react": "^7.123.9",
+    "office-ui-fabric-react": "^7.204.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/parser": "^6.10.0",
+    "eslint": "^8.53.0",
     "pcf-scripts": "^1",
-    "pcf-start": "^1"
+    "pcf-start": "^1",
+    "typescript": "^4.9.5"
   }
 }
