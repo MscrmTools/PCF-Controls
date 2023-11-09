@@ -160,6 +160,12 @@
     <data name="IconName_Desc_Key" xml:space="preserve">
         <value>An icon from the Fluent UI library</value>
     </data>
+    <data name="ToolTip_Display_Key" xml:space="preserve">
+        <value>ToolTip</value>
+    </data>
+    <data name="ToolTip_Desc_Key" xml:space="preserve">
+        <value>A tooltip to display over the button</value>
+    </data>
     <data name="PressedBackColor_Display_Key" xml:space="preserve">
         <value>Background color (pressed)</value>
     </data>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+        <xsd:element name="root" msdata:IsDataSet="true">
+            <xsd:complexType>
+                <xsd:choice maxOccurs="unbounded">
+                    <xsd:element name="metadata">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" use="required" type="xsd:string"/>
+                            <xsd:attribute name="type" type="xsd:string"/>
+                            <xsd:attribute name="mimetype" type="xsd:string"/>
+                            <xsd:attribute ref="xml:space"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="assembly">
+                        <xsd:complexType>
+                            <xsd:attribute name="alias" type="xsd:string"/>
+                            <xsd:attribute name="name" type="xsd:string"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="data">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+                            <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+                            <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+                            <xsd:attribute ref="xml:space"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="resheader">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:choice>
+            </xsd:complexType>
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="ActionButton_Display_Key" xml:space="preserve">
+        <value>Aktions-Schaltfläche</value>
+    </data>
+    <data name="ActionButton_Desc_Key" xml:space="preserve">
+        <value>Ein Steuerelement zur Anzeige einer Aktions-Schaltfläche. Die Schaltfläche aktualisiert den an das Attribut gebundenen Wert mit dem Aktions-Text.</value>
+    </data>
+    <data name="BoundAttribute_Display_Key" xml:space="preserve">
+        <value>Attribut</value>
+    </data>
+    <data name="BoundAttribute_Desc_Key" xml:space="preserve">
+        <value>Attribut, das durch eine Aktions-Schaltfläche ersetzt werden soll.</value>
+    </data>
+    <data name="ActionText_Display_Key" xml:space="preserve">
+        <value>Text</value>
+    </data>
+    <data name="ActionText_Desc_Key" xml:space="preserve">
+        <value>Text, der auf der Aktions-Schaltfläche angezeigt werden soll.</value>
+    </data>
+    <data name="EnableButtonOnDisabledForm_Display_Key" xml:space="preserve">
+        <value>Schaltfläche immer aktivieren</value>
+    </data>
+    <data name="EnableButtonOnDisabledForm_Desc_Key" xml:space="preserve">
+        <value>Gibt an, ob die Schaltfläche immer aktiviert sein soll, auch wenn das Steuerelement oder das Formular deaktiviert ist.</value>
+    </data>
+    <data name="yes_Display_Key" xml:space="preserve">
+        <value>Ja</value>
+    </data>
+    <data name="yes_Desc_Key" xml:space="preserve">
+        <value>Ja</value>
+    </data>
+    <data name="no_Display_Key" xml:space="preserve">
+        <value>Nein</value>
+    </data>
+    <data name="no_Desc_Key" xml:space="preserve">
+        <value>Nein</value>
+    </data>
+    <data name="BackColor_Display_Key" xml:space="preserve">
+        <value>Hintergrundfarbe</value>
+    </data>
+    <data name="BorderColor_Display_Key" xml:space="preserve">
+        <value>Rahmenfarbe</value>
+    </data>
+    <data name="Color_Display_Key" xml:space="preserve">
+        <value>Textfarbe</value>
+    </data>
+    <data name="HoverBackColor_Display_Key" xml:space="preserve">
+        <value>Hintergrundfarbe (angehoben)</value>
+    </data>
+    <data name="HoverBorderColor_Display_Key" xml:space="preserve">
+        <value>Rahmenfarbe (angehoben)</value>
+    </data>
+    <data name="HoverColor_Display_Key" xml:space="preserve">
+        <value>Textfarbe (angehoben)</value>
+    </data>
+    <data name="BackColor_Desc_Key" xml:space="preserve">
+        <value>Hintergrundfarbe für die Standardanzeige</value>
+    </data>
+    <data name="BorderColor_Desc_Key" xml:space="preserve">
+        <value>Rahmenfarbe für die Standardanzeige</value>
+    </data>
+    <data name="Color_Desc_Key" xml:space="preserve">
+        <value>Textfarbe für die Standardanzeige</value>
+    </data>
+    <data name="HoverBackColor_Desc_Key" xml:space="preserve">
+        <value>Hintergrundfarbe, wenn die Maus über die Schaltfläche bewegt wird</value>
+    </data>
+    <data name="HoverBorderColor_Desc_Key" xml:space="preserve">
+        <value>Rahmenfarbe, wenn die Maus über die Schaltfläche bewegt wird</value>
+    </data>
+    <data name="HoverColor_Desc_Key" xml:space="preserve">
+        <value>Textfarbe, wenn die Maus über die Schaltfläche bewegt wird</value>
+    </data>
+    <data name="Id_Display_Key" xml:space="preserve">
+        <value>Schaltflächenkennung</value>
+    </data>
+    <data name="Id_Desc_Key" xml:space="preserve">
+        <value>Die Kennung kann an die gebundene Spalte gesendet werden.</value>
+    </data>
+    <data name="SendId_Display_Key" xml:space="preserve">
+        <value>Kennung senden?</value>
+    </data>
+    <data name="SendId_Desc_Key" xml:space="preserve">
+        <value>Legen Sie fest, welcher Wert an die gebundene Spalte gesendet wird: Kennung oder Beschriftung.</value>
+    </data>
+    <data name="IdChoice_Display_Key" xml:space="preserve">
+        <value>Kennung</value>
+    </data>
+    <data name="IdChoice_Desc_Key" xml:space="preserve">
+        <value>Die Schaltflächenkennung wird an die gebundene Spalte gesendet.</value>
+    </data>
+    <data name="LabelChoice_Display_Key" xml:space="preserve">
+        <value>Beschriftung</value>
+    </data>
+    <data name="LabelChoice_Desc_Key" xml:space="preserve">
+        <value>Die Schaltflächenbeschriftung wird an die gebundene Spalte gesendet.</value>
+    </data>
+    <data name="IconName_Display_Key" xml:space="preserve">
+        <value>Symbol</value>
+    </data>
+    <data name="IconName_Desc_Key" xml:space="preserve">
+        <value>Ein Symbol aus der Fluent UI-Bibliothek.</value>
+    </data>
+    <data name="ToolTip_Display_Key" xml:space="preserve">
+        <value>QuickInfo</value>
+    </data>
+    <data name="ToolTip_Desc_Key" xml:space="preserve">
+        <value>Eine QuickInfo, die über der Schaltfläche angezeigt wird.</value>
+    </data>
+    <data name="PressedBackColor_Display_Key" xml:space="preserve">
+        <value>Hintergrundfarbe (gedrückt)</value>
+    </data>
+    <data name="PressedBackColor_Desc_Key" xml:space="preserve">
+        <value>Hintergrundfarbe, wenn die Maus auf die Schaltfläche klickt</value>
+    </data>
+    <data name="PressedBorderColor_Display_Key" xml:space="preserve">
+        <value>Rahmenfarbe (gedrückt)</value>
+    </data>
+    <data name="PressedBorderColor_Desc_Key" xml:space="preserve">
+        <value>Rahmenfarbe, wenn die Maus auf die Schaltfläche klickt</value>
+    </data>
+    <data name="PressedColor_Display_Key" xml:space="preserve">
+        <value>Textfarbe (gedrückt)</value>
+    </data>
+    <data name="PressedColor_Desc_Key" xml:space="preserve">
+        <value>Textfarbe, wenn die Maus auf die Schaltfläche klickt</value>
+    </data>
+    <data name="Width_Display_Key" xml:space="preserve">
+        <value>Breite</value>
+    </data>
+    <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
+</root>

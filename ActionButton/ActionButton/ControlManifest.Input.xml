@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest>
-  <control namespace="MscrmTools" constructor="ActionButton" version="0.1.10" display-name-key="ActionButton_Display_Key" description-key="ActionButton_Desc_Key" control-type="standard" preview-image="imgs/logo.png">
+  <control namespace="MscrmTools" constructor="ActionButton" version="0.1.15" display-name-key="ActionButton_Display_Key" description-key="ActionButton_Desc_Key" control-type="standard" preview-image="imgs/logo.png">
     <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
     <property name="BoundAttribute" display-name-key="BoundAttribute_Display_Key" description-key="BoundAttribute_Desc_Key" of-type-group="ValidTypes" usage="bound" required="true" />
     <property name="ActionText" display-name-key="ActionText_Display_Key" description-key="ActionText_Desc_Key" of-type="SingleLine.Text" default-value="" usage="input" required="false" />
@@ -20,13 +20,12 @@
     <property name="HoverBackColor" display-name-key="HoverBackColor_Display_Key" description-key="HoverBackColor_Desc_Key" of-type="SingleLine.Text" default-value="#106EBE" usage="input" required="false" />
     <property name="HoverBorderColor" display-name-key="HoverBorderColor_Display_Key" description-key="HoverBorderColor_Desc_Key" of-type="SingleLine.Text" default-value="#106EBE" usage="input" required="false" />
     <property name="HoverColor" display-name-key="HoverColor_Display_Key" description-key="HoverColor_Desc_Key" of-type="SingleLine.Text" default-value="#FFFFFF" usage="input" required="false" />
-
     <property name="PressedBackColor" display-name-key="PressedBackColor_Display_Key" description-key="PressedBackColor_Desc_Key" of-type="SingleLine.Text" default-value="#0078d4" usage="input" required="false" />
     <property name="PressedBorderColor" display-name-key="PressedBorderColor_Display_Key" description-key="PressedBorderColor_Desc_Key" of-type="SingleLine.Text" default-value="#0078d4" usage="input" required="false" />
     <property name="PressedColor" display-name-key="PressedColor_Display_Key" description-key="PressedColor_Desc_Key" of-type="SingleLine.Text" default-value="#FFFFFF" usage="input" required="false" />
-
     <property name="IconName" display-name-key="IconName_Display_Key" description-key="IconName_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" />
-   <type-group name="ValidTypes">
+    <property name="ToolTip" display-name-key="ToolTip_Display_Key" description-key="ToolTip_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" />
+    <type-group name="ValidTypes">
       <type>DateAndTime.DateAndTime</type>
       <type>DateAndTime.DateOnly</type>
       <type>SingleLine.Text</type>
@@ -35,6 +34,7 @@
       <code path="index.ts" order="1" />
       <resx path="strings/ActionButton.1033.resx" version="1.0.0" />
       <resx path="strings/ActionButton.1036.resx" version="1.0.0" />
+      <resx path="strings/ActionButton.1031.resx" version="1.0.0" />
     </resources>
   </control>
 </manifest>

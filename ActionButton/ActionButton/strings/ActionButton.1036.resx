@@ -160,6 +160,12 @@
     <data name="IconName_Desc_Key" xml:space="preserve">
         <value>Une icône de la librairie Fluent UI</value>
     </data>
+    <data name="ToolTip_Display_Key" xml:space="preserve">
+        <value>Infobulle</value>
+    </data>
+    <data name="ToolTip_Desc_Key" xml:space="preserve">
+        <value>Une infobulle à afficher au-dessus du bouton</value>
+    </data>
     <data name="PressedBackColor_Display_Key" xml:space="preserve">
         <value>Couleur de fond (clic)</value>
     </data>
