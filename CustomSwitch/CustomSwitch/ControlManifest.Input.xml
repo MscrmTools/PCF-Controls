@@ -2,9 +2,9 @@
 <manifest>
   <control namespace="MscrmTools" constructor="CustomSwitch" version="1.0.2" display-name-key="CustomSwitch_Display_Key" description-key="CustomSwitch_Desc_Key" control-type="standard" preview-image="imgs/preview.png">
     <property name="booleanAttribute" display-name-key="booleanAttribute_Display_Key" description-key="booleanAttribute_Desc_Key" of-type="TwoOptions" usage="bound" required="true" />
-    <property name="offColor" display-name-key="offColor_Display_Key" description-key="offColor_Desc_Key" of-type="SingleLine.Text" default-value="" usage="input" required="false" />
-    <property name="onColor" display-name-key="onColor_Display_Key" description-key="onColor_Desc_Key" of-type="SingleLine.Text" default-value="" usage="input" required="false" />
-    <property name="switchColor" display-name-key="switchColor_Display_Key" description-key="switchColor_Desc_Key" of-type="SingleLine.Text" default-value="" usage="input" required="false" />
+    <property name="offColor" display-name-key="offColor_Display_Key" description-key="offColor_Desc_Key" of-type="SingleLine.Text" default-value="#008000" usage="input" required="false" />
+    <property name="onColor" display-name-key="onColor_Display_Key" description-key="onColor_Desc_Key" of-type="SingleLine.Text" default-value="#E70000" usage="input" required="false" />
+    <property name="switchColor" display-name-key="switchColor_Display_Key" description-key="switchColor_Desc_Key" of-type="SingleLine.Text" default-value="#FFFFFF" usage="input" required="false" />
     <property name="layout" display-name-key="layout_Display_Key" description-key="layout_Desc_Key" of-type="Enum" usage="input" default-value="Round" required="true">
       <value name="Round" display-name-key="layoutRound_Display_Key" description-key="layoutRound_Desc_Key">Round</value>
       <value name="Square" display-name-key="layoutSquare_Display_Key" description-key="layoutSquare_Desc_Key">Square</value>
