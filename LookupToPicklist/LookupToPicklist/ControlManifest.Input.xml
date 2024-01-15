@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest>
-  <control namespace="MscrmTools" constructor="LookupToPicklist" version="0.0.4" display-name-key="Control_Display_Name_Key" description-key="Control_Description_Key" control-type="standard" preview-image="img/LookupToPicklist_preview.png">
+  <control namespace="MscrmTools" constructor="LookupToPicklist" version="0.0.6" display-name-key="LookupToPicklist" description-key="The purpose of this control is to display a Dropdown that allows to select records from an entity." control-type="standard" preview-image="img/LookupToPicklist_preview.png">
     <property name="lookup" display-name-key="lookup_Display_Key" description-key="lookup_Desc_Key" of-type="Lookup.Simple" usage="bound" required="true" />
     <property name="dependantLookup" display-name-key="dependantLookup_Display_Key" description-key="dependantLookup_Desc_Key" of-type="Lookup.Simple" usage="bound" required="false" />
     <property name="attributemask" display-name-key="attributemask_Display_Key" description-key="attributemask_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" />
@@ -14,12 +14,13 @@
       <value name="Yes" display-name-key="yes_Display_Key" description-key="yes_Desc_Key">1</value>
       <value name="No" display-name-key="no_Display_Key" description-key="no_Desc_Key">0</value>
     </property>
-     <property name="addSearch" display-name-key="addSearch_Display_Key" description-key="addSearch_Desc_Key" of-type="Enum" default-value="0" usage="input" required="true">
+    <property name="addSearch" display-name-key="addSearch_Display_Key" description-key="addSearch_Desc_Key" of-type="Enum" default-value="0" usage="input" required="true">
       <value name="Yes" display-name-key="yes_Display_Key" description-key="yes_Desc_Key">1</value>
       <value name="No" display-name-key="no_Display_Key" description-key="no_Desc_Key">0</value>
     </property>
     <resources>
       <code path="index.ts" order="1" />
+      <resx path="strings/LookupToPicklist.1031.resx" version="1.0.0" />
       <resx path="strings/LookupToPicklist.1036.resx" version="1.0.0" />
       <resx path="strings/LookupToPicklist.1033.resx" version="1.0.0" />
     </resources>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest>
-  <control namespace="MscrmTools" constructor="CustomSwitch" version="1.0.2" display-name-key="CustomSwitch_Display_Key" description-key="CustomSwitch_Desc_Key" control-type="standard" preview-image="imgs/preview.png">
+  <control namespace="MscrmTools" constructor="CustomSwitch" version="1.0.3" display-name-key="CustomSwitch_Display_Key" description-key="CustomSwitch_Desc_Key" control-type="standard" preview-image="imgs/preview.png">
     <property name="booleanAttribute" display-name-key="booleanAttribute_Display_Key" description-key="booleanAttribute_Desc_Key" of-type="TwoOptions" usage="bound" required="true" />
     <property name="offColor" display-name-key="offColor_Display_Key" description-key="offColor_Desc_Key" of-type="SingleLine.Text" default-value="" usage="input" required="false" />
     <property name="onColor" display-name-key="onColor_Display_Key" description-key="onColor_Desc_Key" of-type="SingleLine.Text" default-value="" usage="input" required="false" />
@@ -16,6 +16,7 @@
     <resources>
       <code path="index.ts" order="1" />
       <css path="css/CustomSwitch.css" order="1" />
+      <resx path="strings/CustomSwitch.1031.resx" version="1.0.0" />
       <resx path="strings/CustomSwitch.1033.resx" version="1.0.0" />
       <resx path="strings/CustomSwitch.1036.resx" version="1.0.0" />
     </resources>

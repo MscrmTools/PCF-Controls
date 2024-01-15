@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+        <xsd:element name="root" msdata:IsDataSet="true">
+            <xsd:complexType>
+                <xsd:choice maxOccurs="unbounded">
+                    <xsd:element name="metadata">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" use="required" type="xsd:string"/>
+                            <xsd:attribute name="type" type="xsd:string"/>
+                            <xsd:attribute name="mimetype" type="xsd:string"/>
+                            <xsd:attribute ref="xml:space"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="assembly">
+                        <xsd:complexType>
+                            <xsd:attribute name="alias" type="xsd:string"/>
+                            <xsd:attribute name="name" type="xsd:string"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="data">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+                            <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+                            <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+                            <xsd:attribute ref="xml:space"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="resheader">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:choice>
+            </xsd:complexType>
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="LinearSliderWithSteps" xml:space="preserve">
+        <value>Linearer Schieberegler mit Schritten</value>
+    </data>
+    <data name="LinearSliderWithSteps_description" xml:space="preserve">
+        <value>Zeigt eine Steuerung als linearen Schieberegler mit konfigurierbaren Schritten an</value>
+    </data>
+    <data name="controlValue_Display_Key" xml:space="preserve">
+        <value>Spalte</value>
+    </data>
+    <data name="controlValue_Desc_Key" xml:space="preserve">
+        <value>Zu dieser Steuerung zugeordnete Spalte</value>
+    </data>
+    <data name="min_Display_Key" xml:space="preserve">
+        <value>Minimalwert</value>
+    </data>
+    <data name="min_Desc_Key" xml:space="preserve">
+        <value>Minimalwert für den Schieberegler</value>
+    </data>
+    <data name="max_Display_Key" xml:space="preserve">
+        <value>Maximalwert</value>
+    </data>
+    <data name="max_Desc_Key" xml:space="preserve">
+        <value>Maximalwert für den Schieberegler</value>
+    </data>
+    <data name="step_Desc_Key" xml:space="preserve">
+        <value>Schritt für den Schieberegler</value>
+    </data>
+    <data name="step_Display_Key" xml:space="preserve">
+        <value>Schritt</value>
+    </data>
+    <data name="color_Display_Key" xml:space="preserve">
+        <value>Farbe</value>
+    </data>
+    <data name="color_Desc_Key" xml:space="preserve">
+        <value>Farbe des Schiebereglers</value>
+    </data>
+    <data name="labelPrefix_Display_Key" xml:space="preserve">
+        <value>Label-Vorsatz</value>
+    </data>
+    <data name="labelPrefix_Desc_Key" xml:space="preserve">
+        <value>Definieren Sie einen Text, der vor dem Wert der Spalte eingefügt werden soll</value>
+    </data>
+    <data name="labelSuffix_Display_Key" xml:space="preserve">
+        <value>Label-Nachsatz</value>
+    </data>
+    <data name="labelSuffix_Desc_Key" xml:space="preserve">
+        <value>Definieren Sie einen Text, der nach dem Wert der Spalte hinzugefügt werden soll</value>
+    </data>
+    <data name="labelPosition_Display_Key" xml:space="preserve">
+        <value>Label-Position</value>
+    </data>
+    <data name="labelPosition_Desc_Key" xml:space="preserve">
+        <value>Position des Labels unter dem Schieberegler</value>
+    </data>
+    <data name="Left_Key" xml:space="preserve">
+        <value>Links</value>
+    </data>
+    <data name="Center_Key" xml:space="preserve">
+        <value>Mitte</value>
+    </data>
+    <data name="Right_Key" xml:space="preserve">
+        <value>Rechts</value>
+    </data>
+    <data name="Left_Desc" xml:space="preserve">
+        <value>Label wird links ausgerichtet</value>
+    </data>
+    <data name="Center_Desc" xml:space="preserve">
+        <value>Label wird zentriert</value>
+    </data>
+    <data name="Right" xml:space="preserve">
+        <value>Label wird rechts ausgerichtet</value>
+    </data>
+</root>

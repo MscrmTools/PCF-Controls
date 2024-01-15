@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest>
-  <control namespace="MscrmTools" constructor="LinearSliderWithSteps" version="0.0.16" display-name-key="LinearSliderWithSteps" description-key="LinearSliderWithSteps_description" control-type="standard" preview-image="imgs/screenshot.png">
+  <control namespace="MscrmTools" constructor="LinearSliderWithSteps" version="0.0.17" display-name-key="LinearSliderWithSteps" description-key="LinearSliderWithSteps_description" control-type="standard" preview-image="imgs/screenshot.png">
     <type-group name="numbers">
       <type>Whole.None</type>
       <type>Currency</type>
@@ -22,6 +22,7 @@
     <resources>
       <code path="index.ts" order="1" />
       <css path="css/LinearSliderWithSteps.css" order="2" />
+      <resx path="strings/LinearSliderWithSteps.1031.resx" version="1.0.0" />
       <resx path="strings/LinearSliderWithSteps.1033.resx" version="1.0.0" />
       <resx path="strings/LinearSliderWithSteps.1036.resx" version="1.0.0" />
     </resources>
