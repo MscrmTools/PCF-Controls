@@ -139,6 +139,12 @@ export class CustomSwitch implements ComponentFramework.StandardControl<IInputs,
 
 			this.ensureLabel((<HTMLInputElement>document.getElementById(this._checkboxid)).checked);
 		}
+		
+		if (context.mode.isControlDisabled) {
+			(<HTMLInputElement>document.getElementById(this._checkboxid)).setAttribute("disabled", "disabled");
+		}else{
+			(<HTMLInputElement>document.getElementById(this._checkboxid)).removeAttribute("disabled")
+		}
 	}
 
 	/** 
