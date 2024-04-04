@@ -10,6 +10,7 @@ export const SearchableDropdown: React.FunctionComponent<IDropdownProps> = props
     <Dropdown
         {...props}
         styles={DropdownStyle}
+        calloutProps={{ calloutMaxHeight: 300 }}
         onDismiss={() => setSearchText('')}
         selectedKey = {props.selectedKey}
         options={[

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest>
-  <control namespace="MscrmTools" constructor="NNCheckboxes" version="1.0.85" display-name-key="NNCheckboxes_Display_Key" description-key="NNCheckboxes_Desc_Key" control-type="standard" preview-image="imgs/nncheckboxes.png">
+  <control namespace="MscrmTools" constructor="NNCheckboxes" version="1.0.86" display-name-key="NNCheckboxes_Display_Key" description-key="NNCheckboxes_Desc_Key" control-type="standard" preview-image="imgs/nncheckboxes.png">
     <data-set name="nnRelationshipDataSet" display-name-key="nnRelationshipDataSet_Display_Key">
       <property-set name="displayAttribute" display-name-key="targetEntity_Display_Key" description-key="targetEntity_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
       <property-set name="backgroundColorAttribute" display-name-key="backgroundColorAttribute_Display_Key" description-key="backgroundColorAttribute_Desc_Key" of-type-group="colorTypes" usage="bound" required="false" />
@@ -52,6 +52,7 @@
     <resources>
       <code path="index.ts" order="1" />
       <css path="css/NNCheckboxes.css" order="1" />
+      <resx path="strings/NNCheckboxes.1031.resx" version="1.0.0" />
       <resx path="strings/NNCheckboxes.1033.resx" version="1.0.0" />
       <resx path="strings/NNCheckboxes.1036.resx" version="1.0.0" />
     </resources>

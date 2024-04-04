@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="https://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:import namespace="https://www.w3.org/XML/1998/namespace"/>
+        <xsd:element name="root" msdata:IsDataSet="true">
+            <xsd:complexType>
+                <xsd:choice maxOccurs="unbounded">
+                    <xsd:element name="metadata">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" use="required" type="xsd:string"/>
+                            <xsd:attribute name="type" type="xsd:string"/>
+                            <xsd:attribute name="mimetype" type="xsd:string"/>
+                            <xsd:attribute ref="xml:space"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="assembly">
+                        <xsd:complexType>
+                            <xsd:attribute name="alias" type="xsd:string"/>
+                            <xsd:attribute name="name" type="xsd:string"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="data">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+                            <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+                            <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+                            <xsd:attribute ref="xml:space"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="resheader">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:choice>
+            </xsd:complexType>
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="targetColumn_Display_Key" xml:space="preserve">
+        <value>Zielspalte</value>
+    </data>
+    <data name="targetColumn_Desc_Key" xml:space="preserve">
+        <value>Die an dieses Steuerelement gebundene Spalte</value>
+    </data>
+    <data name="yearsBefore_Display_Key" xml:space="preserve">
+        <value>Jahre zuvor</value>
+    </data>
+    <data name="yearsBefore_Desc_Key" xml:space="preserve">
+        <value>Anzahl der Jahre, die im Dropdown-Menü vor dem aktuellen Jahr hinzugefügt werden</value>
+    </data>
+    <data name="yearsAfter_Display_Key" xml:space="preserve">
+        <value>Jahre danach</value>
+    </data>
+    <data name="yearsAfter_Desc_Key" xml:space="preserve">
+        <value>Anzahl der Jahre, die im Dropdown-Menü nach dem aktuellen Jahr hinzugefügt werden</value>
+    </data>
+    <data name="dateDefaultMonth_Display_Key" xml:space="preserve">
+        <value>Standardmonat</value>
+    </data>
+    <data name="dateDefaultMonth_Desc_Key" xml:space="preserve">
+        <value>Standardmonat zur Generierung des Datums, wenn die Zielspalte vom Typ Datum ist</value>
+    </data>
+    <data name="dateDefaultDay_Display_Key" xml:space="preserve">
+        <value>Standardtag</value>
+    </data>
+    <data name="dateDefaultDay_Desc_Key" xml:space="preserve">
+        <value>Standardtag zur Generierung des Datums, wenn die Zielspalte vom Typ Datum ist</value>
+    </data>
+    <data name="YearDropdown" xml:space="preserve">
+        <value>Jahresauswahl-Dropdown</value>
+    </data>
+    <data name="YearDropdown description" xml:space="preserve">
+        <value>Ein Steuerelement zur Auswahl eines Jahres und Speicherung in einer DateTime-, Ganzzahl- oder Zeichenkettenspalte</value>
+    </data>
+</root>
