@@ -306,6 +306,39 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 					view.fetchxml = queryContent.documentElement.outerHTML;
 				}
 
+				let addFilterNode = function(filterObject:any, parent:any){
+					var filterNode = queryContent.createElement("filter");
+					filterNode.setAttribute("type",filterObject.filterOperator === 0 ? "and" : "or");
+					
+					for(let condition of filterObject.conditions){
+						let conditionNode = queryContent.createElement("condition");
+						conditionNode.setAttribute("attribute",condition.attributeName);
+						conditionNode.setAttribute("operator",conditionOperators[condition.conditionOperator]);
+						conditionNode.setAttribute("value",condition.value);
+						if(condition.entityAliasName){
+							conditionNode.setAttribute("entityname",condition.entityAliasName);
+						}
+
+						filterNode.appendChild(conditionNode);
+					}
+
+					for(let filter of filterObject.filters ?? []){
+						addFilterNode(filter,filterNode);
+					}
+
+					parent.appendChild(filterNode);
+				}
+
+				let filterObject = thisCtrl._context.parameters.nnRelationshipDataSet.filtering.getFilter();
+				if(filterObject){
+					const parser = new DOMParser();
+					var queryContent = parser.parseFromString(<string>view.fetchxml, "text/xml");
+
+					addFilterNode(filterObject, queryContent.documentElement.firstChild);
+
+					view.fetchxml = queryContent.documentElement.outerHTML;
+				}
+
 				thisCtrl._context.webAPI.retrieveMultipleRecords(thisCtrl._childRecordType, "?fetchXml=" + encodeURIComponent(<string>view.fetchxml)
 					)
 					.then(function (result) {

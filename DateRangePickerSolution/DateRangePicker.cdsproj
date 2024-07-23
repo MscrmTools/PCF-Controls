@@ -22,7 +22,7 @@
   </PropertyGroup>
   -->
     <PropertyGroup>
-    <SolutionPackageType>Both</SolutionPackageType>
+    <SolutionPackageType>Unmanaged</SolutionPackageType>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.PowerApps.MSBuild.Solution" Version="1.*" />
@@ -42,14 +42,7 @@
   </ItemGroup>
   
   <ItemGroup>
-	<ProjectReference Include="..\ActionButton\ActionButton.pcfproj" />
-	<ProjectReference Include="..\CustomSwitch\CustomSwitch.pcfproj" />
-	<ProjectReference Include="..\DateAsCheckbox\DateAsCheckbox.pcfproj" />
-	<ProjectReference Include="..\NNCheckboxes\NNCheckboxes.pcfproj" />
-	<ProjectReference Include="..\ReactNotifier\ReactNotifier.pcfproj" />
-	<ProjectReference Include="..\LinearSliderWithSteps\LinearSliderWithSteps.pcfproj" />
-	<ProjectReference Include="..\YearDropdown\YearDropdown.pcfproj" />
-  <ProjectReference Include="..\LookupToPicklist\LookupToPicklist.pcfproj" />
+	<ProjectReference Include="..\DateRangePickerPCF\DateRangePickerPCF.pcfproj" />
   </ItemGroup>
 
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />

@@ -21,9 +21,6 @@
     "react-dom": "^16.13.1"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.10.0",
-    "@typescript-eslint/parser": "^6.10.0",
-    "eslint": "^8.53.0",
     "pcf-scripts": "^1",
     "pcf-start": "^1",
     "typescript": "^4.9.5"

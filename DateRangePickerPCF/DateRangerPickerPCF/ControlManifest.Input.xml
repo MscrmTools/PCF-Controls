@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="MscrmTools" constructor="DateRangerPicker" version="0.0.7" display-name-key="DateRangerPicker" description-key="DateRangerPicker description" control-type="standard" >
+    <!--external-service-usage node declares whether this 3rd party PCF control is using external service or not, if yes, this control will be considered as premium and please also add the external domain it is using.
+    If it is not using any external service, please set the enabled="false" and DO NOT add any domain below. The "enabled" will be false by default.
+    Example1:
+      <external-service-usage enabled="true">
+        <domain>www.Microsoft.com</domain>
+      </external-service-usage>
+    Example2:
+      <external-service-usage enabled="false">
+      </external-service-usage>
+    -->
+    <external-service-usage enabled="false">
+      <!--UNCOMMENT TO ADD EXTERNAL DOMAINS
+      <domain></domain>
+      <domain></domain>
+      -->
+    </external-service-usage>
+    <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
+    <property name="StartDate" display-name-key="StartDate_Display_Key" description-key="StartDate_Desc_Key" of-type="DateAndTime.DateOnly" usage="bound" required="true" />
+    <property name="EndDate" display-name-key="EndDate_Display_Key" description-key="EndDate_Desc_Key" of-type="DateAndTime.DateOnly" usage="bound" required="true" />
+    <property name="ShowOneCalendar" display-name-key="ShowOneCalendar_Display_Key" description-key="ShowOneCalendar_Desc_Key" of-type="Enum" default-value="0" usage="input" required="true" >
+      <value name="Yes" display-name-key="yes_Display_Key" description-key="yes_Desc_Key">1</value>
+      <value name="No" display-name-key="no_Display_Key" description-key="no_Desc_Key">0</value>
+    </property>
+    <property name="ShowWeeksNumber" display-name-key="ShowWeeksNumber_Display_Key" description-key="ShowWeeksNumber_Desc_Key" of-type="Enum" usage="input" default-value="0" required="true" >
+      <value name="Yes" display-name-key="yes_Display_Key" description-key="yes_Desc_Key">1</value>
+      <value name="No" display-name-key="no_Display_Key" description-key="no_Desc_Key">0</value>
+    </property>
+    <property name="DateFormat" display-name-key="DateFormat_Display_Key" description-key="DateFormat_Desc_Key" of-type="SingleLine.Text" default-value="yyyy-MM-dd" usage="input" required="true" />
+    <property name="PlaceHolder" display-name-key="PlaceHolder_Display_Key" description-key="PlaceHolder_Desc_Key" of-type="SingleLine.Text" usage="input" default-value="Select a range of date" required="true" />
+    <property name="LinkCharacter" display-name-key="LinkCharacter_Display_Key" description-key="LinkCharacter_Desc_Key" of-type="SingleLine.Text" usage="input" default-value=" ~ " required="true" />
+    
+    <!--
+      Property node's of-type attribute can be of-type-group attribute.
+      Example:
+      <type-group name="numbers">
+        <type>Whole.None</type>
+        <type>Currency</type>
+        <type>FP</type>
+        <type>Decimal</type>
+      </type-group>
+      <property name="sampleProperty" display-name-key="Property_Display_Key" description-key="Property_Desc_Key" of-type-group="numbers" usage="bound" required="true" />
+    -->
+    <resources>
+      <code path="index.ts" order="1"/>
+      <resx path="strings/DateRangePicker.1033.resx" version="1.0.0" />
+      <resx path="strings/DateRangePicker.1036.resx" version="1.0.0" />
+      <!-- UNCOMMENT TO ADD MORE RESOURCES
+      <css path="css/DateRangerPicker.css" order="1" />
+
+      -->
+    </resources>
+    <!-- UNCOMMENT TO ENABLE THE SPECIFIED API
+    <feature-usage>
+      <uses-feature name="Device.captureAudio" required="true" />
+      <uses-feature name="Device.captureImage" required="true" />
+      <uses-feature name="Device.captureVideo" required="true" />
+      <uses-feature name="Device.getBarcodeValue" required="true" />
+      <uses-feature name="Device.getCurrentPosition" required="true" />
+      <uses-feature name="Device.pickFile" required="true" />
+      <uses-feature name="Utility" required="true" />
+      <uses-feature name="WebAPI" required="true" />
+    </feature-usage>
+    -->
+  </control>
+</manifest>
