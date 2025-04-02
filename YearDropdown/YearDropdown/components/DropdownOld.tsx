@@ -1,14 +1,8 @@
 import * as React from 'react';
 import { Dropdown, IDropdownOption, IDropdownStyleProps, IDropdownStyles } from '@fluentui/react/lib/Dropdown';
+import { IRecordSelectorProps } from "./IRecordSelectorProps";
 
-export interface IRecordSelectorProps {
-    selectedValue: string | number;
-    availableOptions: IDropdownOption[];
-    isDisabled: boolean;
-    onChange: (selectedOption?: IDropdownOption) => void;
-}
-
-export const RecordSelector: React.FunctionComponent<IRecordSelectorProps> = props => {
+export const DropdownOld: React.FunctionComponent<IRecordSelectorProps> = props => {
     return (
     <Dropdown
         selectedKey={props.selectedValue}

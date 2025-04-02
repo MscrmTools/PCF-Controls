@@ -1,10 +1,9 @@
 import { IDropdownOption } from "@fluentui/react/lib/Dropdown";
-import React = require("react");
-import ReactDom = require("react-dom");
+import * as React from "react";
 import {IInputs, IOutputs} from "./generated/ManifestTypes";
-import { RecordSelector } from "./RecordSelector";
+import { RecordSelector } from "./components/RecordSelector";
 
-export class YearDropdown implements ComponentFramework.StandardControl<IInputs, IOutputs> {
+export class YearDropdown implements ComponentFramework.ReactControl<IInputs, IOutputs> {
     private _context : ComponentFramework.Context<IInputs>;
     private container: HTMLDivElement;
 	private notifyOutputChanged: () => void;
@@ -36,7 +35,6 @@ export class YearDropdown implements ComponentFramework.StandardControl<IInputs,
         this.availableOptions = new Array();
         this._context = context;
         
-
         for(let i=(context.parameters.yearsBefore?.raw ?? 5);i>0; i--){
             this.availableOptions.push({key:currentYear-i, text:(currentYear-i).toString()});
         }
@@ -50,7 +48,7 @@ export class YearDropdown implements ComponentFramework.StandardControl<IInputs,
         this.renderControl(context);
     }
 
-    private renderControl(context: ComponentFramework.Context<IInputs>) {
+    private renderControl(context: ComponentFramework.Context<IInputs>): React.ReactElement {
         let currentValue:number;
         if(this._context.parameters.targetColumn.type === "Whole.None" ){
             currentValue = context.parameters.targetColumn != null && context.parameters.targetColumn.raw != null && context.parameters.targetColumn.raw.toString() != 0
@@ -80,10 +78,11 @@ export class YearDropdown implements ComponentFramework.StandardControl<IInputs,
 				}
 
 				this.notifyOutputChanged();
-			}
+			},
+            theme: this._context.fluentDesignLanguage?.tokenTheme
 		})
 
-		ReactDom.render(recordSelector, this.container);
+		return recordSelector;
 	}
 
 
@@ -91,9 +90,9 @@ export class YearDropdown implements ComponentFramework.StandardControl<IInputs,
      * Called when any value in the property bag has changed. This includes field values, data-sets, global values such as container height and width, offline status, control metadata values such as label, visible, etc.
      * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to names defined in the manifest, as well as utility functions
      */
-    public updateView(context: ComponentFramework.Context<IInputs>): void
+    public updateView(context: ComponentFramework.Context<IInputs>): React.ReactElement
     {
-        this.renderControl(context);
+        return this.renderControl(context);
     }
 
     /**
@@ -133,6 +132,5 @@ export class YearDropdown implements ComponentFramework.StandardControl<IInputs,
      */
     public destroy(): void
     {
-        ReactDom.unmountComponentAtNode(this.container)
     }
 }
