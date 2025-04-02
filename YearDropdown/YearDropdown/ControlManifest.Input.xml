@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-  <control namespace="MscrmTools" constructor="YearDropdown" version="0.0.5" display-name-key="YearDropdown" description-key="YearDropdown description" control-type="virtual" preview-image="img/yeardropdown.png">
+  <control namespace="MscrmTools" constructor="YearDropdown" version="1.0.0" display-name-key="YearDropdown" description-key="YearDropdown description" control-type="virtual" preview-image="img/yeardropdown.png">
     <external-service-usage enabled="false">
     </external-service-usage>
     <property name="targetColumn" display-name-key="targetColumn_Display_Key" description-key="targetColumn_Desc_Key" of-type-group="customGroup" usage="bound" required="true" />
