@@ -11,6 +11,7 @@
     <Name>CustomSwitch</Name>
     <ProjectGuid>dd033002-92f9-4908-b921-997880747c07</ProjectGuid>
     <OutputPath>$(MSBuildThisFileDirectory)out\controls</OutputPath>
+	<PcfBuildMode>production</PcfBuildMode>
   </PropertyGroup>
 
   <PropertyGroup>

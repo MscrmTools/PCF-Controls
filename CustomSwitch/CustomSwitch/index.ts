@@ -1,5 +1,4 @@
 import {IInputs, IOutputs} from "./generated/ManifestTypes";
-import { readFile } from "fs";
 
 export class CustomSwitch implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 
@@ -25,45 +24,39 @@ export class CustomSwitch implements ComponentFramework.StandardControl<IInputs,
 	 */
 	public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container:HTMLDivElement)
 	{
-		let id = Math.random().toString().split('.')[1];
+		const id = Math.random().toString().split('.')[1];
 		this._checkboxid = id + "-c";
 		this._labelid = id + "-l";
-		// @ts-ignore
+		// @ts-expect-error not exposed in the framework
 		this._options = context.parameters.booleanAttribute.attributes.Options;
 		this._notifyOutputChanged = notifyOutputChanged;
 
-		var subContainer = <HTMLDivElement>document.createElement("div");
+		const subContainer = <HTMLDivElement>document.createElement("div");
 		subContainer.className = "ccb-container";
 		container.appendChild(subContainer);
 		
-		var lblContainer = document.createElement("label");
+		const lblContainer = document.createElement("label");
 		lblContainer.setAttribute("class", "ccb-container-switch");
 		subContainer.appendChild(lblContainer);
 
 		if(context.parameters.displayLabel && context.parameters.displayLabel.raw === "True"){
-			var spanLabel = document.createElement("span");
+			const spanLabel = document.createElement("span");
 			spanLabel.setAttribute("class", "ccb-switch-label");
 			spanLabel.id = this._labelid;
 			spanLabel.textContent = "loading...";
 			subContainer.appendChild(spanLabel);
 		}
 
-		var thisCtrl = this;
-
-		var chk = document.createElement("input");
+		const chk = document.createElement("input");
 		chk.id = this._checkboxid;
 		chk.setAttribute("type", "checkbox");
-		chk.addEventListener("change", function () {
-			thisCtrl.ensureLabel((<HTMLInputElement>this).checked);
-
-			thisCtrl._notifyOutputChanged();
-		});
+		chk.addEventListener("change", this.changedValue);
 
 		if (context.mode.isControlDisabled) {
 			chk.setAttribute("disabled", "disabled");
 		}
 
-		var toggle = document.createElement("span");
+		const toggle = document.createElement("span");
 		
 		lblContainer.appendChild(chk);
 		lblContainer.appendChild(toggle);
@@ -90,11 +83,15 @@ export class CustomSwitch implements ComponentFramework.StandardControl<IInputs,
 		}
 	}
 
+	private changedValue(event:Event){
+		this.ensureLabel((<HTMLInputElement>event.target).checked);
+		this._notifyOutputChanged();
+	}
+
 	private createStyleRule(name:string,content:string){
-		let styleSheet = this.GetStyleSheet();
+		const styleSheet = this.GetStyleSheet();
 		if(styleSheet != null){
-			// @ts-ignore
-			let index = styleSheet.insertRule(name + " " + content);
+			const index = styleSheet.insertRule(name + " " + content);
 			console.log(index);
 		}
 	}
@@ -109,18 +106,18 @@ export class CustomSwitch implements ComponentFramework.StandardControl<IInputs,
 		}	
 
 		for(let i=0;i<this._options.length;i++){
-			//@ts-ignore
+			//@ts-expect-error not exposed in the framework
 			if(this._options[i].Value === expectedValue){
-			let ctrl = document.getElementById(this._labelid);
-			//@ts-ignore
+			const ctrl = document.getElementById(this._labelid);
+			//@ts-expect-error not exposed in the framework
 			if(ctrl) ctrl.textContent = this._options[i].Label;
 			}
 		}
 	}
 
 	private GetStyleSheet() {
-		for(var i=0; i<document.styleSheets.length; i++) {
-		  var sheet = document.styleSheets[i];
+		for(let i=0; i<document.styleSheets.length; i++) {
+			const sheet = document.styleSheets[i];
 		  if(sheet.href && sheet.href.endsWith("CustomSwitch.css")) {
 			return sheet;
 		  }
