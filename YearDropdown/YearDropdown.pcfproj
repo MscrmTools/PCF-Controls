@@ -11,7 +11,8 @@
     <Name>YearDropdown</Name>
     <ProjectGuid>2ad819a5-c9dd-4cf7-bc46-c6900ac7327c</ProjectGuid>
     <OutputPath>$(MSBuildThisFileDirectory)out\controls</OutputPath>
-  </PropertyGroup>
+ 	<PcfBuildMode>production</PcfBuildMode>
+ </PropertyGroup>
 
   <PropertyGroup>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>

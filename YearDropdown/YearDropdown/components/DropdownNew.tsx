@@ -2,11 +2,6 @@ import * as React from "react";
 import { IRecordSelectorProps } from "./IRecordSelectorProps";
 import { Dropdown, FluentProvider, IdPrefixProvider, Input, makeStyles, Option } from "@fluentui/react-components";
 
-
-
-
-
-
 const _useStyles = makeStyles({
     root: {
         width: "100%",
@@ -31,6 +26,7 @@ export const DropdownNew: React.FC<IRecordSelectorProps> = (props) => {
         props.theme;
 
     return (
+        <div className={styles.root}>
             <IdPrefixProvider value={"newDropdownControl"}>
                 <FluentProvider theme={myTheme} className={styles.root}>
                 {props.isDisabled?
@@ -72,6 +68,7 @@ export const DropdownNew: React.FC<IRecordSelectorProps> = (props) => {
                     <Option
                         key={option.key}
                         value={option.text as string}
+                        className={styles.root}
                     >
                         {option.text!}
                     </Option>
@@ -80,5 +77,6 @@ export const DropdownNew: React.FC<IRecordSelectorProps> = (props) => {
                 }
                 </FluentProvider>
             </IdPrefixProvider>
+        </div>
     );
 }
