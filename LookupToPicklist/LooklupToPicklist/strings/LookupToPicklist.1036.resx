@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Control_Display_Name_Key" xml:space="preserve">
+    <value>Recherche vers liste déroulante v9</value>
+    <comment/>
+  </data>
+  <data name="Control_Description_Key" xml:space="preserve">
+    <value>Affiche une colonne de recherche comme une liste déroulante</value>
+    <comment/>
+  </data>
+  <data name="lookup_Display_Key" xml:space="preserve">
+    <value>Colonne de recherche</value>
+    <comment/>
+  </data>
+  <data name="lookup_Desc_Key" xml:space="preserve">
+    <value>Colonne de recherche sur laquelle ce contrôle est mappé</value>
+    <comment/>
+  </data>
+  <data name="attributemask_Display_Key" xml:space="preserve">
+    <value>Masque d'affichage</value>
+    <comment/>
+  </data>
+  <data name="attributemask_Desc_Key" xml:space="preserve">
+    <value>Masque qui permet d'indiquer quelle colonne utiliser pour l'affichage. Si vide, le champ primaire est utilisé. Utilisez le code {lcid} pour remplacer par le code langue de l'interface utilisateur</value>
+    <comment/>
+  </data>
+  <data name="sortByName_Display_Key" xml:space="preserve">
+    <value>Trier par nom d'affichage</value>
+    <comment/>
+  </data>
+  <data name="sortByName_Desc_Key" xml:space="preserve">
+    <value>Indique s'il faut trier par le nom d'affichage ou par le tri de la vue sélectionnée</value>
+    <comment/>
+  </data>
+  <data name="yes_Display_Key" xml:space="preserve">
+    <value>Oui</value>
+    <comment/>
+  </data>
+  <data name="yes_Desc_Key" xml:space="preserve">
+    <value>Tri par le nom d'affichage</value>
+    <comment/>
+  </data>
+  <data name="no_Display_Key" xml:space="preserve">
+    <value>Non</value>
+    <comment/>
+  </data>
+  <data name="no_Desc_Key" xml:space="preserve">
+    <value>Tri par le tri défini dans la vue sélectionnée</value>
+    <comment/>
+  </data>
+  <data name="AddNew_Display_Key" xml:space="preserve">
+    <value>Créer</value>
+    <comment/>
+  </data>
+  <data name="addNew_Display_Key" xml:space="preserve">
+    <value>Créer des enregistrements</value>
+    <comment/>
+  </data>
+  <data name="addNew_Desc_Key" xml:space="preserve">
+    <value>Permettre aux utilisateurs de créer de nouveau enregistrements à partir de la liste déroulante. Nécessite les privilèges appropriés</value>
+    <comment/>
+  </data>
+  <data name="dependantLookup_Display_Key" xml:space="preserve">
+    <value>Colonne de filtrage</value>
+    <comment/>
+  </data>
+  <data name="dependantLookup_Desc_Key" xml:space="preserve">
+    <value>Indique la colonne de type Recherche qui doit permettre de filtrer le contrôle courant. Doit être la même valeur que la colonne indiquée dans le filtrage au niveau du formulaire</value>
+    <comment/>
+  </data>
+  <data name="addSearch_Display_Key" xml:space="preserve">
+    <value>Afficher recherche</value>
+    <comment/>
+  </data>
+  <data name="addSearch_Desc_Key" xml:space="preserve">
+    <value>Indique s'il faut afficher une barre de recherche des enregistrements</value>
+    <comment/>
+  </data>
+  <data name="searchPlaceHolder" xml:space="preserve">
+    <value>Rechercher</value>
+    <comment/>
+  </data>
+  <data name="recentItems" xml:space="preserve">
+    <value>Eléments récents</value>
+    <comment/>
+  </data>
+  <data name="favorites" xml:space="preserve">
+    <value>Favoris</value>
+    <comment/>
+  </data>
+  <data name="favorites_Display_Key" xml:space="preserve">
+    <value>Favoris</value>
+    <comment/>
+  </data>
+  <data name="favorites_Desc_Key" xml:space="preserve">
+    <value>Liste d'identifiants des enregistrements à proposer en favoris</value>
+    <comment/>
+  </data>
+  <data name="mruSize_Display_Key" xml:space="preserve">
+    <value>Nombre d'éléments récents</value>
+    <comment/>
+  </data>
+  <data name="mruSize_Desc_Key" xml:space="preserve">
+    <value>Indique le nombre d'éléments récents à afficher</value>
+    <comment/>
+  </data>
+</root>
