@@ -61,7 +61,8 @@ This is the list of parameters that can be set on the control
 
 ⚠️When using filter feature, the control won't disassociate related records that don't fit with the selected filter. It's your responsability to disassociate these records.
 
-## Custom Switch
+## Custom Switch (deprecated)
+⚠️ This PCF won't receive any updates
 
 [Download](https://github.com/MscrmTools/PCF-Controls/releases/)
 
@@ -114,6 +115,8 @@ Allows to display a notification or an helpful message to the user in a section.
 |**Display a link?**|Indicates if an hypertext link must be added at the end of the message|||
 |**Link text**|Text to be used for the link|||
 |**Link**|Url to navigate to when clicking on the link||
+|**Title**|Notification title||
+|**Multi line**|Indicates if the notification can display message on multiple lines||
 
 ## Action Button
 
@@ -202,6 +205,8 @@ The purpose of this control is to allow user to select a year in a dropdown and 
 
 ### Configuration
 
+⚠️ Some users reported the requirement to configure this PCF in classic form editor to make it works as expected
+
 This is the list of parameters that can be set on the control
 
 |Parameter|Description|Required|Bound to an attribute|
@@ -238,6 +243,8 @@ This control has the following features:
 ![ltd_filter](https://user-images.githubusercontent.com/10774317/207603990-ca9ab428-c8d5-4923-8aeb-cc1980290a15.gif)
 
 ### Configuration
+
+⚠️ Some users reported the requirement to configure this PCF in classic form editor to make it works as expected
 
 This is the list of parameters that can be set on the control
 
