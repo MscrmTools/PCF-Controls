@@ -1,6 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-  <control namespace="MscrmTools" constructor="SimpleNotification" version="0.0.9" display-name-key="SimpleNotification" description-key="SimpleNotification_Desc" control-type="standard" preview-image="imgs/reactnotification.png">
+  <control namespace="MscrmTools" constructor="SimpleNotification" version="2.0.0" display-name-key="SimpleNotification" description-key="SimpleNotification_Desc" control-type="virtual"  preview-image="imgs/reactnotification.png">
+    <external-service-usage enabled="false"/>
+    <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
     <property name="fakeAttribute" display-name-key="fakeAttribute_Display_Key" description-key="fakeAttribute_Desc" of-type="SingleLine.Text" usage="bound" required="true" />
     <property name="messageType" display-name-key="messageType_Display_Key" description-key="messageType_Desc" of-type="Enum" usage="input" required="true">
       <value name="Info" display-name-key="Info_Key" description-key="Info_Desc">Info</value>
@@ -10,7 +12,12 @@
       <value name="SevereWarning" display-name-key="SevereWarning_Key" description-key="SevereWarning_Desc">SeverWarning</value>
       <value name="Success" display-name-key="Success_Key" description-key="Success_Desc" default="true">Success</value>
     </property>
+    <property name="title" display-name-key="title_Display_Key" description-key="title_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" />
     <property name="message" display-name-key="message_Display_Key" description-key="message_Desc_Key" of-type="SingleLine.Text" usage="input" required="true" />
+    <property name="isMultiLine" display-name-key="isMultiLine_Display_Key" description-key="isMultiLine_Desc_Key" of-type="Enum" usage="input" required="false" default-value="No" >
+          <value name="Yes" display-name-key="Yes_Key" description-key="Yes_Desc">Yes</value>
+      <value name="No" display-name-key="No_Key" description-key="No_Desc" default="true">No</value>
+    </property>
     <property name="showLink" display-name-key="showLink_Display_Key" description-key="showLink_Desc_Key" of-type="Enum" usage="input" required="true">
       <value name="Yes" display-name-key="Yes_Key" description-key="Yes_Desc">Yes</value>
       <value name="No" display-name-key="No_Key" description-key="No_Desc" default="true">No</value>
@@ -18,13 +25,12 @@
     <property name="linkText" display-name-key="linkText_Display_Key" description-key="linkText_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" />
     <property name="link" display-name-key="link_Display_Key" description-key="link_Desc_Key" of-type="SingleLine.Text" usage="input" required="false" />
     <resources>
-      <code path="index.ts" order="1" />
+      <code path="index.ts" order="1"/>
+      <platform-library name="React" version="16.14.0" />
+      <platform-library name="Fluent" version="9.46.2" />
       <resx path="strings/ReactNotifier.1031.resx" version="1.0.0" />
       <resx path="strings/ReactNotifier.1033.resx" version="1.0.0" />
       <resx path="strings/ReactNotifier.1036.resx" version="1.0.0" />
-      <!-- UNCOMMENT TO ADD MORE RESOURCES
-      <css path="css/ReactNotifier.css" order="1" />
-      -->
     </resources>
   </control>
 </manifest>
