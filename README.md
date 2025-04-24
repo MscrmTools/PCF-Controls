@@ -103,7 +103,8 @@ See documentation of [Custom Switch](#custom-switch). This is the same.
 Allows to display a notification or an helpful message to the user in a section. This should avoid to create static web resource to display information.
 
 ### Samples
-![Screenshot](https://github.com/MscrmTools/PCF-Controls/raw/master/ReactNotifier/screenshots/SimpleNotification.png?raw=true)
+![Capture d'écran 2025-04-24 095352](https://github.com/user-attachments/assets/8c817064-bc0a-4c6f-9394-f50295f2db95)
+
 
 ### Configuration
 
