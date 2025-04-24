@@ -25,35 +25,33 @@ export class DateAsCheckbox implements ComponentFramework.StandardControl<IInput
 	 */
 	public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container:HTMLDivElement)
 	{
-		let id = Math.random().toString().split('.')[1];
+		const id = Math.random().toString().split('.')[1];
 		this._checkboxid = id + "-c";
 		this._labelid = id + "-l";
-		// @ts-ignore
+		// @ts-expect-error not exposed by the framework
 		this._options = context.parameters.DateAttribute.attributes.Options;
 		this._notifyOutputChanged = notifyOutputChanged;
 
-		var subContainer = <HTMLDivElement>document.createElement("div");
+		const subContainer = <HTMLDivElement>document.createElement("div");
 		subContainer.className = "dac-container";
 		container.appendChild(subContainer);
 		
-		var lblContainer = document.createElement("label");
+		const lblContainer = document.createElement("label");
 		lblContainer.setAttribute("class", "dac-container-switch");
 		subContainer.appendChild(lblContainer);
 
-		var thisCtrl = this;
+		
 
-		var chk = document.createElement("input");
+		const chk = document.createElement("input");
 		chk.id = this._checkboxid;
 		chk.setAttribute("type", "checkbox");
-		chk.addEventListener("change", function () {
-			thisCtrl._notifyOutputChanged();
-		});
+		chk.addEventListener("change", this.changefunction);
 
 		if (context.mode.isControlDisabled) {
 			chk.setAttribute("disabled", "disabled");
 		}
 
-		var toggle = document.createElement("span");
+		const toggle = document.createElement("span");
 		
 		lblContainer.appendChild(chk);
 		lblContainer.appendChild(toggle);
@@ -79,20 +77,21 @@ export class DateAsCheckbox implements ComponentFramework.StandardControl<IInput
 			toggle.setAttribute("class","dac-slider-default dac-slider-" + this._checkboxid + " dac-round");
 		}
 	}
+	private changefunction(){
+		this._notifyOutputChanged();
+	}
 
 	private createStyleRule(name:string,content:string){
-		let styleSheet = this.GetStyleSheet();
+		const styleSheet = this.GetStyleSheet();
 		if(styleSheet != null){
-			// @ts-ignore
-			let index = styleSheet.insertRule(name + " " + content);
-			console.log(index);
+			styleSheet.insertRule(name + " " + content);
 		}
 	}
 
 	
 	private GetStyleSheet() {
-		for(var i=0; i<document.styleSheets.length; i++) {
-		  var sheet = document.styleSheets[i];
+		for(let i=0; i<document.styleSheets.length; i++) {
+		  const sheet = document.styleSheets[i];
 		  if(sheet.href && sheet.href.endsWith("CustomSwitch.css")) {
 			return sheet;
 		  }
@@ -120,7 +119,7 @@ export class DateAsCheckbox implements ComponentFramework.StandardControl<IInput
 	public getOutputs(): IOutputs
 	{
 		let date : Date | undefined;
-		date = new Date() || undefined;
+		date = new Date();
 		if((<HTMLInputElement>document.getElementById(this._checkboxid)).checked === false){
 			date = undefined;
 		}

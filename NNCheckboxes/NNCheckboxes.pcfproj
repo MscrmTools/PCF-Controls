@@ -6,7 +6,8 @@
     <Name>NNCheckboxes</Name>
     <ProjectGuid>97aafff1-a4ee-42c9-bd28-998ab205ed13</ProjectGuid>
     <OutputPath>$(MSBuildThisFileDirectory)out\controls</OutputPath>
-  </PropertyGroup>
+ 	<PcfBuildMode>production</PcfBuildMode>
+ </PropertyGroup>
 
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>

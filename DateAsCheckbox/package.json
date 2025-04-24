@@ -5,15 +5,34 @@
   "scripts": {
     "build": "pcf-scripts build",
     "clean": "pcf-scripts clean",
+    "lint": "pcf-scripts lint",
+    "lint:fix": "pcf-scripts lint fix",
     "rebuild": "pcf-scripts rebuild",
-    "start": "pcf-scripts start"
+    "start": "pcf-scripts start",
+    "start:watch": "pcf-scripts start watch",
+    "refreshTypes": "pcf-scripts refreshTypes"
   },
   "dependencies": {
-    "@types/node": "^10.12.18",
-    "@types/powerapps-component-framework": "^1.2.0"
+    "@fluentui/react": "^8.29.0",
+    "@fluentui/react-components": "9.46.2",
+    "@typescript-eslint/eslint-plugin": "^8.29.0",
+    "react": "16.14.0",
+    "react-dom": "16.14.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.25.1",
+    "@microsoft/eslint-plugin-power-apps": "^0.2.51",
+    "@types/powerapps-component-framework": "^1.3.15",
+    "@types/react": "^16.14.60",
+    "@types/react-dom": "^16.9.24",
+    "eslint": "^9.25.1",
+    "eslint-plugin-promise": "^7.1.0",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^15.15.0",
     "pcf-scripts": "^1",
-    "pcf-start": "^1"
+    "pcf-start": "^1",
+    "react": "^16.14.0",
+    "typescript": "^4.9.5",
+    "typescript-eslint": "^8.31.0"
   }
 }

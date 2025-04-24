@@ -11,6 +11,7 @@
     <Name>DateAsCheckbox</Name>
     <ProjectGuid>48b5b2e8-823f-4027-aaff-79856bd522ee</ProjectGuid>
     <OutputPath>$(MSBuildThisFileDirectory)out\controls</OutputPath>
+	<PcfBuildMode>production</PcfBuildMode>
   </PropertyGroup>
 
   <PropertyGroup>

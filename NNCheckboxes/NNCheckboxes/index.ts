@@ -1,9 +1,5 @@
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
-import DataSetInterfaces = ComponentFramework.PropertyHelper.DataSetApi;
-import { SpawnSyncOptionsWithBufferEncoding } from "child_process";
 import { RelationshipInfo} from "./reldef";
-import { isRegExp } from "util";
-type DataSet = ComponentFramework.PropertyTypes.DataSet;
 
 export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 
@@ -28,7 +24,6 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 	private _categoryAttributeName : string;
 	private _categoryUseDisplayName : boolean;
 	private _useToggleSwitch : boolean;
-	private _relationshipSchemaName: string | null;
 	private _colors: any;
 	private _relationshipInfo: RelationshipInfo;
 	private _currentControlClassName : string;
@@ -53,29 +48,29 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 		this._container = document.createElement("div");
 		this._container.setAttribute("class", "nncb-main")
 		this._useToggleSwitch = (context.parameters.useToggleSwitch && context.parameters.useToggleSwitch.raw && context.parameters.useToggleSwitch.raw.toLowerCase() === "true") ? true : false;
-		// @ts-ignore
+		// @ts-expect-error not exposed in the framework
 		this._parentRecordId = context.mode.contextInfo.entityId;
-		// @ts-ignore
+		// @ts-expect-error not exposed in the framework
 		this._parentRecordType = context.mode.contextInfo.entityTypeName;
 
-		let id = Math.random().toString().split('.')[1];
+		const id = Math.random().toString().split('.')[1];
 		this._currentControlClassName = "nncb-" + id;
 
 		if(context.parameters.toggleDefaultBackgroundColorOn && context.parameters.toggleDefaultBackgroundColorOn.raw)
 		{
-			// @ts-ignore
-			let styleSheet = this.GetStyleSheet();
+
+			const styleSheet = this.GetStyleSheet();
 			if(styleSheet != null){
-				// @ts-ignore
-				let rules = styleSheet.rules;
+
+				const rules = styleSheet.rules;
 				for(let i=0;i<rules.length;i++){
-					// @ts-ignore
-					let rule = rules[i];
-					// @ts-ignore
+					
+					const rule = rules[i];
+						// @ts-expect-error not exposed in the framework
 					if(rule.selectorText === "input:checked + .nncb-slider"){
-						// @ts-ignore
+						
 						styleSheet.deleteRule(i);
-						// @ts-ignore
+		// @ts-expect-error not exposed in the framework
 						styleSheet.insertRule("input:checked + .nncb-slider { background-color: "+context.parameters.toggleDefaultBackgroundColorOn.raw+";}", rule.index)
 					}
 				}
@@ -84,18 +79,16 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 
 		if(context.parameters.toggleDefaultBackgroundColorOff && context.parameters.toggleDefaultBackgroundColorOff.raw)
 		{
-			// @ts-ignore
-			let styleSheet = this.GetStyleSheet();
+			const styleSheet = this.GetStyleSheet();
 			if(styleSheet != null){
-				// @ts-ignore
-				let rules = styleSheet.rules;
+				const rules = styleSheet.rules;
 				for(let i=0;i<rules.length;i++){
-					let rule = rules[i];
-					// @ts-ignore
+					const rule = rules[i];
+					// @ts-expect-error not exposed in the framework
 					if(rule.selectorText === ".nncb-slider"){
-						// @ts-ignore
+
 						styleSheet.deleteRule(i);
-						// @ts-ignore
+						// @ts-expect-error not exposed in the framework
 						styleSheet.insertRule(".nncb-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: "+context.parameters.toggleDefaultBackgroundColorOff.raw+"; -webkit-transition: .4s; transition: .4s;", rule.index)
 					}
 				}
@@ -105,10 +98,10 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 		container.appendChild(this._container);
 
 		this._childRecordType = context.parameters.nnRelationshipDataSet.getTargetEntityType();
-		this._numberOfColumns = context.parameters.columnsNumber ? context.parameters.columnsNumber.raw : 1;
+		this._numberOfColumns = context.parameters.columnsNumber ? context.parameters.columnsNumber.raw ?? 1 : 1;
 		
-		for (var i = 0; i < context.parameters.nnRelationshipDataSet.columns.length; i++) {
-			var column = context.parameters.nnRelationshipDataSet.columns[i];
+		for (let i = 0; i < context.parameters.nnRelationshipDataSet.columns.length; i++) {
+			const column = context.parameters.nnRelationshipDataSet.columns[i];
 			if (column.alias === "displayAttribute") {
 				this._labelAttributeName = column.name;
 			}
@@ -147,7 +140,7 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 		}
 
 		try{
-			this._relationshipSchemaName = await this.GetNNRelationshipNameByEntityNames();
+			await this.GetNNRelationshipNameByEntityNames();
 		}
 		catch(error){
 			this.DisplayError(error);
@@ -157,34 +150,34 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 		this.DisplayRecords();
 	}
 
-	addSearchBar() {
-		let thisCtrl = this;
+	onSearchTextChanged(event: Event) {
+		const switches = document.getElementsByClassName("nncb-switch-label " + this._currentControlClassName);
+		const searchTerm = (<HTMLInputElement>event.target).value.toLowerCase();
 
-		let inputSearch = document.createElement("input") as HTMLInputElement;
+		for(let i=0;i<switches.length;i++){
+			const label = switches[i].innerHTML.toLowerCase();
+
+			(<HTMLDivElement>(<HTMLSpanElement>switches[i]).parentElement).style.display = label.indexOf(searchTerm) >= 0 ? "" : "none";
+		}
+
+		const checkmarks = document.getElementsByClassName("nncb-container "+ this._currentControlClassName);
+		for(let i=0;i<checkmarks.length;i++){
+			const label = checkmarks[i].textContent?.toLowerCase() ?? "";
+
+			(<HTMLDivElement>(<HTMLLabelElement>checkmarks[i]).parentElement).style.display = label.indexOf(searchTerm) >= 0 ? "" : "none";
+		}
+
+	}
+
+	addSearchBar() {
+		const inputSearch = document.createElement("input") as HTMLInputElement;
 		inputSearch.type = "text";
 		inputSearch.id = "nncb_searchbox";
 		inputSearch.placeholder = this._context.resources.getString("Search_Placeholder");
 		inputSearch.style.width = "200px";
-		inputSearch.addEventListener("input", function (event) {
-			debugger;
-			let switches = document.getElementsByClassName("nncb-switch-label " + thisCtrl._currentControlClassName);
-			let searchTerm = (<HTMLInputElement>event.target).value.toLowerCase();
+		inputSearch.addEventListener("input", event => this.onSearchTextChanged(event));
 
-			for(let i=0;i<switches.length;i++){
-				let label = switches[i].innerHTML.toLowerCase();
-
-				(<HTMLDivElement>(<HTMLSpanElement>switches[i]).parentElement).style.display = label.indexOf(searchTerm) >= 0 ? "" : "none";
-			}
-
-			let checkmarks = document.getElementsByClassName("nncb-container "+ thisCtrl._currentControlClassName);
-			for(let i=0;i<checkmarks.length;i++){
-				let label = checkmarks[i].textContent?.toLowerCase() ?? "";
-
-				(<HTMLDivElement>(<HTMLLabelElement>checkmarks[i]).parentElement).style.display = label.indexOf(searchTerm) >= 0 ? "" : "none";
-			}
-		});
-
-		let divSearch = document.createElement("div");
+		const divSearch = document.createElement("div");
 		divSearch.id = "nncb-search";
 		divSearch.style.textAlign = "right";
 		divSearch.appendChild(inputSearch);
@@ -261,421 +254,409 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 			});
 	}
 
-	/**
-	 * Responsible for compiling / rendering the output DOM of the PCF and wiring up event handlers for association/dissasociations.
-	 */
-	private DisplayRecords(){
-		var thisCtrl = this;
-		this._context.webAPI.retrieveRecord("savedquery", this._context.parameters.nnRelationshipDataSet.getViewId(),"?$select=fetchxml")
-		.then(
-			function(view){
-				// If both properties are set to filter content
-				if(thisCtrl._context.parameters.fpa && thisCtrl._datasetFilterAttributeName){
-					const parser = new DOMParser();
-					var queryContent = parser.parseFromString(<string>view.fetchxml, "text/xml");
+	onToggleClicked(event: Event){
 
-					var condition = queryContent.createElement("condition");
-					condition.setAttribute("attribute",thisCtrl._datasetFilterAttributeName);
+		event.preventDefault();
+		const items = (<HTMLInputElement>event.target)?.parentElement?.nextElementSibling?.children || [];
+		for(let i=0;i<items.length;i++){
+			const input = this._useToggleSwitch ?												
+			<HTMLInputElement>items[i].firstChild?.firstChild || null:
+			<HTMLInputElement>items[i].firstChild?.firstChild?.nextSibling || null;
+			if((<HTMLDivElement>items[i]).style.display !== "none" && input && !input.checked){
+				input.click();
+			}
+		}
+	}
 
-					if(thisCtrl._context.parameters.fpa.raw){
-						let value = thisCtrl._context.parameters.fpa.raw;
-						if(thisCtrl._context.parameters.fpa.type === "Lookup.Simple"){
-							if((<Array<any>>thisCtrl._context.parameters.fpa.raw).length === 1){
-								value = (<Array<any>>thisCtrl._context.parameters.fpa.raw)[0].id;
-								condition.setAttribute("operator", "eq");
-								condition.setAttribute("value", value); 
+	onCheckBoxChanged(elt : HTMLInputElement, event: Event) {
+		let entity1name:string;
+		let entity2name:string;
+		let record1Id:string;
+		let record2Id:string;
+		if(this._relationshipInfo.Entity1AttributeName === this._childRecordType){
+			entity1name = this._childRecordType;
+			record1Id = elt.id.split('|')[1];
+			entity2name = this._parentRecordType;
+			record2Id = this._parentRecordId;
+		}
+		else{
+			entity1name = this._parentRecordType;
+			record1Id = this._parentRecordId;
+			entity2name = this._childRecordType;
+			record2Id = elt.id.split('|')[1];
+		}
+
+		if (elt.checked) {
+			const associateRequest = new class {
+				target = {
+					id: record1Id,
+					entityType: entity1name
+				};
+				relatedEntities = [
+					{
+						id: record2Id,
+						entityType: entity2name
+					}
+				];
+				relationship = elt.id.split('|')[0];
+				getMetadata(): any {
+					return {
+						boundParameter: undefined,
+						parameterTypes: {
+							"target": {
+								"typeName": "mscrm." + entity1name,
+								"structuralProperty": 5
+							},
+							"relatedEntities": {
+								"typeName": "mscrm." + entity2name,
+								"structuralProperty": 4
+							},
+							"relationship": {
+								"typeName": "Edm.String",
+								"structuralProperty": 1
 							}
-							else{
-								condition.setAttribute("operator", "null");
+						},
+						operationType: 2,
+						operationName: "Associate"
+					};
+				}
+			}();
+
+			// @ts-expect-error not exposed in the framework
+			this._context.webAPI.execute(associateRequest)
+				.then(
+					function () {
+						console.log("NNCheckboxes: records were successfully associated")
+					},
+					this.onWebApiErrorReturned
+				);
+		}
+		else {
+			const disassociateRequest = new class {
+				target = {
+					id: record1Id,
+					entityType: entity1name
+				};
+				relatedEntityId = record2Id;
+				relationship = elt.id.split('|')[0];
+				getMetadata(): any {
+					return {
+						boundParameter: undefined,
+						parameterTypes: {
+							"target": {
+								"typeName": "mscrm." + entity1name,
+								"structuralProperty": 5
+							},
+							"relationship": {
+								"typeName": "Edm.String",
+								"structuralProperty": 1
+							}
+						},
+						operationType: 2,
+						operationName: "Disassociate"
+					};
+				}
+			}();
+
+			// @ts-expect-error not exposed in the framework
+			this._context.webAPI.execute(disassociateRequest)
+				.then(
+					
+					function () {
+						console.log("NNCheckboxes: records were successfully disassociated")
+					},this.onWebApiErrorReturned
+				);
+		}
+
+	}
+
+	onRecordsFound(result: any){
+		let category = "";
+				let divFlexCtrl = document.createElement("div");
+
+				if(this._divFlexBox){
+					this._divFlexBox.innerHTML = "";
+				}
+
+				this._container.innerHTML = "";
+
+				if(this._context.parameters.displaySearch && this._context.parameters.displaySearch.raw === "1"){
+					this.addSearchBar();
+				}
+
+				if(result.entities.length === 0){
+					// @ts-expect-error not exposed in the framework
+					const word = this._context.parameters.nnRelationshipDataSet.entityDisplayCollectionName ?? this._context.resources.getString("Records");
+
+					const emptyDiv = document.createElement("div");
+					emptyDiv.setAttribute("style", "text-align:center;")
+					emptyDiv.innerText = (this._context.resources.getString("FilterNotFoundMask")??"").replace("{{entityname}}",word);
+					
+					this._container.appendChild(emptyDiv);
+
+					return;
+				}else{
+					// If no category grouping, then only one flexbox is needed
+					if(!this._categoryAttributeName){
+						this._divFlexBox = document.createElement("div");
+						this._divFlexBox.setAttribute("class", "nncb-flex");
+						this._container.appendChild(this._divFlexBox);
+					}
+				}
+
+				for (let i = 0; i < result.entities.length; i++) {
+					const record = result.entities[i];
+
+					// If using category
+					if(this._categoryAttributeName){
+						// We need to display new category only if the category 
+						// is different from the previous one
+						if(category != record[this._categoryAttributeName]){
+							category = record[this._categoryAttributeName];
+
+							let label = record[this._categoryAttributeName + (this._categoryUseDisplayName ? "@OData.Community.Display.V1.FormattedValue" : "")];
+							if(!label){
+								label = this._context.resources.getString("No_Category");
+							}
+
+							// Add the category
+							const categoryDiv = document.createElement("div");
+							categoryDiv.setAttribute("style", "margin-bottom: 10px;border-bottom: solid 1px #828181;padding-bottom: 5px;");
+							categoryDiv.innerHTML = label;
+
+							
+							
+							// If we need to add all records category selection
+							if(this._context.parameters.addCategorySelector?.raw === "1"){
+								const selectAnchor = <HTMLAnchorElement>document.createElement("a");
+								selectAnchor.className = "nncb-category-link"
+								selectAnchor.text = "select";
+								selectAnchor.style.float = "right";
+								selectAnchor.href="#";
+								selectAnchor.style.paddingRight = "4px";
+								selectAnchor.addEventListener("click", this.onToggleClicked);
+
+								const unselectAnchor = <HTMLAnchorElement>document.createElement("a");
+								unselectAnchor.className = "nncb-category-link"
+								unselectAnchor.text = "unselect";
+								unselectAnchor.style.float = "right";
+								unselectAnchor.href="#";
+								unselectAnchor.addEventListener("click", this.onToggleClicked);
+
+								const allTerm = document.createElement("span");
+								allTerm.innerText = "all";
+								allTerm.style.float = "right";
+								allTerm.style.paddingLeft = "4px";
+
+								const slash = document.createElement("span");
+								slash.innerText = "/";
+								slash.style.float = "right";
+								slash.style.paddingRight = "4px";
+
+								categoryDiv.appendChild(allTerm);
+								categoryDiv.appendChild(unselectAnchor);
+								categoryDiv.appendChild(slash);
+								categoryDiv.appendChild(selectAnchor);
+							}
+
+							this._container.appendChild(categoryDiv);
+
+							// Add a new flex box
+							this._divFlexBox = document.createElement("div");
+							this._divFlexBox.setAttribute("class", "nncb-flex");
+							this._container.appendChild(this._divFlexBox);
+						}
+					}
+									
+					// Add flex content
+					divFlexCtrl = document.createElement("div");
+					divFlexCtrl.setAttribute("style", "flex: 0 " + (100/this._numberOfColumns) + "% !important");
+				
+					this._divFlexBox.appendChild(divFlexCtrl);
+					
+					// With style if configured with colors
+					const styles = [];
+					if(this._backgroundColorAttributeName) {
+						if(this._backgroundColorIsFromOptionSet){
+							if(this._colors 
+								&& this._colors[this._backgroundColorAttributeName] 
+								&& this._colors[this._backgroundColorAttributeName][record[this._backgroundColorAttributeName]]){
+									const color = this._colors[this._backgroundColorAttributeName][record[this._backgroundColorAttributeName]];
+								styles.push("background-color:" + color);
 							}
 						}
 						else{
-							condition.setAttribute("operator", "eq");
-							condition.setAttribute("value", value); 
+							styles.push("background-color:" + record[this._backgroundColorAttributeName]);
 						}
+					}
+					if(this._foreColorAttributeName){
+						if(this._foreColorIsFromOptionSet){
+							if(this._colors 
+								&& this._colors[this._foreColorAttributeName] 
+								&& this._colors[this._foreColorAttributeName][record[this._backgroundColorAttributeName]]){
+									const color = this._colors[this._foreColorAttributeName][record[this._backgroundColorAttributeName]];
+								styles.push("color:" + color);
+							}
+						}
+						else{
+							styles.push("color:" + record[this._foreColorAttributeName]);
+						}
+					}
+
+					const lblContainer = document.createElement("label");
+					divFlexCtrl.appendChild(lblContainer);
+					
+					if(this._useToggleSwitch){
+						lblContainer.setAttribute("class", "nncb-container-switch");
+				
+						const spanLabel = document.createElement("span");
+						spanLabel.setAttribute("class", "nncb-switch-label " + this._currentControlClassName);
+						spanLabel.textContent = record[this._labelAttributeName];
+						divFlexCtrl.appendChild(spanLabel);
+					}
+					else{
+						lblContainer.setAttribute("class", "nncb-container " + this._currentControlClassName);
+						lblContainer.setAttribute("style", styles.join(";"))
+					}
+					
+					const chk = document.createElement("input");
+					chk.setAttribute("type", "checkbox");
+					chk.setAttribute("class","nncb-control")
+					chk.setAttribute("id", this._relationshipInfo.Name + "|" + record[this._childRecordType + "id"]);
+					chk.setAttribute("value", this._relationshipInfo.Name + "|" + record[this._childRecordType + "id"]);
+					chk.addEventListener("change", this.onCheckBoxChanged.bind(this, chk));
+
+					
+					if (this._context.mode.isControlDisabled) {
+						chk.setAttribute("disabled", "disabled");
+					}
+					
+					if(this._useToggleSwitch){
+						const toggle = document.createElement("span");
+						toggle.setAttribute("class","nncb-slider nncb-round");
+
+						if(this._tooltipAttributeName && record[this._tooltipAttributeName]){
+							toggle.setAttribute("title", record[this._tooltipAttributeName]);
+						}
+						
+						if(styles.length > 0)
+							toggle.setAttribute("style", styles.join(";"))
+
+						lblContainer.appendChild(chk);
+						lblContainer.appendChild(toggle);
+					}
+					else{
+						const mark = document.createElement("span");
+						mark.setAttribute("class", "nncb-checkmark");
+
+						if(this._tooltipAttributeName && record[this._tooltipAttributeName]){
+							mark.setAttribute("title", record[this._tooltipAttributeName]);
+						}
+
+
+						lblContainer.innerHTML += record[this._labelAttributeName];
+						lblContainer.appendChild(chk);
+						lblContainer.appendChild(mark);
+					}
+				}
+
+				this._context.parameters.nnRelationshipDataSet.paging.reset();
+				this._context.parameters.nnRelationshipDataSet.refresh();
+	}
+
+	onViewFound(view:any){
+		let queryContent : Document;
+		// If both properties are set to filter content
+		if(this._context.parameters.fpa && this._datasetFilterAttributeName){
+			const parser = new DOMParser();
+			queryContent = parser.parseFromString(<string>view.fetchxml, "text/xml");
+
+			const condition = queryContent.createElement("condition");
+			condition.setAttribute("attribute",this._datasetFilterAttributeName);
+
+			if(this._context.parameters.fpa.raw){
+				let value = this._context.parameters.fpa.raw;
+				if(this._context.parameters.fpa.type === "Lookup.Simple"){
+					if((<Array<ComponentFramework.LookupValue>>this._context.parameters.fpa.raw).length === 1){
+						value = (<Array<ComponentFramework.LookupValue>>this._context.parameters.fpa.raw)[0].id;
+						condition.setAttribute("operator", "eq");
+						condition.setAttribute("value", value); 
 					}
 					else{
 						condition.setAttribute("operator", "null");
 					}
-
-					var attrFilter = queryContent.createElement("filter");
-					attrFilter.appendChild(condition);
-
-					queryContent.documentElement.firstChild?.appendChild(attrFilter);
-
-					view.fetchxml = queryContent.documentElement.outerHTML;
 				}
-
-				let addFilterNode = function(filterObject:any, parent:any){
-					var filterNode = queryContent.createElement("filter");
-					filterNode.setAttribute("type",filterObject.filterOperator === 0 ? "and" : "or");
-					
-					for(let condition of filterObject.conditions){
-						let conditionNode = queryContent.createElement("condition");
-						conditionNode.setAttribute("attribute",condition.attributeName);
-						conditionNode.setAttribute("operator",conditionOperators[condition.conditionOperator]);
-						conditionNode.setAttribute("value",condition.value);
-						if(condition.entityAliasName){
-							conditionNode.setAttribute("entityname",condition.entityAliasName);
-						}
-
-						filterNode.appendChild(conditionNode);
-					}
-
-					for(let filter of filterObject.filters ?? []){
-						addFilterNode(filter,filterNode);
-					}
-
-					parent.appendChild(filterNode);
+				else{
+					condition.setAttribute("operator", "eq");
+					condition.setAttribute("value", value); 
 				}
-
-				let filterObject = thisCtrl._context.parameters.nnRelationshipDataSet.filtering.getFilter();
-				if(filterObject){
-					const parser = new DOMParser();
-					var queryContent = parser.parseFromString(<string>view.fetchxml, "text/xml");
-
-					addFilterNode(filterObject, queryContent.documentElement.firstChild);
-
-					view.fetchxml = queryContent.documentElement.outerHTML;
-				}
-
-				thisCtrl._context.webAPI.retrieveMultipleRecords(thisCtrl._childRecordType, "?fetchXml=" + encodeURIComponent(<string>view.fetchxml)
-					)
-					.then(function (result) {
-						var category = "";
-						var divFlexCtrl = document.createElement("div");
-
-						if(thisCtrl._divFlexBox){
-							thisCtrl._divFlexBox.innerHTML = "";
-						}
-
-						thisCtrl._container.innerHTML = "";
-
-						if(thisCtrl._context.parameters.displaySearch && thisCtrl._context.parameters.displaySearch.raw === "1"){
-							thisCtrl.addSearchBar();
-						}
-
-						if(result.entities.length === 0){
-							// @ts-ignore
-							let word = thisCtrl._context.parameters.nnRelationshipDataSet.entityDisplayCollectionName ?? thisCtrl._context.resources.getString("Records");
-
-							let emptyDiv = document.createElement("div");
-							emptyDiv.setAttribute("style", "text-align:center;")
-							emptyDiv.innerText = (thisCtrl._context.resources.getString("FilterNotFoundMask")??"").replace("{{entityname}}",word);
-							
-							thisCtrl._container.appendChild(emptyDiv);
-
-							return;
-						}else{
-							// If no category grouping, then only one flexbox is needed
-							if(!thisCtrl._categoryAttributeName){
-								thisCtrl._divFlexBox = document.createElement("div");
-								thisCtrl._divFlexBox.setAttribute("class", "nncb-flex");
-								thisCtrl._container.appendChild(thisCtrl._divFlexBox);
-							}
-						}
-
-						for (var i = 0; i < result.entities.length; i++) {
-							var record = result.entities[i];
-		
-							// If using category
-							if(thisCtrl._categoryAttributeName){
-								// We need to display new category only if the category 
-								// is different from the previous one
-								if(category != record[thisCtrl._categoryAttributeName]){
-									category = record[thisCtrl._categoryAttributeName];
-		
-									let label = record[thisCtrl._categoryAttributeName + (thisCtrl._categoryUseDisplayName ? "@OData.Community.Display.V1.FormattedValue" : "")];
-									if(!label){
-										label = thisCtrl._context.resources.getString("No_Category");
-									}
-
-									// Add the category
-									var categoryDiv = document.createElement("div");
-									categoryDiv.setAttribute("style", "margin-bottom: 10px;border-bottom: solid 1px #828181;padding-bottom: 5px;");
-									categoryDiv.innerHTML = label;
-									
-									// If we need to add all records category selection
-									if(thisCtrl._context.parameters.addCategorySelector?.raw === "1"){
-										var selectAnchor = <HTMLAnchorElement>document.createElement("a");
-										selectAnchor.className = "nncb-category-link"
-										selectAnchor.text = "select";
-										selectAnchor.style.float = "right";
-										selectAnchor.href="#";
-										selectAnchor.style.paddingRight = "4px";
-										selectAnchor.addEventListener("click", function (event) {
-											event.preventDefault();
-											var items = this.parentElement?.nextElementSibling?.children || [];
-											for(let i=0;i<items.length;i++){
-												let input = thisCtrl._useToggleSwitch ?												
-												<HTMLInputElement>items[i].firstChild?.firstChild || null:
-												<HTMLInputElement>items[i].firstChild?.firstChild?.nextSibling || null;
-												if((<HTMLDivElement>items[i]).style.display !== "none" && input && !input.checked){
-													input.click();
-												}
-											}
-										});
-
-										var unselectAnchor = <HTMLAnchorElement>document.createElement("a");
-										unselectAnchor.className = "nncb-category-link"
-										unselectAnchor.text = "unselect";
-										unselectAnchor.style.float = "right";
-										unselectAnchor.href="#";
-										unselectAnchor.addEventListener("click", function (event) {
-											event.preventDefault();
-											var items = this.parentElement?.nextElementSibling?.children || [];
-											for(let i=0;i<items.length;i++){
-												let input = thisCtrl._useToggleSwitch ?												
-												<HTMLInputElement>items[i].firstChild?.firstChild || null:
-												<HTMLInputElement>items[i].firstChild?.firstChild?.nextSibling || null;
-												if((<HTMLDivElement>items[i]).style.display !== "none" && input && input.checked){
-													input.click();
-												}
-											}
-										});
-
-										var allTerm = document.createElement("span");
-										allTerm.innerText = "all";
-										allTerm.style.float = "right";
-										allTerm.style.paddingLeft = "4px";
-
-										var slash = document.createElement("span");
-										slash.innerText = "/";
-										slash.style.float = "right";
-										slash.style.paddingRight = "4px";
-
-										categoryDiv.appendChild(allTerm);
-										categoryDiv.appendChild(unselectAnchor);
-										categoryDiv.appendChild(slash);
-										categoryDiv.appendChild(selectAnchor);
-									}
-
-									thisCtrl._container.appendChild(categoryDiv);
-		
-									// Add a new flex box
-									thisCtrl._divFlexBox = document.createElement("div");
-									thisCtrl._divFlexBox.setAttribute("class", "nncb-flex");
-									thisCtrl._container.appendChild(thisCtrl._divFlexBox);
-								}
-							}
-											
-							// Add flex content
-							divFlexCtrl = document.createElement("div");
-							divFlexCtrl.setAttribute("style", "flex: 0 " + (100/thisCtrl._numberOfColumns) + "% !important");
-						
-							thisCtrl._divFlexBox.appendChild(divFlexCtrl);
-							
-							// With style if configured with colors
-							var styles = new Array();
-							if(thisCtrl._backgroundColorAttributeName) {
-								if(thisCtrl._backgroundColorIsFromOptionSet){
-									if(thisCtrl._colors 
-										&& thisCtrl._colors[thisCtrl._backgroundColorAttributeName] 
-										&& thisCtrl._colors[thisCtrl._backgroundColorAttributeName][record[thisCtrl._backgroundColorAttributeName]]){
-										var color = thisCtrl._colors[thisCtrl._backgroundColorAttributeName][record[thisCtrl._backgroundColorAttributeName]];
-										styles.push("background-color:" + color);
-									}
-								}
-								else{
-									styles.push("background-color:" + record[thisCtrl._backgroundColorAttributeName]);
-								}
-							}
-							if(thisCtrl._foreColorAttributeName){
-								if(thisCtrl._foreColorIsFromOptionSet){
-									if(thisCtrl._colors 
-										&& thisCtrl._colors[thisCtrl._foreColorAttributeName] 
-										&& thisCtrl._colors[thisCtrl._foreColorAttributeName][record[thisCtrl._backgroundColorAttributeName]]){
-										var color = thisCtrl._colors[thisCtrl._foreColorAttributeName][record[thisCtrl._backgroundColorAttributeName]];
-										styles.push("color:" + color);
-									}
-								}
-								else{
-									styles.push("color:" + record[thisCtrl._foreColorAttributeName]);
-								}
-							}
-
-							var lblContainer = document.createElement("label");
-							divFlexCtrl.appendChild(lblContainer);
-							
-							if(thisCtrl._useToggleSwitch){
-								lblContainer.setAttribute("class", "nncb-container-switch");
-						
-								var spanLabel = document.createElement("span");
-								spanLabel.setAttribute("class", "nncb-switch-label " + thisCtrl._currentControlClassName);
-								spanLabel.textContent = record[thisCtrl._labelAttributeName];
-								divFlexCtrl.appendChild(spanLabel);
-							}
-							else{
-								lblContainer.setAttribute("class", "nncb-container " + thisCtrl._currentControlClassName);
-								lblContainer.setAttribute("style", styles.join(";"))
-							}
-							
-							var chk = document.createElement("input");
-							chk.setAttribute("type", "checkbox");
-							chk.setAttribute("class","nncb-control")
-							chk.setAttribute("id", thisCtrl._relationshipInfo.Name + "|" + record[thisCtrl._childRecordType + "id"]);
-							chk.setAttribute("value", thisCtrl._relationshipInfo.Name + "|" + record[thisCtrl._childRecordType + "id"]);
-							chk.addEventListener("change", function () {
-								let entity1name:string;
-								let entity2name:string;
-								let record1Id:string;
-								let record2Id:string;
-								if(thisCtrl._relationshipInfo.Entity1AttributeName === thisCtrl._childRecordType){
-									entity1name = thisCtrl._childRecordType;
-									record1Id = this.id.split('|')[1];
-									entity2name = thisCtrl._parentRecordType;
-									record2Id = thisCtrl._parentRecordId;
-								}
-								else{
-									entity1name = thisCtrl._parentRecordType;
-									record1Id = thisCtrl._parentRecordId;
-									entity2name = thisCtrl._childRecordType;
-									record2Id = this.id.split('|')[1];
-								}
-
-								if (this.checked) {
-									var associateRequest = new class {
-										target = {
-											id: record1Id,
-											entityType: entity1name
-										};
-										relatedEntities = [
-											{
-												id: record2Id,
-												entityType: entity2name
-											}
-										];
-										relationship = thisCtrl._relationshipInfo.Name;
-										getMetadata(): any {
-											return {
-												boundParameter: undefined,
-												parameterTypes: {
-													"target": {
-														"typeName": "mscrm." + entity1name,
-														"structuralProperty": 5
-													},
-													"relatedEntities": {
-														"typeName": "mscrm." + entity2name,
-														"structuralProperty": 4
-													},
-													"relationship": {
-														"typeName": "Edm.String",
-														"structuralProperty": 1
-													}
-												},
-												operationType: 2,
-												operationName: "Associate"
-											};
-										}
-									}();
-		
-									// @ts-ignore
-									thisCtrl._context.webAPI.execute(associateRequest)
-										.then(
-											// @ts-ignore
-											function (result) {
-												console.log("NNCheckboxes: records were successfully associated")
-											},
-											// @ts-ignore
-											function (error) {
-												thisCtrl.DisplayError(error, thisCtrl._context.resources.getString("Error_Associate"));
-											}
-										);
-								}
-								else {
-									var theRecordId = this.id;
-									var disassociateRequest = new class {
-										target = {
-											id: record1Id,
-											entityType: entity1name
-										};
-										relatedEntityId = record2Id;
-										relationship = thisCtrl._relationshipInfo.Name;
-										getMetadata(): any {
-											return {
-												boundParameter: undefined,
-												parameterTypes: {
-													"target": {
-														"typeName": "mscrm." + entity1name,
-														"structuralProperty": 5
-													},
-													"relationship": {
-														"typeName": "Edm.String",
-														"structuralProperty": 1
-													}
-												},
-												operationType: 2,
-												operationName: "Disassociate"
-											};
-										}
-									}();
-		
-									// @ts-ignore
-									thisCtrl._context.webAPI.execute(disassociateRequest)
-										.then(
-											// @ts-ignore
-											function (result) {
-												console.log("NNCheckboxes: records were successfully disassociated")
-											},
-											// @ts-ignore
-											function (error) {
-												thisCtrl.DisplayError(error, thisCtrl._context.resources.getString("Error_Disassociate"));
-											}
-										);
-								}
-							});
-		
-							
-							if (thisCtrl._context.mode.isControlDisabled) {
-								chk.setAttribute("disabled", "disabled");
-							}
-							
-							if(thisCtrl._useToggleSwitch){
-								var toggle = document.createElement("span");
-								toggle.setAttribute("class","nncb-slider nncb-round");
-
-								if(thisCtrl._tooltipAttributeName && record[thisCtrl._tooltipAttributeName]){
-									toggle.setAttribute("title", record[thisCtrl._tooltipAttributeName]);
-								}
-								
-								if(styles.length > 0)
-									toggle.setAttribute("style", styles.join(";"))
-
-								lblContainer.appendChild(chk);
-								lblContainer.appendChild(toggle);
-							}
-							else{
-								var mark = document.createElement("span");
-								mark.setAttribute("class", "nncb-checkmark");
-
-								if(thisCtrl._tooltipAttributeName && record[thisCtrl._tooltipAttributeName]){
-									mark.setAttribute("title", record[thisCtrl._tooltipAttributeName]);
-								}
-	
-
-								lblContainer.innerHTML += record[thisCtrl._labelAttributeName];
-								lblContainer.appendChild(chk);
-								lblContainer.appendChild(mark);
-							}
-						}
-
-						thisCtrl._context.parameters.nnRelationshipDataSet.paging.reset();
-						thisCtrl._context.parameters.nnRelationshipDataSet.refresh();
-					},
-					function (error) {
-						thisCtrl.DisplayError(error, thisCtrl._context.resources.getString("Error_Retrieve_Records"));
-					}
-				);
-			},
-			function(error){
-				thisCtrl.DisplayError(error, thisCtrl._context.resources.getString("Error_Retrieve_View"));
 			}
-		);
+			else{
+				condition.setAttribute("operator", "null");
+			}
+
+			const attrFilter = queryContent.createElement("filter");
+			attrFilter.appendChild(condition);
+
+			queryContent.documentElement.firstChild?.appendChild(attrFilter);
+
+			view.fetchxml = queryContent.documentElement.outerHTML;
+		}
+
+		const addFilterNode = function(filterObject:any, parent:any){
+			const filterNode = queryContent.createElement("filter");
+			filterNode.setAttribute("type",filterObject.filterOperator === 0 ? "and" : "or");
+			
+			for(const condition of filterObject.conditions){
+				const conditionNode = queryContent.createElement("condition");
+				conditionNode.setAttribute("attribute",condition.attributeName);
+				conditionNode.setAttribute("operator",conditionOperators[condition.conditionOperator]);
+				conditionNode.setAttribute("value",condition.value);
+				if(condition.entityAliasName){
+					conditionNode.setAttribute("entityname",condition.entityAliasName);
+				}
+
+				filterNode.appendChild(conditionNode);
+			}
+
+			for(const filter of filterObject.filters ?? []){
+				addFilterNode(filter,filterNode);
+			}
+
+			parent.appendChild(filterNode);
+		}
+
+		const filterObject = this._context.parameters.nnRelationshipDataSet.filtering.getFilter();
+		if(filterObject){
+			const parser = new DOMParser();
+			const queryContent = parser.parseFromString(<string>view.fetchxml, "text/xml");
+
+			addFilterNode(filterObject, queryContent.documentElement.firstChild);
+
+			view.fetchxml = queryContent.documentElement.outerHTML;
+		}
+
+		this._context.webAPI.retrieveMultipleRecords(this._childRecordType, "?fetchXml=" + encodeURIComponent(<string>view.fetchxml)
+			)
+			.then(records => this.onRecordsFound(records), error => this.onWebApiErrorReturned(error));
+	}
+
+	private onWebApiErrorReturned(error:any){
+		this.DisplayError(error, this._context.resources.getString("Error_Retrieve_View"));
+	}
+
+	/**
+	 * Responsible for compiling / rendering the output DOM of the PCF and wiring up event handlers for association/dissasociations.
+	 */
+	private DisplayRecords(){
+	
+		this._context.webAPI.retrieveRecord("savedquery", this._context.parameters.nnRelationshipDataSet.getViewId(),"?$select=fetchxml")
+		.then(view => this.onViewFound(view), error => this.onWebApiErrorReturned(error));
 	}
 
 	public GetStyleSheet() {
-		for(var i=0; i<document.styleSheets.length; i++) {
-		  var sheet = document.styleSheets[i];
+		for(let i=0; i<document.styleSheets.length; i++) {
+			const sheet = document.styleSheets[i];
 		  if(sheet.href && sheet.href.endsWith("NNCheckboxes.css")) {
 			return sheet;
 		  }
@@ -684,44 +665,44 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 	  }
 
 	public async GetOptionSetColors(attribute:string){
-		let requestUrl =
+		const requestUrl =
 		"/api/data/v9.2/EntityDefinitions(LogicalName='"+ this._childRecordType +"')/Attributes/Microsoft.Dynamics.CRM.PicklistAttributeMetadata?$select=LogicalName&$filter=LogicalName eq '"+attribute+"'&$expand=OptionSet";
 	
-		var thisCtrl = this;
-		let request = new XMLHttpRequest();
+		const request = new XMLHttpRequest();
 		request.open("GET", requestUrl, true);
 		request.setRequestHeader("OData-MaxVersion", "4.0");
 		request.setRequestHeader("OData-Version", "4.0");
 		request.setRequestHeader("Accept", "application/json");
 		request.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-		request.onreadystatechange = () => {
+		request.onreadystatechange = (function ( myClass: NNCheckboxes, event: Event ): any {
 			if (request.readyState === 4) {
 				request.onreadystatechange = null;
 				if (request.status === 200) {
-					let entityMetadata = JSON.parse(request.response);
-					let options = entityMetadata.value[0].OptionSet.Options;
-					thisCtrl._colors = {};
-					thisCtrl._colors[attribute] = {}
-					for (var i = 0; i < options.length; i++) {
-						thisCtrl._colors[attribute][options[i].Value] = options[i].Color;						
+					const entityMetadata = JSON.parse(request.response);
+					const options = entityMetadata.value[0].OptionSet.Options;
+					myClass._colors = {};
+					myClass._colors[attribute] = {}
+					for (let i = 0; i < options.length; i++) {
+						myClass._colors[attribute][options[i].Value] = options[i].Color;						
 					}
 				} else {
-					let errorText = request.responseText;
+					const errorText = request.responseText;
 					console.log(errorText);
 				}
 			}
-		};
+		}
+		).bind(request, this);
 		request.send();
 	}
 
 	public async GetNNRelationshipNameByEntityNames() {
-		let schemaNameParameter = this._context.parameters.relationshipSchemaName;
+		const schemaNameParameter = this._context.parameters.relationshipSchemaName;
 		if (schemaNameParameter != undefined && schemaNameParameter.raw != null) { 
-			let entityMetadata = await this._context.utils.getEntityMetadata(this._parentRecordType);
-			let nnRelationships = entityMetadata.ManyToManyRelationships.getAll();
+			const entityMetadata = await this._context.utils.getEntityMetadata(this._parentRecordType);
+			const nnRelationships = entityMetadata.ManyToManyRelationships.getAll();
 
 			for (let i = 0; i < nnRelationships.length; i++) {
-				if (nnRelationships[i].SchemaName.toLowerCase() === this._context.parameters.relationshipSchemaName.raw.toLowerCase()) {
+				if (nnRelationships[i].SchemaName.toLowerCase() === this._context.parameters.relationshipSchemaName.raw?.toLowerCase()) {
 					this._relationshipInfo = new RelationshipInfo();
 					this._relationshipInfo.Entity1LogicalName = nnRelationships[i].Entity1LogicalName;
 					this._relationshipInfo.Entity1AttributeName = nnRelationships[i].Entity1IntersectAttribute;
@@ -737,8 +718,8 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 			
 			return Promise.resolve(<string>schemaNameParameter.raw); 
 		}
-		let entityMetadata = await this._context.utils.getEntityMetadata(this._parentRecordType);
-		let nnRelationships = entityMetadata.ManyToManyRelationships.getAll();
+		const entityMetadata = await this._context.utils.getEntityMetadata(this._parentRecordType);
+		const nnRelationships = entityMetadata.ManyToManyRelationships.getAll();
 
 		let count = 0;
 		let foundSchemaName = "";
@@ -786,17 +767,18 @@ export class NNCheckboxes implements ComponentFramework.StandardControl<IInputs,
 				return;
 			}
 		
-			var selectedIds = context.parameters.nnRelationshipDataSet.sortedRecordIds;
-			for (var j = 0; j < selectedIds.length; j++) {
-				let chk = <HTMLInputElement>window.document.getElementById(this._relationshipInfo.Name + "|" + selectedIds[j]);
+			const selectedIds = context.parameters.nnRelationshipDataSet.sortedRecordIds;
+			for (let j = 0; j < selectedIds.length; j++) {
+				const chk = <HTMLInputElement>window.document.getElementById(this._relationshipInfo.Name + "|" + selectedIds[j]);
 				if(chk){
 					chk.checked = true;
+					console.log("NNCheckboxes: record " + chk.id + " is checked.");
 				}
 			}
 		}
 
 		// Handle change of parent record state
-		var allControls = window.document.getElementsByClassName("nncb-control");
+		const allControls = window.document.getElementsByClassName("nncb-control");
 		for(let i=0;i<allControls.length;i++){
 			if(context.mode.isControlDisabled)
 			{

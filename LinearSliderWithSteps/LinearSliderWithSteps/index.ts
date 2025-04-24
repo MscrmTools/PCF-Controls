@@ -1,4 +1,3 @@
-import { timingSafeEqual } from "crypto";
 import {IInputs, IOutputs} from "./generated/ManifestTypes";
 
 export class LinearSliderWithSteps implements ComponentFramework.StandardControl<IInputs, IOutputs> {
@@ -41,7 +40,7 @@ constructor() {
 	 */
 	public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container:HTMLDivElement)
 	{
-		let id = Math.random().toString().split('.')[1];
+		const id = Math.random().toString().split('.')[1];
 		
 		this._context = context;
 		this._container = document.createElement("div");
@@ -104,16 +103,15 @@ constructor() {
 	}
 
 	private createStyleRule(name:string,content:string){
-		let styleSheet = this.GetStyleSheet();
+		const styleSheet = this.GetStyleSheet();
 		if(styleSheet != null){
-			// @ts-ignore
-			let index = styleSheet.insertRule(name + " " + content);
+			styleSheet.insertRule(name + " " + content);
 		}
 	}
 
 	private GetStyleSheet() {
-		for(var i=0; i<document.styleSheets.length; i++) {
-		  var sheet = document.styleSheets[i];
+		for(let i=0; i<document.styleSheets.length; i++) {
+			const sheet = document.styleSheets[i];
 		  if(sheet.href && sheet.href.endsWith("LinearSliderWithSteps.css")) {
 			return sheet;
 		  }
@@ -126,10 +124,10 @@ constructor() {
 	 * Updates the values to the internal value variable we are storing and also updates the html label that displays the value
 	 * @param evt : The "Input Properties" containing the parameters, control metadata and interface functions
 	 */
-	public refreshData(evt: Event) : void
+	public refreshData() : void
 	{
-		this._value = (this.inputElement.value as any)as number;
-		this.labelElement.innerHTML =((this._context.parameters.labelPrefix.raw ?? "") + " " + this.inputElement.value + " " + (this._context.parameters.labelSuffix.raw ?? "")) ?? "";
+		this._value = parseInt(this.inputElement.value);
+		this.labelElement.innerHTML = (this._context.parameters.labelPrefix.raw ?? "") + " " + this.inputElement.value + " " + (this._context.parameters.labelSuffix.raw ?? "");
 		this._notifyOutputChanged();
 	}
 
@@ -149,7 +147,7 @@ constructor() {
 		this._value = context.parameters.controlValue.raw!;
 		this._context = context;
 		this.inputElement.setAttribute("value",context.parameters.controlValue.formatted ? context.parameters.controlValue.formatted : "");
-		this.labelElement.innerHTML = ((this._context.parameters.labelPrefix.raw ?? "") + " " + this.inputElement.value + " " + (this._context.parameters.labelSuffix.raw ?? "")) ?? "";
+		this.labelElement.innerHTML = (this._context.parameters.labelPrefix.raw ?? "") + " " + this.inputElement.value + " " + (this._context.parameters.labelSuffix.raw ?? "");
 	}
 
 	/** 
