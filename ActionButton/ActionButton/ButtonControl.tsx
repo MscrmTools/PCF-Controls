@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Stack } from '@fluentui/react/lib/Stack';
-import { IBaseButtonProps, IBaseButtonState, IButtonStyles, PrimaryButton, IconButton } from '@fluentui/react/lib/Button';
+import { IBaseButtonProps, IBaseButtonState, IButtonStyles, PrimaryButton, IconButton } from '@fluentui/react/lib/Button'
 import { IIconProps } from '@fluentui/react';
 import { TooltipHost } from '@fluentui/react/lib/Tooltip';
 
@@ -48,7 +48,7 @@ export default class ButtonControl extends React.Component<IButtonControlProps, 
     return (
       <Stack horizontal>
         {this.props.text?.trim().length ? (
-          <TooltipHost content={this.props.toolTip} id={toolTipId}>
+          <TooltipHost content={this.props.toolTip} id={toolTipId} styles={this.styles}>
             <PrimaryButton
               iconProps={this.icon}
               styles={this.styles}
@@ -59,7 +59,7 @@ export default class ButtonControl extends React.Component<IButtonControlProps, 
             />
           </TooltipHost>
         ) : (
-          <TooltipHost content={this.props.toolTip} id={toolTipId}>
+          <TooltipHost content={this.props.toolTip} id={toolTipId} styles={this.styles}>
             <IconButton
               iconProps={this.icon}
               styles={this.styles}

@@ -11,6 +11,7 @@
     <Name>ActionButton</Name>
     <ProjectGuid>bc249511-6921-4066-88f1-c66c38823a47</ProjectGuid>
     <OutputPath>$(MSBuildThisFileDirectory)out\controls</OutputPath>
+	<PcfBuildMode>production</PcfBuildMode>
   </PropertyGroup>
 
   <PropertyGroup>

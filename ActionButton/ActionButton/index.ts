@@ -37,11 +37,11 @@ export class ActionButton implements ComponentFramework.StandardControl<IInputs,
 		this.id = context.parameters.Id.raw ?? "";
 		this.sendId = context.parameters.SendId.raw === "1";
 
-		// @ts-ignore
+		// @ts-expect-error not exposed by the framework
 		this.controlType = context.parameters.BoundAttribute.attributes.Type;
 
 		if (this.actionText.trim().startsWith("{")) {
-			let json = JSON.parse(this.actionText);
+			const json = JSON.parse(this.actionText);
 			try {
 				this.actionText = json[context.userSettings.languageId];
 				if (this.actionText === undefined) {
@@ -58,7 +58,7 @@ export class ActionButton implements ComponentFramework.StandardControl<IInputs,
 
 	private renderControl(context: ComponentFramework.Context<IInputs>): void {
 
-		let props: IButtonControlProps = {
+		const props: IButtonControlProps = {
 			text: this.actionText,
 			disabled: context.parameters.EnableButtonOnDisabledForm.raw === "1" ? false : context.mode.isControlDisabled,
 			style: {
