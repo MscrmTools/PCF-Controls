@@ -1,7 +1,7 @@
 body {
     margin: 0;
 }
-
+/* 
 input[type=checkbox] + label {
     vertical-align: middle;
     position: relative;
@@ -11,9 +11,9 @@ input[type=checkbox] + label {
 
 input[type=checkbox]:checked + label{
     font-weight: normal;
-    text-decoration: line-through;
+     text-decoration: line-through;  
 }
-
+*/
 
 div.nncb-main{
     margin-top:10px;
