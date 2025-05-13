@@ -270,7 +270,7 @@ export const LookupCombobox = (props: ILookupToComboBoxProps): JSX.Element => {
         if (props.context.parameters.dependantLookup?.raw?.length > 0) {
           const dependentId =
             props.context.parameters.dependantLookup.raw[0].id;
-          const attributeName =
+          const attributeName = props.context.parameters.dependantLookupTargetColumn?.raw ??
             props.context.parameters.dependantLookup.attributes?.LogicalName ??
             "";
 

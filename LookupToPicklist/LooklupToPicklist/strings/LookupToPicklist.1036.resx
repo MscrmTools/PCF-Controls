@@ -221,4 +221,12 @@
     <value>Indique le nombre d'éléments récents à afficher</value>
     <comment/>
   </data>
+  <data name="dependantLookupTargetColumn_Display_Key" xml:space="preserve">
+    <value>Colonne cible de filtrage</value>
+    <comment/>
+  </data>
+  <data name="dependantLookupTargetColumn_Desc_Key" xml:space="preserve">
+    <value>Colonne de la table cible de la colonne de filtrage à utiliser. A n'utiliser que si le nom logique de la colonne de filtrage est différent de la colonne d'identifiant de la table clible</value>
+    <comment/>
+  </data>
 </root>

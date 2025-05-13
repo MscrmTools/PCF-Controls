@@ -221,4 +221,12 @@
     <value>Gibt an, ob eine Suchleiste oben im Dropdown-Menü hinzugefügt werden soll</value>
     <comment/>
   </data>
+  <data name="dependantLookupTargetColumn_Display_Key" xml:space="preserve">
+    <value>Filterzielspalte</value>
+    <comment/>
+  </data>
+  <data name="dependantLookupTargetColumn_Desx_Key" xml:space="preserve">
+    <value>Spalte in der Zieltabelle der zu verwendenden Filterspalte. Nur verwenden, wenn der logische Name der Filterspalte sich von der ID-Spalte der Zieltabelle unterscheidet</value>
+    <comment/>
+  </data>
 </root>

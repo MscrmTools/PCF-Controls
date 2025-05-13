@@ -221,4 +221,12 @@
     <value>Indicates if a search bar must be added on top of the dropdown</value>
     <comment/>
   </data>
+  <data name="dependantLookupTargetColumn_Display_Key" xml:space="preserve">
+    <value>Filtering target column</value>
+    <comment/>
+  </data>
+  <data name="dependantLookupTargetColumn_Desc_Key" xml:space="preserve">
+    <value>Filtering targeted table column to use. Use this only if the logical name of the Filtering column is different from the targeted table primary id column</value>
+    <comment/>
+  </data>
 </root>

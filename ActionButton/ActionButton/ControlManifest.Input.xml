@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest>
-  <control namespace="MscrmTools" constructor="ActionButton" version="0.1.16" display-name-key="ActionButton_Display_Key" description-key="ActionButton_Desc_Key" control-type="standard" preview-image="imgs/logo.png">
+  <control namespace="MscrmTools" constructor="ActionButton" version="0.1.17" display-name-key="ActionButton_Display_Key" description-key="ActionButton_Desc_Key" control-type="standard" preview-image="imgs/logo.png">
     <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
     <property name="BoundAttribute" display-name-key="BoundAttribute_Display_Key" description-key="BoundAttribute_Desc_Key" of-type-group="ValidTypes" usage="bound" required="true" />
     <property name="ActionText" display-name-key="ActionText_Display_Key" description-key="ActionText_Desc_Key" of-type="SingleLine.Text" default-value="" usage="input" required="false" />
