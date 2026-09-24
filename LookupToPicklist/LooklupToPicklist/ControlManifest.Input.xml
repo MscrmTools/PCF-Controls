@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-  <control namespace="MscrmTools" constructor="LookupToPicklist" version="2.1.0" display-name-key="LookupToPicklist" description-key="The purpose of this control is to display a Dropdown that allows to select records from an entity" control-type="virtual" preview-image="img/LookupToPicklist_preview.png">
+  <control namespace="MscrmTools" constructor="LookupToPicklist" version="2.1.3" display-name-key="LookupToPicklist" description-key="The purpose of this control is to display a Dropdown that allows to select records from an entity" control-type="virtual" preview-image="img/LookupToPicklist_preview.png">
     <external-service-usage enabled="false"/>
     <property name="lookup" display-name-key="lookup_Display_Key" description-key="lookup_Desc_Key" of-type="Lookup.Simple" usage="bound" required="true" />
     <property name="dependantLookup" display-name-key="dependantLookup_Display_Key" description-key="dependantLookup_Desc_Key" of-type="Lookup.Simple" usage="bound" required="false" />

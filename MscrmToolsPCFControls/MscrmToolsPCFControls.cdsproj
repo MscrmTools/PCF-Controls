@@ -54,6 +54,18 @@
 	<ProjectReference Include="..\ColumnHeader\ColumnHeader.pcfproj" />
   </ItemGroup>
 
+  <!-- Add the solution version to the package file names, e.g. MscrmToolsPCFControls_1_14_2_0.zip
+       (the managed package gets the same name with the _managed suffix) -->
+  <Target Name="SetVersionedSolutionPackageName" BeforeTargets="PowerAppsPackage">
+    <XmlPeek XmlInputPath="$(MSBuildThisFileDirectory)$(SolutionRootPath)\Other\Solution.xml" Query="/ImportExportXml/SolutionManifest/Version/text()">
+      <Output TaskParameter="Result" PropertyName="SolutionManifestVersion" />
+    </XmlPeek>
+    <PropertyGroup>
+      <SolutionPackageZipFilePath>$(OutputPath)$(MSBuildProjectName)_$(SolutionManifestVersion.Replace('.', '_')).zip</SolutionPackageZipFilePath>
+    </PropertyGroup>
+    <Message Importance="High" Text="Solution package: $(SolutionPackageZipFilePath)" />
+  </Target>
+
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
   <Import Project="$(PowerAppsTargetsPath)\Microsoft.PowerApps.VisualStudio.Solution.targets" Condition="Exists('$(PowerAppsTargetsPath)\Microsoft.PowerApps.VisualStudio.Solution.targets')" />
 

@@ -197,6 +197,10 @@
     <value>Search</value>
     <comment/>
   </data>
+  <data name="actions" xml:space="preserve">
+    <value>Actions</value>
+    <comment/>
+  </data>
   <data name="favorites" xml:space="preserve">
     <value>Favorites</value>
     <comment/>

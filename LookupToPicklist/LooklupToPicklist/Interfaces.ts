@@ -1,4 +1,3 @@
-import { ComboboxProps, Theme } from '@fluentui/react-components';
 import { IInputs } from './generated/ManifestTypes';
 
 export interface IRecordCategory{
@@ -15,12 +14,13 @@ export interface IRecord {
     type?:string
 }
 
-export interface ILookupToComboBoxProps extends ComboboxProps {
+export interface ILookupToComboBoxProps {
     viewId: string,
     entityName: string,
     isDisabled:boolean,
     context: ComponentFramework.Context<IInputs>,
     selectedId: string,
+    selectedName?: string,
     parentRecordId : string | undefined,
     notifyOutputChanged: (value : ComponentFramework.LookupValue | undefined) => void,
 }

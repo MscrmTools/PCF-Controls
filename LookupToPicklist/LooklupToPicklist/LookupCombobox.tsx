@@ -12,7 +12,7 @@ import {
   Theme,
   Input,
 } from "@fluentui/react-components";
-import { ILookupToComboBoxProps, IRecord, IRecordCategory } from "./Interfaces";
+import { ILookupToComboBoxProps, IMru, IRecord, IRecordCategory } from "./Interfaces";
 import {
   StarRegular,
   ClockRegular,
@@ -25,6 +25,11 @@ const useStyles = makeStyles({
   },
 });
 
+const EMPTY_KEY = "---";
+
+const normalizeId = (id: string | undefined | null): string =>
+  (id ?? "").replace(/[{}]/g, "").toLowerCase();
+
 export interface IILookupToComboBoxState{
   categories : IRecordCategory[],
   entityIdFieldName: string,
@@ -33,24 +38,26 @@ export interface IILookupToComboBoxState{
   selectedKey: string,
   selectedText: string,
   newlyCreatedId: string | undefined,
-  parentRecordId : string | undefined,
 }
 
 export const LookupCombobox = (props: ILookupToComboBoxProps): JSX.Element => {
+  const initialText = props.selectedId !== EMPTY_KEY ? props.selectedName ?? "" : EMPTY_KEY;
   const [state, setState] = React.useState({
     categories: [] as IRecordCategory[],
     entityIdFieldName: "",
     entityNameFieldName: "",
     entityDisplayName: "",
     selectedKey: props.selectedId,
-    selectedText: "",
+    selectedText: initialText,
     newlyCreatedId: undefined,
-    parentRecordId : props.parentRecordId,
   } as IILookupToComboBoxState);
-  const [query, setQuery] = React.useState<string>("");
+  const [query, setQuery] = React.useState<string>(initialText);
   const [isSearching, setIsSearching] = React.useState<boolean>(false);
 
-  let availableOptions : IRecord[] = [];
+  // Latest selection, readable from async callbacks without stale closures
+  const selectionRef = React.useRef({ key: props.selectedId, text: initialText });
+  // Used to discard responses of outdated record requests
+  const requestIdRef = React.useRef(0);
 
   const styles = useStyles();
   const currentTheme = props.context.fluentDesignLanguage?.tokenTheme as Theme;
@@ -69,26 +76,28 @@ export const LookupCombobox = (props: ILookupToComboBoxProps): JSX.Element => {
   React.useEffect(() => {
     retrieveMetadata();
   },[]);
- 
-  React.useEffect(() => {
-    retrieveRecords();
-  }, [state.entityIdFieldName, state.newlyCreatedId]);
 
   React.useEffect(() => {
     retrieveRecords();
-  }, [props.parentRecordId]);
+  }, [state.entityIdFieldName, state.newlyCreatedId, props.parentRecordId]);
 
   React.useEffect(() => {
-    displayRecords(state.categories, props.selectedId);
- }, [props.selectedId]);
-
- React.useEffect(() => {
-  displayRecords(state.categories, state.selectedKey);
-}, [state.selectedKey]);
+    displayRecords(state.categories, props.selectedId, props.selectedName);
+  }, [props.selectedId]);
 
   const retrieveMetadata = () => {
-    props.context.utils
-      .getEntityMetadata(props.entityName)
+    if (!props.entityName) {
+      return;
+    }
+    // getEntityMetadata may be unavailable or throw synchronously (e.g. in the form designer)
+    let metadataPromise: Promise<ComponentFramework.PropertyHelper.EntityMetadata>;
+    try {
+      metadataPromise = props.context.utils.getEntityMetadata(props.entityName);
+    } catch (error) {
+      console.log("LookupToPicklist: unable to retrieve metadata", error);
+      return;
+    }
+    metadataPromise
       .then((metadata) => {
         setState((prevState) => {
           return {
@@ -106,149 +115,164 @@ export const LookupCombobox = (props: ILookupToComboBoxProps): JSX.Element => {
   };
 
   const setMrus = (categories: IRecordCategory[], records: IRecord[]) => {
-    // @ts-expect-error toto
-    const mrus = props.context.parameters.lookup.getRecentItems() as IMru[];
-    if (
-      mrus.length > 0 &&
-      // @ts-expect-error toto
-      props.context.parameters.lookup.getLookupConfiguration().isMruDisabled ===
-        false
-    ) {
-      let mruCategory = categories.find((c) => c.key === "mrus");
-      if (!mruCategory) {
-        mruCategory = {
-          title: props.context.resources.getString("recentItems"),
-          key: "mrus",
-          type: "mrus",
-          records: [],
-        };
-        categories.push(mruCategory);
-      }
+    let mrus: IMru[] = [];
+    let isMruDisabled = true;
+    try {
+      // @ts-expect-error getRecentItems is not part of the typed API
+      mrus = (props.context.parameters.lookup.getRecentItems?.() ?? []) as IMru[];
+      // @ts-expect-error getLookupConfiguration is not part of the typed API
+      isMruDisabled = props.context.parameters.lookup.getLookupConfiguration?.()?.isMruDisabled !== false;
+    } catch (error) {
+      console.log("LookupToPicklist: unable to retrieve recent items", error);
+    }
+    if (!Array.isArray(mrus) || mrus.length === 0 || isMruDisabled) {
+      return;
+    }
 
-      const mruOptions = [] as IRecord[];
-      const maxSize = props.context.parameters.mruSize?.raw ?? 999;
-      for (let i = 0; i < mrus.length && i < maxSize; i++) {
-        mruOptions.push({
-          key: mrus[i].objectId + "_mru",
-          text:
-            records.find((o) => o.key === mrus[i].objectId)?.text ??
-            (mrus[i].title as string),
-        });
-      }
+    // When the list is filtered by a parent record, recent items outside
+    // of that filter must not be selectable
+    const restrictToRecords = !!props.parentRecordId;
 
-      mruCategory.records = mruOptions.map((mru) => {
-        return {
-          key: mru.key,
-          text: records.find((o) => o.key === mru.key)?.text ?? mru.text,
-        };
+    const mruOptions = [] as IRecord[];
+    const maxSize = props.context.parameters.mruSize?.raw ?? 999;
+    for (const mru of mrus) {
+      if (mruOptions.length >= maxSize) {
+        break;
+      }
+      const id = normalizeId(mru.objectId);
+      const record = records.find((o) => o.key === id);
+      if (restrictToRecords && !record) {
+        continue;
+      }
+      mruOptions.push({
+        key: id + "_mru",
+        text: record?.text ?? mru.title,
+      });
+    }
+
+    if (mruOptions.length > 0) {
+      categories.push({
+        title: props.context.resources.getString("recentItems"),
+        key: "mrus",
+        type: "mrus",
+        records: mruOptions,
       });
     }
   };
 
   const setFavorites = (categories: IRecordCategory[], records: IRecord[]) => {
-    const hasFavorites =
-      props.context.parameters.favorites.raw !== null &&
-      props.context.parameters.favorites.raw.length > 0;
-    if (hasFavorites) {
-      const favorites = JSON.parse(
-        props.context.parameters.favorites.raw ?? ""
-      ) as string[];
-
-      const favoritesOptions = [];
-      for (const i of favorites) {
-        const favOption = records.find((o) => o.key === i);
-        if (favOption) {
-          favoritesOptions.push({
-            key: favOption.key + "_fav",
-            text: favOption.text,
-          });
-        }
-      }
-
-      let favoritesCategory = categories.find((c) => c.key === "favorites");
-      if (!favoritesCategory) {
-        favoritesCategory = {
-          title: props.context.resources.getString("favorites"),
-          key: "favorites",
-          type: "favorites",
-          records: [],
-        };
-        categories.push(favoritesCategory);
-      }
-
-      favoritesCategory.records = favoritesOptions.map((favOption) => {
-        return {
-          key: favOption.key,
-          text:
-            records.find((o) => o.key === favOption.key)?.text ??
-            favOption.text,
-        };
-      });
+    const raw = props.context.parameters.favorites.raw;
+    if (!raw) {
+      return;
     }
-  };
 
-  const setRecords = (categories: IRecordCategory[], records: IRecord[]) => {
-    const category = categories.find((c) => c.key === "records");
-    if (!category) {
+    let favorites: string[];
+    try {
+      favorites = JSON.parse(raw) as string[];
+    } catch (error) {
+      console.log("LookupToPicklist: favorites parameter is not a valid JSON array", error);
+      return;
+    }
+    if (!Array.isArray(favorites)) {
+      return;
+    }
+
+    const favoritesOptions = [] as IRecord[];
+    for (const favorite of favorites) {
+      const favOption = records.find((o) => o.key === normalizeId(favorite));
+      if (favOption) {
+        favoritesOptions.push({
+          key: favOption.key + "_fav",
+          text: favOption.text,
+        });
+      }
+    }
+
+    if (favoritesOptions.length > 0) {
       categories.push({
-        title: state.entityDisplayName,
-        key: "records",
-        type: "records",
-        records: records,
+        title: props.context.resources.getString("favorites"),
+        key: "favorites",
+        type: "favorites",
+        records: favoritesOptions,
       });
-    } else {
-      category.title = state.entityDisplayName;
-      category.records = records;
     }
   };
 
   const sortRecords = (records: IRecord[]) => {
-    records = records.sort((n1, n2) => {
-      if (n1.text.toLowerCase() > n2.text.toLowerCase()) {
-        return 1;
-      }
-
-      if (n1.text.toLowerCase() < n2.text.toLowerCase()) {
-        return -1;
-      }
-
-      return 0;
-    });
+    records.sort((n1, n2) =>
+      n1.text.localeCompare(n2.text, undefined, { sensitivity: "base" })
+    );
   };
 
   const setActions = (categories: IRecordCategory[]) => {
-    let actionsCategory = categories.find((c) => c.key === "actions");
-    if (!actionsCategory) {
-      actionsCategory = {
-        title: "Actions",
-        type: "actions",
-        key: "actions",
-        records: [],
-      };
+    categories.push({
+      title: props.context.resources.getString("actions"),
+      type: "actions",
+      key: "actions",
+      records: [
+        {
+          key: "new",
+          text:
+            props.context.resources.getString("AddNew_Display_Key") +
+            " " +
+            state.entityDisplayName,
+          isAction: true,
+        },
+      ],
+    });
+  };
 
-      categories.push(actionsCategory);
+  const buildFetchXml = (fetchXml: string): string => {
+    const xmlDoc = new DOMParser().parseFromString(fetchXml, "text/xml");
+    const entityNode = xmlDoc.getElementsByTagName("entity")[0];
+    if (!entityNode || xmlDoc.getElementsByTagName("parsererror").length > 0) {
+      return fetchXml;
     }
 
-    let newAction = actionsCategory.records.find((r) => r.key === "new");
-    if (!newAction) {
-      newAction = {
-        key: "new",
-        text:
-          props.context.resources.getString("AddNew_Display_Key") +
-          " " +
-          state.entityDisplayName,
-        isAction: true,
-      };
-
-      actionsCategory.records.push(newAction);
+    // Make sure the columns used to display the options are retrieved
+    const children = Array.from(entityNode.children);
+    if (!children.some((n) => n.tagName === "all-attributes")) {
+      const attributes = children
+        .filter((n) => n.tagName === "attribute")
+        .map((n) => n.getAttribute("name"));
+      for (const name of [state.entityIdFieldName, state.entityNameFieldName]) {
+        if (name && !attributes.includes(name)) {
+          const attributeNode = xmlDoc.createElement("attribute");
+          attributeNode.setAttribute("name", name);
+          entityNode.appendChild(attributeNode);
+        }
+      }
     }
+
+    const parentId = props.parentRecordId;
+    const targetColumn = props.context.parameters.dependantLookupTargetColumn?.raw?.trim() ?? "";
+    const attributeName = targetColumn !== ""
+      ? targetColumn
+      : props.context.parameters.dependantLookup?.attributes?.LogicalName;
+
+    if (parentId && attributeName) {
+      // A dedicated filter at entity level is combined (AND) with the
+      // view filters, whatever their type (and / or)
+      const filterNode = xmlDoc.createElement("filter");
+      filterNode.setAttribute("type", "and");
+      const conditionNode = xmlDoc.createElement("condition");
+      conditionNode.setAttribute("attribute", attributeName);
+      conditionNode.setAttribute("operator", "eq");
+      conditionNode.setAttribute("value", parentId);
+      filterNode.appendChild(conditionNode);
+      entityNode.appendChild(filterNode);
+    }
+
+    return new XMLSerializer().serializeToString(xmlDoc);
   };
 
   const retrieveRecords = () => {
 
-    if(!(state.entityDisplayName?.length > 0)){
+    if(!state.entityIdFieldName){
       return;
     }
+
+    const requestId = ++requestIdRef.current;
 
     let filter = "";
     if (props.viewId) {
@@ -262,113 +286,95 @@ export const LookupCombobox = (props: ILookupToComboBoxProps): JSX.Element => {
         "' and querytype eq 64";
     }
 
-    props.context.webAPI
-      .retrieveMultipleRecords("savedquery", filter)
+    // webAPI may be unavailable or throw synchronously (e.g. in the form designer)
+    let viewPromise: Promise<ComponentFramework.WebApi.RetrieveMultipleResponse>;
+    try {
+      viewPromise = props.context.webAPI.retrieveMultipleRecords("savedquery", filter);
+    } catch (error) {
+      console.log("LookupToPicklist: unable to retrieve records", error);
+      return;
+    }
+
+    viewPromise
       .then((result) => {
         const view = result.entities[0];
-        let xml = view.fetchxml as string;
-        if (props.context.parameters.dependantLookup?.raw?.length > 0) {
-          const dependentId =
-            props.context.parameters.dependantLookup.raw[0].id;
-          const attributeName = props.context.parameters.dependantLookupTargetColumn?.raw ??
-            props.context.parameters.dependantLookup.attributes?.LogicalName ??
-            "";
-
-          const parser = new DOMParser();
-          const xmlDoc = parser.parseFromString(xml, "text/xml");
-
-          const entityNode = xmlDoc.getElementsByTagName("entity")[0];
-          const filterNodes = entityNode.getElementsByTagName("filter");
-          let filterNode;
-          if (filterNodes.length == 0) {
-            filterNode = xmlDoc.createElement("filter");
-            entityNode.appendChild(filterNode);
-          } else {
-            filterNode = filterNodes[0];
-          }
-
-          // adding condition
-          const conditionNode = xmlDoc.createElement("condition");
-          conditionNode.setAttribute("attribute", attributeName);
-          conditionNode.setAttribute("operator", "eq");
-          conditionNode.setAttribute("value", dependentId);
-          filterNode.appendChild(conditionNode);
-
-          xml = xmlDoc.documentElement.outerHTML;
+        if (!view) {
+          throw new Error(`LookupToPicklist: no view found for table ${props.entityName}`);
         }
 
-        props.context.webAPI
-          .retrieveMultipleRecords(
-            view.returnedtypecode as string,
-            "?fetchXml=" + xml
-          )
-          .then((result) => {
-            availableOptions = result.entities.map((r) => {
-              let localizedEntityFieldName = "";
-              const mask = props.context.parameters.attributemask.raw;
+        const xml = buildFetchXml(view.fetchxml as string);
 
-              if (mask) {
-                localizedEntityFieldName = mask.replace(
-                  "{lcid}",
-                  props.context.userSettings.languageId.toString()
-                );
-              }
+        return props.context.webAPI.retrieveMultipleRecords(
+          view.returnedtypecode as string,
+          "?fetchXml=" + encodeURIComponent(xml)
+        );
+      })
+      .then((result) => {
+        if (requestId !== requestIdRef.current) {
+          // A newer request has been sent in the meantime
+          return null;
+        }
 
-              return {
-                key: r[state.entityIdFieldName] as string,
-                text: (r[localizedEntityFieldName] ??
-                  r[state.entityNameFieldName] ??
-                  "Display Name is not available") as string,
-              };
-            });
+        const mask = props.context.parameters.attributemask.raw;
+        const localizedEntityFieldName = mask
+          ? mask.replace("{lcid}", props.context.userSettings.languageId.toString())
+          : "";
 
-            if (props.context.parameters.sortByName.raw === "1") {
-              sortRecords(availableOptions);
-            }
+        const availableOptions: IRecord[] = result.entities.map((r) => {
+          return {
+            key: normalizeId(r[state.entityIdFieldName] as string),
+            text: (r[localizedEntityFieldName] ??
+              r[state.entityNameFieldName] ??
+              "Display Name is not available") as string,
+          };
+        });
 
-            availableOptions.splice(0, 0, { key: "---", text: "---" });
+        if (props.context.parameters.sortByName.raw === "1") {
+          sortRecords(availableOptions);
+        }
 
-            const categories = [] as IRecordCategory[];
-            setMrus(categories, availableOptions);
-            setFavorites(categories, availableOptions);
-            setRecords(categories, availableOptions);
-            if (props.context.parameters.addNew.raw === "1") {
-              setActions(categories);
-            }
+        availableOptions.splice(0, 0, { key: EMPTY_KEY, text: EMPTY_KEY });
 
-            displayRecords(categories, props.selectedId);
+        const categories = [] as IRecordCategory[];
+        setMrus(categories, availableOptions);
+        setFavorites(categories, availableOptions);
+        categories.push({
+          title: state.entityDisplayName,
+          key: "records",
+          type: "records",
+          records: availableOptions,
+        });
+        if (props.context.parameters.addNew.raw === "1") {
+          setActions(categories);
+        }
 
-            return null;
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
+        displayRecords(categories, selectionRef.current.key, selectionRef.current.text);
 
         return null;
       })
-      .catch((error) => {
+      .catch((error: Error) => {
         console.log(error.message);
       });
   };
 
-  const displayRecords = (categories : IRecordCategory[], selectedKey: string) => {
+  const displayRecords = (categories : IRecordCategory[], selectedKey: string, fallbackText?: string) => {
+    const records = categories.find((c) => c.type === "records")?.records ?? [];
+    const selectedOption = records.find((o) => o.key === selectedKey);
 
-    availableOptions = availableOptions.length > 0 ? availableOptions : state.categories.find((c) => c.type === "records")?.records ?? []
+    // The selected record may be absent from the list (inactive, filtered out
+    // by the view...): keep it selected and display its known name
+    const key = selectedKey || EMPTY_KEY;
+    const text = selectedOption?.text ?? (key !== EMPTY_KEY ? fallbackText : undefined) ?? EMPTY_KEY;
 
-    if(availableOptions.length === 0){
-      return;}
-
-    const selectedOption = availableOptions.find(
-      (o) => o.key === selectedKey
-    );
-
-    setQuery(selectedOption?.text ?? "---");
+    selectionRef.current = { key, text };
+    setQuery(text);
+    setIsSearching(false);
     setState((prevState) => {
       return {
         ...prevState,
         categories: categories,
-        selectedKey: selectedOption?.key ?? "---",
-        selectedText: selectedOption?.text ?? "---",
+        selectedKey: key,
+        selectedText: text,
       };
     });
   }
@@ -377,13 +383,16 @@ export const LookupCombobox = (props: ILookupToComboBoxProps): JSX.Element => {
     selectedId: string | undefined,
     selectedText: string | undefined
   ) => {
+    const key = selectedId ? normalizeId(selectedId) : EMPTY_KEY;
+    const text = selectedText ?? EMPTY_KEY;
+    selectionRef.current = { key, text };
     setState((prevState) => ({
       ...prevState,
-      selectedKey: selectedId?.replace(/[{}]/g,"").toLowerCase() ?? "---",
-      selectedText: selectedText ?? "---",
+      selectedKey: key,
+      selectedText: text,
     }));
     setIsSearching(false);
-    setQuery(selectedText ?? "");
+    setQuery(text);
   };
 
   const handleOptionSelect = (
@@ -391,6 +400,9 @@ export const LookupCombobox = (props: ILookupToComboBoxProps): JSX.Element => {
     data: OptionOnSelectData
   ) => {
     if (data.optionValue === "new") {
+      // Restore the current selection while the quick create form is open
+      setIsSearching(false);
+      setQuery(state.selectedText);
       props.context.navigation
         .openForm({
           entityName: props.entityName,
@@ -398,28 +410,30 @@ export const LookupCombobox = (props: ILookupToComboBoxProps): JSX.Element => {
           windowPosition: 2,
         })
         .then((result) => {
-          props.notifyOutputChanged(result.savedEntityReference[0]);
-          updateSelectedItem(
-            result.savedEntityReference[0].id,
-            result.savedEntityReference[0].name
-          );
+          const created = result.savedEntityReference?.[0];
+          if (!created) {
+            // Quick create form was cancelled
+            return null;
+          }
+          props.notifyOutputChanged(created);
+          updateSelectedItem(created.id, created.name);
 
           setState((prevState => ({
             ...prevState,
-            newlyCreatedId: result.savedEntityReference[0].id.toLowerCase().replace(/[{}]/g,"")
+            newlyCreatedId: normalizeId(created.id)
           })));
 
           return null;
         })
-        .catch((error) => {
+        .catch((error: Error) => {
           console.log(error.message);
         });
-    } else if (data.optionValue === "---") {
+    } else if (!data.optionValue || data.optionValue === EMPTY_KEY) {
       props.notifyOutputChanged(undefined);
-      updateSelectedItem("---", "---");
+      updateSelectedItem(EMPTY_KEY, EMPTY_KEY);
     } else {
       const newValue = {
-        id: (data.optionValue ?? "").split("_mru")[0].split("_fav")[0],
+        id: data.optionValue.replace(/_(mru|fav)$/, ""),
         name: data.optionText,
         entityType: props.entityName,
       };
@@ -427,6 +441,9 @@ export const LookupCombobox = (props: ILookupToComboBoxProps): JSX.Element => {
       updateSelectedItem(newValue.id, newValue.name);
     }
   };
+
+  const matchesQuery = (record: IRecord) =>
+    !isSearching || record.text.toLowerCase().includes(query.toLowerCase());
 
   return (
     <div className={styles.root}>
@@ -440,11 +457,17 @@ export const LookupCombobox = (props: ILookupToComboBoxProps): JSX.Element => {
           />
         ) : (
           <Combobox
-            {...props}
-            placeholder="---"
+            placeholder={EMPTY_KEY}
             onChange={(ev) => {
               setQuery(ev.target.value);
               setIsSearching(true);
+            }}
+            onOpenChange={(ev, data) => {
+              if (!data.open && isSearching) {
+                // Discard an unfinished search and show the selected value again
+                setIsSearching(false);
+                setQuery(state.selectedText);
+              }
             }}
             onOptionSelect={handleOptionSelect}
             selectedOptions={[state.selectedKey]}
@@ -454,18 +477,13 @@ export const LookupCombobox = (props: ILookupToComboBoxProps): JSX.Element => {
           >
             {state.categories.length === 1
               ? state.categories[0].records
-                  .filter(
-                    (r) =>
-                      (isSearching &&
-                        r.text.toLowerCase().includes(query.toLowerCase())) ||
-                      !isSearching
-                  )
+                  .filter(matchesQuery)
                   .map((record) => (
                     <Option
                       key={record.key}
                       text={record.text}
                       value={record.key}
-                      className="{styles.root}"
+                      className={styles.root}
                     >
                       {record.text}
                     </Option>
@@ -474,7 +492,7 @@ export const LookupCombobox = (props: ILookupToComboBoxProps): JSX.Element => {
                   <OptionGroup
                     label={category.title}
                     key={category.key}
-                    className="{styles.root}"
+                    className={styles.root}
                   >
                     <div
                       style={
@@ -488,22 +506,13 @@ export const LookupCombobox = (props: ILookupToComboBoxProps): JSX.Element => {
                       }
                     >
                       {category.records
-                        .filter(
-                          (r) =>
-                            (isSearching &&
-                              r.text
-                                .toLowerCase()
-                                .includes(query.toLowerCase()) &&
-                              category.type === "records") ||
-                            !isSearching ||
-                            category.type != "records"
-                        )
+                        .filter((r) => category.type !== "records" || matchesQuery(r))
                         .map((record) => (
                           <Option
                             key={record.key}
                             text={record.text}
                             value={record.key}
-                            className="{styles.root}"
+                            className={styles.root}
                           >
                             {category.type === "mrus" && <ClockRegular />}
                             {category.type === "favorites" && <StarRegular />}

@@ -2,16 +2,16 @@ import { IInputs, IOutputs } from "./generated/ManifestTypes";
 import { LookupCombobox } from "./LookupCombobox";
 import * as React from "react";
 
+const normalizeId = (id: string | undefined | null): string | undefined =>
+	id ? id.replace(/[{}]/g, "").toLowerCase() : undefined;
+
 export class LookupToPicklist implements ComponentFramework.ReactControl<IInputs, IOutputs> {
     private notifyOutputChanged: () => void;
 	private entityName: string;
-	private entityIdFieldName: string;
-	private entityNameFieldName: string;
-	private entityDisplayName: string;
 	private viewId: string;
 	private currentValue?: ComponentFramework.LookupValue[];
-	private newlyCreatedId: string|null;
-	private parentId: string|undefined;
+	private parentId: string | undefined;
+	private clearedByParentChange = false;
     /**
      * Empty constructor.
      */
@@ -31,37 +31,44 @@ export class LookupToPicklist implements ComponentFramework.ReactControl<IInputs
         notifyOutputChanged: () => void,
         state: ComponentFramework.Dictionary
     ): void {
-        this.notifyOutputChanged = notifyOutputChanged;      
-		this.entityName = context.parameters.lookup.getTargetEntityType()
-		this.viewId = context.parameters.lookup.getViewId();
+        this.notifyOutputChanged = notifyOutputChanged;
+		// These APIs are not always available (e.g. in the form designer)
+		try {
+			this.entityName = context.parameters.lookup.getTargetEntityType();
+		} catch (error) {
+			console.log("LookupToPicklist: unable to get the target table", error);
+		}
+		const lookupMetadata = context.parameters.lookup.attributes as ComponentFramework.PropertyHelper.FieldPropertyMetadata.LookupMetadata | undefined;
+		this.entityName ??= lookupMetadata?.Targets?.[0] ?? "";
+		try {
+			this.viewId = context.parameters.lookup.getViewId();
+		} catch (error) {
+			console.log("LookupToPicklist: unable to get the lookup view", error);
+			this.viewId = "";
+		}
+		// Remember the initial parent so loading the form doesn't clear the value
+		this.parentId = normalizeId(context.parameters.dependantLookup?.raw?.[0]?.id);
     }
 
     private renderControl(context: ComponentFramework.Context<IInputs>) : React.ReactElement {
-		
-		let recordId = context.parameters.lookup.raw != null && context.parameters.lookup.raw.length > 0 
-		? context.parameters.lookup.raw[0].id?.replace(/[{}]/g,"").toLowerCase()
-		: '---'
+		const lookupValue = this.clearedByParentChange ? undefined : context.parameters.lookup.raw?.[0];
 
-		if(this.newlyCreatedId){
-			recordId = this.newlyCreatedId;
-			this.newlyCreatedId = null;
-		}		
+		const recordId = normalizeId(lookupValue?.id) ?? "---";
 
-		const parentId = context.parameters.dependantLookup.raw?.length > 0 ? context.parameters.dependantLookup.raw[0].id : "---"
-			
 		return React.createElement(LookupCombobox, {
 			context: context,
 			selectedId: recordId,
-			selectedOptions: [recordId],
+			selectedName: lookupValue?.name,
 			viewId: this.viewId,
 			entityName: this.entityName,
 			isDisabled: context.mode.isControlDisabled,
-			notifyOutputChanged: this.notifyChange.bind(this),	
-			parentRecordId: parentId,	
-		})
+			notifyOutputChanged: this.notifyChange.bind(this),
+			parentRecordId: this.parentId,
+		});
 	}
 
 	public notifyChange(value : ComponentFramework.LookupValue | undefined) : void {
+		this.clearedByParentChange = false;
 		this.currentValue = value? [value] : undefined;
 		this.notifyOutputChanged();
 	}
@@ -72,18 +79,22 @@ export class LookupToPicklist implements ComponentFramework.ReactControl<IInputs
      * @returns ReactElement root react element for the control
      */
     public updateView(context: ComponentFramework.Context<IInputs>): React.ReactElement {
-   
-        if(context.updatedProperties.includes("dependantLookup")){
-			const newParentId = context.parameters.dependantLookup.raw.length > 0 ? context.parameters.dependantLookup.raw[0].id : undefined;
-			if(newParentId?.replace(/[{}]/g,"") !== this.parentId?.replace(/[{}]/g,"")){
-				this.parentId = newParentId;
-				this.currentValue = [];
+		const newParentId = normalizeId(context.parameters.dependantLookup?.raw?.[0]?.id);
+		if (newParentId !== this.parentId) {
+			this.parentId = newParentId;
+			// The current value may not belong to the new parent: clear it,
+			// but only when there is something to clear to avoid dirtying the form
+			if ((context.parameters.lookup.raw?.length ?? 0) > 0) {
+				this.clearedByParentChange = true;
+				this.currentValue = undefined;
 				this.notifyOutputChanged();
 			}
 		}
-		else if(context.updatedProperties.includes("lookup")){
-			return this.renderControl(context);
+		else if (this.clearedByParentChange && !(context.parameters.lookup.raw?.length)) {
+			// The platform has applied the cleared value
+			this.clearedByParentChange = false;
 		}
+
 		return this.renderControl(context);
     }
 
